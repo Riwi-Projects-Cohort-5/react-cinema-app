@@ -32,12 +32,8 @@ export const Header = () => {
         {/* Contenido centrado */}
         <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
           <h1 className="text-5xl font-bold text-white md:text-7xl">
-            Welcome to Cinema
+          For the name
           </h1>
-
-          <p className="mt-6 max-w-3xl text-lg text-gray-200 md:text-2xl">
-            Here you can see all movies that you imagine.
-          </p>
         </div>
       </header>
 

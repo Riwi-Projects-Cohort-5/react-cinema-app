@@ -104,42 +104,40 @@ export const movies: card[] = [
 ];
 export const Cards = ({image,title,score,year,gender,director,duration,description}: card)  => {
   return (
-    <article className="rounded-2xl bg-zinc-900 p-4">
+    <article className="rounded-2xl bg-zinc-900 p-5">
       <div className= "relative">
         <img
           src={image}
           alt={title}
-          className="h-50 w-full object-cover rounded-lg"
+          className="w-full h-96 object-cover rounded-lg"
         />
 
-        <span className="absolute top-2 right-2 rounded-md bg-orange-700 px-2 py-1 text-sm font-bold text-white">
+        <span className="absolute top-2 right-2 rounded-md bg-white px-2 py-1 text-xl font-bold text-black">
           ⭐ {score}
         </span>
       </div>
 
       <div className="mt-4 space-y-4">
         <header className="flex items-center justify-between">
-          <h2 className="text-3xl font-bold text-white">{title}</h2>
-          <span className="text-lg text-white">{year}</span>
+          <h2 className="text-4xl font-bold text-white">{title}</h2>
+          <span className="text-xl text-white">{year}</span>
         </header>
 
         <div className="space-y-2 text-white">
-          <p>
-            <strong className="text-white">Gender:</strong> {gender}
+          <p className="text-xl">
+            <strong className="text-white text-xl">GENDER:</strong> {gender}
           </p>
 
-          <p>
-            <strong className="text-white">Director:</strong> {director}
+          <p className="text-xl">
+            <strong className=" text-xl text-white">DIRECTOR:</strong> {director}
           </p>
 
-          <p>
-            <strong className="text-white">Duración:</strong> {duration} minutos
+          <p className="text-xl">
+            <strong className="text-xl  text-white">DURATION:</strong> {duration} minutos
           </p>
         </div>
-
-        <p className="text-white">
-          {description}
-        </p>
+          <h1 className="text-xl text-white "><strong>DESCRIPTION:</strong>  {description}</h1>
+      
       </div>
     </article>
     
