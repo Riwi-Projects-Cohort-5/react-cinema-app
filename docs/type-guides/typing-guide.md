@@ -1,6 +1,6 @@
 # Guía de Estándares de Tipado (TypeScript)
 
-> Complementa [`coding-conventions.md`](./coding-conventions.md) (nomenclatura general) y
+> Complementa [`coding-conventions.md`](../frontend-architecture/coding-conventions.md) (nomenclatura general) y
 > [`docs/api/00-conventions.md`](../api/00-conventions.md) (contrato de API — dinero, fechas, ids,
 > enums, envelopes). Léelos primero si no los conoces: esta guía asume sus reglas y solo define cómo
 > se traducen a tipos de TypeScript.

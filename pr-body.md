@@ -20,7 +20,7 @@
 
 <!-- Describe brevemente el objetivo principal del PR -->
 
-Agrega la Guía de Estándares de Tipado en TypeScript (`docs/frontend-architecture/typing-guide.md`):
+Agrega la Guía de Estándares de Tipado en TypeScript (`docs/type-guides/typing-guide.md`):
 define `type` vs `interface`, nombrado, ubicación de carpetas (`shared/interfaces/` vs.
 `features/<feature>/interfaces/`), tipado de servicios, formularios y props, para que el equipo (6
 personas) tenga una referencia única al crear tipos en cualquier feature. También activa `strict` en
@@ -46,7 +46,7 @@ entre módulos (ej. `Movie` con forma distinta en cartelera vs. admin).
 
 **(Obligatorio)**
 
-- Se crea `docs/frontend-architecture/typing-guide.md` con 11 secciones: propósito, configuración
+- Se crea `docs/type-guides/typing-guide.md` con 11 secciones: propósito, configuración
   base, `type` vs `interface`, referencia rápida de nombrado/ubicación, organización de carpetas,
   tipado de servicios, formularios y validación, props de componentes, utility types, antipatrones
   prohibidos y checklist de PR.
@@ -83,7 +83,7 @@ entre módulos (ej. `Movie` con forma distinta en cartelera vs. admin).
 
 | Archivo o área | Descripción |
 |---|---|
-| `docs/frontend-architecture/typing-guide.md` | Guía nueva de estándares de tipado. |
+| `docs/type-guides/typing-guide.md` | Guía nueva de estándares de tipado. |
 | `tsconfig.app.json` | Se activa `strict`, `noImplicitAny`, `noUncheckedIndexedAccess`. |
 
 ---
@@ -92,7 +92,7 @@ entre módulos (ej. `Movie` con forma distinta en cartelera vs. admin).
 
 **(Obligatorio cuando aplique)**
 
-1. Leer `docs/frontend-architecture/typing-guide.md` completo, en especial la sección 4 (tabla de
+1. Leer `docs/type-guides/typing-guide.md` completo, en especial la sección 4 (tabla de
    nombrado/ubicación) y la sección 5 (checklist para features nuevas).
 2. Confirmar que `tsconfig.app.json` refleja los flags esperados.
 3. Correr `npm run build` y verificar el error conocido en "Deuda técnica detectada" (no es
@@ -136,7 +136,7 @@ Notas:
 
 | Documento | Descripción |
 |---|---|
-| `docs/frontend-architecture/typing-guide.md` | Estándares de tipado: `type` vs `interface`, nombrado, carpetas, servicios, formularios, props, utility types, antipatrones y checklist de PR. |
+| `docs/type-guides/typing-guide.md` | Estándares de tipado: `type` vs `interface`, nombrado, carpetas, servicios, formularios, props, utility types, antipatrones y checklist de PR. |
 
 ---
 
