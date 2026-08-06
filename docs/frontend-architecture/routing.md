@@ -71,3 +71,31 @@ La configuración del enrutamiento deberá permitir un crecimiento progresivo de
 - Centralizar la configuración de rutas.
 - Mantener protegidas las rutas privadas.
 - Evitar lógica de negocio dentro de la configuración del enrutamiento.
+
+---
+
+## Implementación actual
+
+### Constantes de rutas
+
+Los paths se centralizan en `src/routes/paths.ts` (`PATHS`) y se referencian desde la configuración del router y las guardas — nunca hardcodear URLs en componentes.
+
+### Configuración del router
+
+`src/appRouter.tsx` define `createBrowserRouter` con tres grupos:
+
+| Grupo     | Rutas                                                      | Guard                       |
+| --------- | ---------------------------------------------------------- | --------------------------- |
+| Público   | `/` (Home), `/auth/login`, `/auth/register`                | —                           |
+| Solo público | envuelve login/register                                   | `PublicOnlyRoute`           |
+| Protegido | `/profile`, `/purchase-history`, `/checkout`               | `ProtectedRoute`            |
+| Catch-all | `*` (Página no encontrada)                                 | —                           |
+
+Las páginas de negocio aún no existen; los placeholders se renderizan con `PlaceholderPage`.
+
+### Guardas
+
+- **`ProtectedRoute`**: si no hay `accessToken` en `useSessionStore` (`@services/session`), redirige a `/auth/login` con `replace` y guarda `state.from` (la ruta a la que se dirigía) para poder regresar tras autenticarse.
+- **`PublicOnlyRoute`**: si el usuario ya está autenticado, redirige a `/`; evita que login/register se muestren a usuarios con sesión.
+
+Ambas guardas son rutas layout sin path y usan `<Outlet />` para renderizar sus hijos.
