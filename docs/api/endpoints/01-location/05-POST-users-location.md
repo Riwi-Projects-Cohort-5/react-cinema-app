@@ -92,7 +92,7 @@ Todos los errores usan el envelope de convenciones §4. Códigos relevantes: `40
 - Nunca bloquear las transiciones de la UI mientras esta petición esté en vuelo.
 
 ## Reglas de negocio
-- Una ciudad solo se puede persistir si tiene al menos un cine activo (espejo de `GET /departments/{departmentId}/cities`).
+- Una ciudad solo se puede persistir si tiene al menos un cine activo (espejo de `GET /cities/{departmentId}`, `#4`).
 - Invitado → el servidor nunca almacena nada; la ubicación es anónima por diseño.
 
 ## Notas de seguridad
