@@ -18,7 +18,6 @@
 
     /* Type checking */
     "strict": true,
-    "noImplicitAny": true,
     "noUncheckedIndexedAccess": true,
 
     /* Linting */

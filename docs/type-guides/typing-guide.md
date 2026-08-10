@@ -29,7 +29,6 @@ personas ya hayan definido su propia versión de `Movie`, `Seat` o `User`.**
   "compilerOptions": {
     // ...
     "strict": true,
-    "noImplicitAny": true,
     "noUncheckedIndexedAccess": true,
 
     "noUnusedLocals": true,
