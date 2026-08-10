@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local PR description drafts (not part of the repo)
+pr-body.md
