@@ -1,5 +1,7 @@
 import { Component, type ErrorInfo, type ReactNode } from "react";
 
+import { GeneralErrorPage } from "@pages/GeneralErrorPage";
+
 interface ErrorBoundaryProps {
   children: ReactNode;
   fallback?: ReactNode;
@@ -20,10 +22,6 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
     console.error("ErrorBoundary caught:", error, errorInfo);
   }
 
-  handleReload = (): void => {
-    window.location.reload();
-  };
-
   render() {
     if (!this.state.error) {
       return this.props.children;
@@ -33,20 +31,6 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
       return this.props.fallback;
     }
 
-    return (
-      <main className="flex min-h-screen flex-col items-center justify-center gap-4 bg-gray-50 px-4 text-center">
-        <h1 className="text-2xl font-semibold text-gray-800">Algo salió mal</h1>
-        <p className="max-w-md text-sm text-gray-600">
-          {this.state.error.message || "Ocurrió un error inesperado."}
-        </p>
-        <button
-          type="button"
-          onClick={this.handleReload}
-          className="rounded-md bg-gray-800 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-gray-700"
-        >
-          Recargar
-        </button>
-      </main>
-    );
+    return <GeneralErrorPage message={this.state.error.message} />;
   }
 }

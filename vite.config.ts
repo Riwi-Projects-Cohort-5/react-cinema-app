@@ -12,6 +12,8 @@ export default defineConfig({
       "@assets": path.resolve(import.meta.dirname, "./src/assets"),
       "@config": path.resolve(import.meta.dirname, "./src/config"),
       "@features": path.resolve(import.meta.dirname, "./src/features"),
+      "@layouts": path.resolve(import.meta.dirname, "./src/layouts"),
+      "@pages": path.resolve(import.meta.dirname, "./src/pages"),
       "@routes": path.resolve(import.meta.dirname, "./src/routes"),
       "@services": path.resolve(import.meta.dirname, "./src/services"),
       "@shared": path.resolve(import.meta.dirname, "./src/shared"),

@@ -15,6 +15,10 @@
       "@assets/*": ["./src/assets/*"],
       "@config/*": ["./src/config/*"],
       "@features/*": ["./src/features/*"],
+      "@layouts": ["./src/layouts/index.ts"],
+      "@layouts/*": ["./src/layouts/*"],
+      "@pages": ["./src/pages/index.ts"],
+      "@pages/*": ["./src/pages/*"],
       "@routes/*": ["./src/routes/*"],
       "@services/*": ["./src/services/*"],
       "@shared/*": ["./src/shared/*"]

@@ -10,6 +10,7 @@ describe("appRouter", () => {
     renderRouter(PATHS.home);
 
     expect(screen.getByRole("heading", { name: "Home" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Inicio" })).toBeInTheDocument();
   });
 
   it("renders the login page when unauthenticated", () => {
@@ -36,6 +37,25 @@ describe("appRouter", () => {
     expect(screen.getByRole("heading", { name: "Purchase History" })).toBeInTheDocument();
   });
 
+  it("renders the authenticated layout for private routes", () => {
+    useSessionStore.setState({ accessToken: "valid-token" });
+
+    renderRouter(PATHS.profile);
+
+    expect(screen.getByRole("link", { name: "Perfil" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Historial de compras" })).toBeInTheDocument();
+  });
+
+  it("renders the admin layout when the user is authenticated", () => {
+    useSessionStore.setState({ accessToken: "valid-token" });
+
+    const router = renderRouter(PATHS.admin.dashboard);
+
+    expect(router.state.location.pathname).toBe(PATHS.admin.dashboard);
+    expect(screen.getByRole("link", { name: "Multicine Admin" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Admin Dashboard" })).toBeInTheDocument();
+  });
+
   it("redirects authenticated users away from public-only routes", () => {
     useSessionStore.setState({ accessToken: "valid-token" });
 
@@ -48,6 +68,12 @@ describe("appRouter", () => {
   it("renders the 404 page for unknown paths", () => {
     renderRouter("/unknown-route");
 
-    expect(screen.getByRole("heading", { name: "Page not found" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "404" })).toBeInTheDocument();
+  });
+
+  it("renders the general error page at the error path", () => {
+    renderRouter(PATHS.error);
+
+    expect(screen.getByRole("heading", { name: "Algo salió mal" })).toBeInTheDocument();
   });
 });
