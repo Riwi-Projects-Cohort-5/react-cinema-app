@@ -82,7 +82,7 @@ Los paths se centralizan en `src/routes/paths.ts` (`PATHS`) y se referencian des
 
 ### Configuración del router
 
-`src/appRouter.tsx` define `createBrowserRouter` con tres grupos:
+`src/routes/appRouter.tsx` define `createBrowserRouter` con tres grupos:
 
 | Grupo     | Rutas                                                      | Guard                       |
 | --------- | ---------------------------------------------------------- | --------------------------- |
@@ -95,7 +95,9 @@ Las páginas de negocio aún no existen; los placeholders se renderizan con `Pla
 
 ### Guardas
 
+Las guardas viven en `src/routes/guards/`:
+
 - **`ProtectedRoute`**: si no hay `accessToken` en `useSessionStore` (`@services/session`), redirige a `/auth/login` con `replace` y guarda `state.from` (la ruta a la que se dirigía) para poder regresar tras autenticarse.
 - **`PublicOnlyRoute`**: si el usuario ya está autenticado, redirige a `/`; evita que login/register se muestren a usuarios con sesión.
 
-Ambas guardas son rutas layout sin path y usan `<Outlet />` para renderizar sus hijos.
+Ambas guardas son rutas layout sin path y usan `<Outlet />` para renderizar sus hijos. Sus tests (Vitest + React Testing Library) se colocalizan junto a cada guarda.

@@ -44,7 +44,7 @@ import { useHealth } from "@features/health/hooks/useHealth";
 ### Reglas
 
 - Los imports a módulos dentro de `features`, `routes`, `services`, `shared`, `config` o `assets` usan su alias corto correspondiente.
-- El alias `@` se reserva para archivos de la raíz de `src/` (por ejemplo `@/appRouter`, `@/main`).
+- El alias `@` se reserva para archivos de la raíz de `src/` (por ejemplo `@/main`).
 - Los archivos barril (`export * from "./...`) pueden mantenerse con rutas relativas por ser re-exportaciones internas de un mismo directorio.
 
 ---
