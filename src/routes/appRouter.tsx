@@ -1,14 +1,13 @@
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter, type RouteObject } from "react-router";
 
 import { LoginPage } from "@features/auth/pages/login/LoginPage";
 import { RegisterPage } from "@features/auth/pages/register/RegisterPage";
-import { ProtectedRoute } from "@routes/ProtectedRoute";
-import { PublicOnlyRoute } from "@routes/PublicOnlyRoute";
+import { ProtectedRoute, PublicOnlyRoute } from "@routes/guards";
 import { PlaceholderPage } from "@shared/components/PlaceholderPage";
 
 import { PATHS } from "@routes/paths";
 
-export const appRouter = createBrowserRouter([
+export const appRoutes: RouteObject[] = [
   {
     path: PATHS.home,
     element: <PlaceholderPage title="Home" />,
@@ -35,4 +34,6 @@ export const appRouter = createBrowserRouter([
     path: "*",
     element: <PlaceholderPage title="Page not found" />,
   },
-]);
+];
+
+export const appRouter = createBrowserRouter(appRoutes);
