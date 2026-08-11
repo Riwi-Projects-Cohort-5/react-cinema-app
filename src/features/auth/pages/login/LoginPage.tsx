@@ -1,0 +1,201 @@
+import { useState } from "react"
+import { Link } from "react-router-dom"
+import login from "./login.png"
+
+export const LoginPage = () => {
+    const [email, setEmail] = useState<string>('')
+    const [password, setPassword] = useState<string>('')
+    const [showPassword, setShowPassword] = useState<boolean>(false)
+    const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
+
+    const showUnverifiedMessage = false
+    const showBlockedMessage = false
+
+    const handleSubmit = async (event: any) => {
+        event.preventDefault()
+        setIsSubmitting(true)
+
+        try {
+            
+            console.log({ email, password })
+            await new Promise((resolve) => setTimeout(resolve, 1500))
+        } finally {
+            setIsSubmitting(false)
+        }
+    }
+
+    return (
+        <div className="min-h-screen bg-black flex items-center justify-center p-4 md:p-8">
+            
+            <div className="relative w-full max-w-6xl h-[640px] rounded-3xl overflow-hidden border border-border shadow-2xl">
+
+                
+                <img
+                    src={login}
+                    alt="Cinema background"
+                    className="absolute inset-0 w-full h-full object-cover object-center"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/40 to-background/90" />
+
+                
+                <div className="relative z-10 flex items-center justify-between px-8 py-6">
+                    <div className="flex items-center gap-2">
+                        <svg width="187" height="20" viewBox="0 0 187 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M173.22 18.9031L178.822 4H181.559L187 18.9031H184.585L182.911 14.462H176.536L174.862 18.9031H173.22ZM176.955 13.3294H182.493L179.788 5.57973L176.955 13.3294Z" fill="#7C5CFF"/>
+                            <path d="M155.351 18.9031L155.447 4H158.313L163.947 16.2802H163.979L169.549 4H172.286L172.382 18.9031H170.096L170 6.59314L164.494 18.9031H162.595L157.089 6.59314L157.057 18.9031H155.351Z" fill="#7C5CFF"/>
+                            <path d="M144.231 18.9031V4H153.503V5.31148H146.549V10.7362H152.859V12.0179H146.549V17.5917H153.986V18.9031H144.231Z" fill="#7C5CFF"/>
+                            <path d="M129.464 18.9031V4H131.911L140.057 15.6841L139.96 15.0581V4H141.634V18.9031H139.638L131.042 6.71237H131.01L131.17 7.60656V18.9031H129.464Z" fill="#7C5CFF"/>
+                            <path d="M112.691 20C110.545 20 108.752 19.5926 107.314 18.7779C105.876 17.9632 104.792 16.8207 104.062 15.3502C103.354 13.8599 103 12.1212 103 10.1341C103 8.08743 103.376 6.30899 104.127 4.79881C104.878 3.28862 105.962 2.11624 107.379 1.28167C108.817 0.427223 110.534 0 112.53 0C113.367 0 114.161 0.0794823 114.912 0.238449C115.685 0.377545 116.372 0.556383 116.973 0.774963C117.595 0.973672 118.078 1.15251 118.422 1.31147C118.787 1.45057 118.969 1.52012 118.969 1.52012L118.518 3.69598C118.518 3.69598 118.347 3.62643 118.003 3.48733C117.681 3.32836 117.241 3.15946 116.683 2.98063C116.147 2.78192 115.556 2.61301 114.912 2.47392C114.29 2.31495 113.678 2.23547 113.077 2.23547C111.918 2.23547 110.952 2.48385 110.18 2.98063C109.407 3.45753 108.827 4.2623 108.441 5.39493C108.076 6.52757 107.894 8.05762 107.894 9.9851C107.894 11.9126 108.098 13.4426 108.505 14.5753C108.913 15.7079 109.514 16.5226 110.308 17.0194C111.124 17.5161 112.122 17.7645 113.303 17.7645C114.161 17.7645 114.923 17.6254 115.589 17.3472C116.254 17.0691 116.812 16.7511 117.263 16.3934C117.713 16.0159 118.057 15.688 118.293 15.4098C118.529 15.1316 118.647 14.9925 118.647 14.9925L120.064 16.4233C120.064 16.4233 119.924 16.6021 119.645 16.9598C119.388 17.3174 118.969 17.7347 118.39 18.2116C117.81 18.6885 117.048 19.1058 116.104 19.4635C115.181 19.8212 114.043 20 112.691 20Z" fill="#7C5CFF"/>
+                            <path d="M91.5879 18.9031V4H100.86V5.31148H93.906V10.7362H100.216V12.0179H93.906V17.5917H101.343V18.9031H91.5879Z" fill="white"/>
+                            <path d="M84.0507 18.9031V5.31148H79.3179V4H91.1015V5.31148H86.401V18.9031H84.0507Z" fill="white"/>
+                            <path d="M73.2226 19.2012C71.2265 19.2012 69.7455 18.7044 68.7796 17.7109C67.8138 16.7173 67.3308 15.4456 67.3308 13.8957V4H69.6489V13.4188C69.6489 14.8296 69.9709 15.9126 70.6148 16.6677C71.2587 17.4228 72.2138 17.8003 73.4802 17.8003C74.811 17.8003 75.7876 17.4128 76.41 16.6379C77.054 15.8629 77.3759 14.7899 77.3759 13.4188V4H79.0823V13.8957C79.0823 15.4257 78.6208 16.6975 77.6979 17.7109C76.7964 18.7044 75.3046 19.2012 73.2226 19.2012Z" fill="white"/>
+                            <path d="M57.4111 18.9031V4H59.7292V17.5917H66.9411V18.9031H57.4111Z" fill="white"/>
+                            <path d="M48.6664 19.4993C46.3483 19.4993 44.5561 18.8038 43.2897 17.4128C42.0233 16.002 41.3901 14.1143 41.3901 11.7496C41.3901 9.40487 42.0233 7.52708 43.2897 6.11625C44.5561 4.70542 46.3483 4 48.6664 4C50.2118 4 51.5318 4.32787 52.6265 4.98361C53.7211 5.61947 54.5582 6.51366 55.1378 7.66617C55.7173 8.81868 56.007 10.1798 56.007 11.7496C56.007 14.1143 55.3631 16.002 54.0753 17.4128C52.7875 18.8038 50.9845 19.4993 48.6664 19.4993ZM48.6664 18.1878C50.2333 18.1878 51.4245 17.6413 52.2401 16.5484C53.0558 15.4555 53.4636 13.8559 53.4636 11.7496C53.4636 9.68306 53.045 8.0934 52.2079 6.98063C51.3923 5.86786 50.2118 5.31148 48.6664 5.31148C47.121 5.31148 45.9405 5.86786 45.1248 6.98063C44.3092 8.0934 43.9014 9.68306 43.9014 11.7496C43.9014 13.8559 44.2985 15.4555 45.0927 16.5484C45.9083 17.6413 47.0995 18.1878 48.6664 18.1878Z" fill="white"/>
+                            <path d="M35.9563 19.4993C34.9475 19.4993 34.1104 19.3999 33.445 19.2012C32.7796 18.9826 32.2537 18.7342 31.8674 18.456C31.481 18.1778 31.202 17.9394 31.0303 17.7407C30.8801 17.5221 30.8049 17.4128 30.8049 17.4128L31.481 16.2504C31.481 16.2504 31.5562 16.3497 31.7064 16.5484C31.8567 16.7273 32.0928 16.9459 32.4147 17.2042C32.7581 17.4426 33.1874 17.6612 33.7026 17.8599C34.2392 18.0388 34.8831 18.1282 35.6343 18.1282C36.686 18.1282 37.4802 17.85 38.0168 17.2936C38.5534 16.7372 38.8217 16.0914 38.8217 15.3562C38.8217 14.7601 38.6392 14.2832 38.2744 13.9255C37.9309 13.5479 37.4802 13.23 36.9221 12.9717C36.3855 12.7134 35.7953 12.4749 35.1514 12.2563C34.5289 12.0179 33.9387 11.7397 33.3806 11.4218C32.844 11.1038 32.3933 10.6965 32.0284 10.1997C31.685 9.70293 31.5132 9.05713 31.5132 8.2623C31.5132 6.97069 31.964 5.93741 32.8655 5.16245C33.7884 4.38748 35.0119 4 36.5358 4C37.3943 4 38.1134 4.11923 38.6929 4.35768C39.2939 4.59613 39.7554 4.83458 40.0773 5.07303C40.3993 5.31148 40.5603 5.4307 40.5603 5.4307L40.2383 6.62295C40.2383 6.62295 40.0773 6.51366 39.7554 6.29508C39.4549 6.0765 39.0363 5.85793 38.4997 5.63935C37.9631 5.4009 37.3514 5.28167 36.6646 5.28167C35.7631 5.28167 35.0548 5.51019 34.5396 5.96721C34.046 6.42424 33.7991 7.0303 33.7991 7.7854C33.7991 8.40139 33.9709 8.89816 34.3143 9.27571C34.6792 9.63338 35.1406 9.94138 35.6987 10.1997C36.2568 10.4382 36.847 10.6766 37.4695 10.9151C38.1134 11.1336 38.7144 11.4019 39.2724 11.7198C39.8305 12.0378 40.2812 12.4451 40.6247 12.9419C40.9895 13.4387 41.172 14.0944 41.172 14.9091C41.172 16.2404 40.6891 17.3433 39.7232 18.2176C38.7788 19.072 37.5231 19.4993 35.9563 19.4993Z" fill="white"/>
+                            <path d="M19 20V4H24.003C26.0332 4 27.5559 4.39467 28.571 5.184C29.5861 5.952 30.0937 6.90133 30.0937 8.032C30.0937 8.94933 29.8157 9.696 29.2598 10.272C28.7039 10.848 28.0876 11.2853 27.4109 11.584C28.4743 11.8613 29.3323 12.3307 29.9849 12.992C30.6616 13.632 31 14.4533 31 15.456C31 16.8427 30.432 17.952 29.2961 18.784C28.1843 19.5947 26.4441 20 24.0755 20H19ZM21.6103 11.168H24.8006C25.139 11.168 25.5136 11.0827 25.9245 10.912C26.3595 10.7413 26.7341 10.4427 27.0483 10.016C27.3867 9.568 27.5559 8.94933 27.5559 8.16C27.5559 7.136 27.2296 6.4 26.577 5.952C25.9486 5.504 25.1027 5.28 24.0393 5.28H21.6103V11.168ZM21.6103 18.688H24.0755C25.574 18.688 26.6616 18.432 27.3384 17.92C28.0393 17.3867 28.3897 16.5333 28.3897 15.36C28.3897 14.2933 28.0634 13.5253 27.4109 13.056C26.7583 12.5867 25.9366 12.352 24.9456 12.352H21.6103V18.688Z" fill="white"/>
+                            <path d="M0 20L6.80911 2H11.6322L18 20H13.3975L11.6322 14.96H4.50788L2.64799 20H0ZM5.13835 13.2154H11.0333L8.22767 4.74154H8.16463L5.13835 13.2154Z" fill="white"/>
+                            <rect x="123.24" y="6.96826" width="2.67062" height="12.4193" fill="#7C5CFF"/>
+                            <path d="M123.24 4.48386C123.24 3.11206 124.352 2 125.724 2H125.91V6.96771H125.724C124.352 6.96771 123.24 5.85565 123.24 4.48386V4.48386Z" fill="#F7F26A"/>
+</svg>
+                    </div>
+                    
+                </div>
+
+                {/* card de login */}
+                <div className="relative z-10 h-[calc(100%-88px)] flex flex-col md:flex-row items-end md:items-center justify-between px-8 pb-10 md:pb-0 gap-8">
+
+                    {/* Columna izquierda */}
+                    <div className="max-w-md hidden md:block">
+                        <span className="inline-flex items-center gap-1.5 text-emerald-400 text-xs font-semibold uppercase tracking-wide">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                            The experience is everything
+                        </span>
+                        <h2 className="text-text-primary text-4xl font-bold mt-3 leading-tight">
+                            Your next showtime<br />is waiting.
+                        </h2>
+                        <p className="text-text-secondary mt-3 text-sm max-w-sm">
+                            Tickets, membership, and exclusive perks — all in one place.
+                        </p>
+                        <div className="flex gap-3 mt-6">
+                            <span className="px-3 py-1.5 rounded-full bg-surface/70 border border-border text-xs text-text-primary">12+ Screens</span>
+                            <span className="px-3 py-1.5 rounded-full bg-surface/70 border border-border text-xs text-text-primary">80+ Movies</span>
+                            <span className="px-3 py-1.5 rounded-full bg-surface/70 border border-border text-xs text-text-primary">2x1 Wednesdays</span>
+                        </div>
+                    </div>
+
+                    {/* Columna derecha */}
+                    <div className="w-full max-w-sm bg-surface/95 backdrop-blur border border-border rounded-2xl p-8 shadow-xl">
+
+                        <span className="inline-flex items-center gap-1.5 text-emerald-400 text-xs font-semibold uppercase tracking-wide">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                            Welcome back
+                        </span>
+                        <h1 className="text-text-primary text-2xl font-bold mt-2">Sign in</h1>
+                        <p className="text-text-secondary text-sm mt-1 mb-6">
+                            Access your tickets, membership, and perks.
+                        </p>
+
+                        {showUnverifiedMessage && (
+                            <div className="bg-warning/10 border border-warning text-warning text-sm rounded p-3 mb-4">
+                                Your account has not been verified yet. Check your email to activate it.
+                            </div>
+                        )}
+
+                        {showBlockedMessage && (
+                            <div className="bg-error/10 border border-error text-error text-sm rounded p-3 mb-4">
+                                Your account is temporarily blocked due to too many failed attempts.
+                            </div>
+                        )}
+
+                        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+
+                            <div className="flex flex-col gap-1.5">
+                                <label className="text-text-secondary text-[11px] font-medium uppercase tracking-wide">
+                                    Email Address
+                                </label>
+                                <input
+                                    type="email"
+                                    name="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    disabled={isSubmitting}
+                                    className="w-full bg-background/60 text-text-primary h-11 px-4 rounded-xl border border-border placeholder-text-disabled focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-violet-500 disabled:opacity-60"
+                                />
+                            </div>
+
+                            <div className="flex flex-col gap-1.5">
+                                <label className="text-text-secondary text-[11px] font-medium uppercase tracking-wide">
+                                    Password
+                                </label>
+                                <div className="relative">
+                                    <input
+                                        type={showPassword ? "text" : "password"}
+                                        name="password"
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        disabled={isSubmitting}
+                                        className="w-full bg-background/60 text-text-primary h-11 px-4 pr-10 rounded-xl border border-border placeholder-text-disabled focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-violet-500 disabled:opacity-60"
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowPassword(!showPassword)}
+                                        disabled={isSubmitting}
+                                        className="absolute right-3 top-3 text-text-secondary hover:text-text-primary disabled:opacity-60"
+                                    >
+                                        {showPassword ? (
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                                <circle cx="12" cy="12" r="3" />
+                                            </svg>
+                                        ) : (
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                                <path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-8-11-8a18.5 18.5 0 0 1 5.06-5.94M9.9 4.24A10.94 10.94 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19M14.12 14.12a3 3 0 1 1-4.24-4.24" />
+                                                <line x1="1" y1="1" x2="23" y2="23" />
+                                            </svg>
+                                        )}
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div className="flex items-center justify-between text-sm -mt-1">
+                                <label className="flex items-center gap-2 text-text-secondary">
+                                    <input type="checkbox" className="accent-violet-500" disabled={isSubmitting} />
+                                    Remember me
+                                </label>
+                                <Link to="/forgot-password" className="text-violet-400 hover:underline">
+                                    Forgot my password?
+                                </Link>
+                            </div>
+
+                            <button
+                                type="submit"
+                                disabled={isSubmitting}
+                                className="bg-gradient-to-r from-violet-600 to-fuchsia-500 hover:from-violet-500 hover:to-fuchsia-400 text-white font-semibold h-11 rounded-xl mt-1 transition flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+                            >
+                                {isSubmitting ? (
+                                    <>
+                                        <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                                        </svg>
+                                        Signing in...
+                                    </>
+                                ) : (
+                                    <>Sign in →</>
+                                )}
+                            </button>
+
+                          
+                            <p className="text-text-secondary text-sm text-center mt-2">
+                                Don't have an account?{" "}
+                                <span className="text-violet-400 font-semibold cursor-pointer hover:underline">
+                                    Sign up
+                                </span>
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
