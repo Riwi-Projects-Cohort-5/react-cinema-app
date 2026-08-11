@@ -16,6 +16,8 @@ Su objetivo es mantener imports limpios, estables ante cambios de estructura y c
 | `@assets`    | `src/assets/`     |
 | `@config`    | `src/config/`     |
 | `@features`  | `src/features/`   |
+| `@layouts`   | `src/layouts/`    |
+| `@pages`     | `src/pages/`      |
 | `@routes`    | `src/routes/`     |
 | `@services`  | `src/services/`   |
 | `@shared`    | `src/shared/`     |
@@ -43,9 +45,10 @@ import { useHealth } from "@features/health/hooks/useHealth";
 
 ### Reglas
 
-- Los imports a módulos dentro de `features`, `routes`, `services`, `shared`, `config` o `assets` usan su alias corto correspondiente.
+- Los imports a módulos dentro de `features`, `layouts`, `pages`, `routes`, `services`, `shared`, `config` o `assets` usan su alias corto correspondiente.
 - El alias `@` se reserva para archivos de la raíz de `src/` (por ejemplo `@/main`).
 - Los archivos barril (`export * from "./...`) pueden mantenerse con rutas relativas por ser re-exportaciones internas de un mismo directorio.
+- Los barriles de `src/layouts` y `src/pages` se importan con el alias exacto (`@layouts`, `@pages`) — su mapeo exacto existe en `tsconfig.app.json` además del mapeo wildcard (`@layouts/*`).
 
 ---
 

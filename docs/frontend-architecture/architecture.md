@@ -41,7 +41,14 @@ Dentro de esta funcionalidad se agrupan todos los archivos relacionados con aute
 
 ## Organización del proyecto
 
-Actualmente la aplicación está organizada en dos grandes grupos:
+Actualmente la aplicación está organizada en tres grandes grupos:
+
+### App-shell global
+
+Recursos de aplicación que envuelven rutas y no pertenecen a una feature específica:
+
+- `src/layouts/` — layouts globales (`PublicLayout`, `AuthenticatedLayout`, `AdminLayout`).
+- `src/pages/` — páginas de aplicación (`NotFoundPage` 404, `GeneralErrorPage`).
 
 ### Componentes globales
 

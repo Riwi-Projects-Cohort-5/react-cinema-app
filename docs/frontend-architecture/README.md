@@ -33,6 +33,7 @@ Su objetivo es establecer un estándar que permita al equipo desarrollar funcion
 | [HTTP Client](./http-client.md)                   | Documenta el cliente HTTP centralizado, sus interceptores y el modelo de error. |
 | [Environment, Error Handling and Tooling](./environment-error-handling-tooling.md) | Documenta variables de entorno, manejo global de errores, notificaciones visuales, ESLint/Prettier y Docker. |
 | [Testing](./testing.md) | Documenta la configuración de pruebas (Vitest + React Testing Library), su organización y los tests de protección de rutas. |
+| [UI / Base Structure and Layouts](./ui-base-structure-and-layouts.md) | Documenta el scope de MULT-30: estructura modular, layouts público/autenticado/admin, página 404 y página de error general. |
 | [Path Aliases](./path-aliases.md)                 | Documenta los aliases de importación del proyecto y su configuración.         |
 | [State Management](./state-management.md)         | Establece los principios para la gestión del estado de la aplicación.         |
 
