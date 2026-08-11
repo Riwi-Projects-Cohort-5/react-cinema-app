@@ -8,24 +8,12 @@ export function HealthStatus() {
   const isHealthy = health.isSuccess && health.data?.status === "ok";
 
   if (health.isPending) {
-    return (
-      <div className={`${baseClassName} bg-gray-800 text-white`}>
-        Verificando conexión...
-      </div>
-    );
+    return <div className={`${baseClassName} bg-gray-800 text-white`}>Verificando conexión...</div>;
   }
 
   if (isHealthy) {
-    return (
-      <div className={`${baseClassName} bg-green-600 text-white`}>
-        Servicio en línea
-      </div>
-    );
+    return <div className={`${baseClassName} bg-green-600 text-white`}>Servicio en línea</div>;
   }
 
-  return (
-    <div className={`${baseClassName} bg-amber-500 text-white`}>
-      Conexión inestable
-    </div>
-  );
+  return <div className={`${baseClassName} bg-amber-500 text-white`}>Conexión inestable</div>;
 }

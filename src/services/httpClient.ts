@@ -1,8 +1,4 @@
-import axios, {
-  AxiosError,
-  type AxiosResponse,
-  type InternalAxiosRequestConfig,
-} from "axios";
+import axios, { AxiosError, type AxiosResponse, type InternalAxiosRequestConfig } from "axios";
 
 import { env } from "@config/env";
 import { PATHS } from "@routes/paths";
