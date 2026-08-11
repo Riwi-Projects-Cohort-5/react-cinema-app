@@ -1,28 +1,22 @@
-# Path Aliases
+# Path aliases
 
 ## Descripción
 
-Los path aliases permiten importar módulos usando referencias cortas y legibles en lugar de rutas relativas (`../../`).
-
-Su objetivo es mantener imports limpios, estables ante cambios de estructura y consistentes en todo el proyecto.
-
----
+Los path aliases permiten importar módulos usando referencias cortas y legibles en lugar de rutas relativas (`../../`). Su objetivo es mantener imports limpios, estables ante cambios de estructura y consistentes en todo el proyecto.
 
 ## Aliases configurados
 
-| Alias        | Destino           |
-| ------------ | ----------------- |
-| `@`          | `src/`            |
-| `@assets`    | `src/assets/`     |
-| `@config`    | `src/config/`     |
-| `@features`  | `src/features/`   |
-| `@layouts`   | `src/layouts/`    |
-| `@pages`     | `src/pages/`      |
-| `@routes`    | `src/routes/`     |
-| `@services`  | `src/services/`   |
-| `@shared`    | `src/shared/`     |
-
----
+| Alias       | Destino          |
+| ----------- | ---------------- |
+| `@`         | `src/`           |
+| `@assets`   | `src/assets/`    |
+| `@config`   | `src/config/`    |
+| `@features` | `src/features/`  |
+| `@layouts`  | `src/layouts/`   |
+| `@pages`    | `src/pages/`     |
+| `@routes`   | `src/routes/`    |
+| `@services` | `src/services/`  |
+| `@shared`   | `src/shared/`    |
 
 ## Configuración
 
@@ -30,8 +24,6 @@ Los aliases se definen en **dos lugares** y deben mantenerse sincronizados:
 
 1. **Vite** — `vite.config.ts` (`resolve.alias`): resuelve los aliases en tiempo de compilación.
 2. **TypeScript** — `tsconfig.app.json` (`compilerOptions.paths`): resuelve los aliases para el type-checking y el editor.
-
----
 
 ## Uso
 
@@ -50,10 +42,13 @@ import { useHealth } from "@features/health/hooks/useHealth";
 - Los archivos barril (`export * from "./...`) pueden mantenerse con rutas relativas por ser re-exportaciones internas de un mismo directorio.
 - Los barriles de `src/layouts` y `src/pages` se importan con el alias exacto (`@layouts`, `@pages`) — su mapeo exacto existe en `tsconfig.app.json` además del mapeo wildcard (`@layouts/*`).
 
----
-
 ## Buenas prácticas
 
 - No usar rutas relativas fuera del directorio inmediato del archivo; preferir el alias correspondiente.
 - No crear nuevos aliases sin actualizar simultáneamente `vite.config.ts` y `tsconfig.app.json`.
 - Verificar que un import resuelva con `npm run build` (ejecuta `tsc -b` y valida los paths).
+
+## Documentos relacionados
+
+- [Guía de tipado (TypeScript)](../../type-guides/typing-guide.md) — los ejemplos de import (`@/shared/interfaces`, `@services/...`) usan estos aliases.
+- [Estructura del proyecto](../architecture/project-structure.md) — carpetas a las que apuntan los aliases.

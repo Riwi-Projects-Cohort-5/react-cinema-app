@@ -1,6 +1,6 @@
 # Guía de Estándares de Tipado (TypeScript)
 
-> Complementa [`coding-conventions.md`](../frontend-architecture/coding-conventions.md) (nomenclatura general) y
+> Complementa [`coding-conventions.md`](../frontend-architecture/development/coding-conventions.md) (nomenclatura general) y
 > [`docs/api/00-conventions.md`](../api/00-conventions.md) (contrato de API — dinero, fechas, ids,
 > enums, envelopes). Léelos primero si no los conoces: esta guía asume sus reglas y solo define cómo
 > se traducen a tipos de TypeScript.
@@ -126,7 +126,7 @@ enum SeatState { Available, Reserved, Sold, Disabled }
 ## 5. Organización de carpetas (adaptada a la arquitectura real: feature-based)
 
 El proyecto **no** centraliza todo en `src/types/` — usa arquitectura por funcionalidades
-(`docs/frontend-architecture/feature-organization.md`), y `scripts/create-feature.mjs` ya genera una
+(`docs/frontend-architecture/architecture/features.md`), y `scripts/create-feature.mjs` ya genera una
 carpeta `interfaces/` por feature. La regla de §4 respeta esa estructura, con **una sola excepción
 obligatoria**: las entidades de dominio usadas por más de una feature no pueden vivir dentro de una
 sola feature.

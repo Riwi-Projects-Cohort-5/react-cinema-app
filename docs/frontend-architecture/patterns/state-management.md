@@ -1,12 +1,10 @@
-# State Management
+# Gestión del estado
 
 ## Descripción
 
 La gestión del estado permite compartir información entre diferentes componentes de la aplicación de forma consistente y centralizada.
 
 Su objetivo es evitar duplicidad de información, facilitar la comunicación entre componentes y mejorar el mantenimiento del proyecto.
-
----
 
 ## Principios
 
@@ -15,9 +13,7 @@ Su objetivo es evitar duplicidad de información, facilitar la comunicación ent
 - Evitar almacenar información innecesaria en el estado global.
 - Mantener el estado lo más simple posible.
 
----
-
-## Estado Local
+## Estado local
 
 Debe utilizarse para información temporal o exclusiva del componente.
 
@@ -27,9 +23,7 @@ Ejemplos:
 - Valor de un input.
 - Estado de carga local.
 
----
-
-## Estado Compartido
+## Estado compartido
 
 Debe utilizarse cuando la información sea utilizada por múltiples componentes o funcionalidades.
 
@@ -40,15 +34,11 @@ Ejemplos:
 - Preferencias del usuario.
 - Ubicación seleccionada.
 
----
-
 ## Organización
 
-Cada funcionalidad podrá administrar su propio estado cuando sea necesario.
+Cada funcionalidad podrá administrar su propio estado cuando sea necesario (`features/<feature>/store/`). El estado compartido deberá mantenerse desacoplado de la interfaz de usuario y responder únicamente a las necesidades del negocio.
 
-El estado compartido deberá mantenerse desacoplado de la interfaz de usuario y responder únicamente a las necesidades del negocio.
-
----
+El estado transversal de sesión (token de acceso, cierre de sesión) vive en `src/services/session.ts`; su API completa y el flujo de renovación se documentan en [Cliente HTTP](../data-layer/http-client.md) y las [Guardas](../navigation/guards.md). El contrato de API exige que el `accessToken` se guarde **en memoria** (nunca en `localStorage`/`sessionStorage`) — ver [convenciones de autenticación](../../api/00-conventions.md#3-autenticación).
 
 ## Buenas prácticas
 
@@ -57,3 +47,9 @@ El estado compartido deberá mantenerse desacoplado de la interfaz de usuario y 
 - Actualizar el estado únicamente cuando sea necesario.
 - Mantener las responsabilidades claramente definidas.
 - Evitar almacenar información derivada cuando pueda calcularse.
+
+## Documentos relacionados
+
+- [Lógica de negocio](./business-logic.md)
+- [Cliente HTTP](../data-layer/http-client.md)
+- [Convenciones de autenticación](../../api/00-conventions.md#3-autenticación)

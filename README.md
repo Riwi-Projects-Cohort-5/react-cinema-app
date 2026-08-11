@@ -31,7 +31,7 @@ npm run test:watch   # ejecuta los tests en modo watch
 ```
 
 Los tests de módulos se colocalizan junto a su código (`*.test.tsx`); la infraestructura de test vive
-en `src/test/`. Ver `docs/frontend-architecture/testing.md`.
+en `src/test/`. Ver `docs/frontend-architecture/tooling/testing.md`.
 
 ## Estructura principal
 
