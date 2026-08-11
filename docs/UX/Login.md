@@ -1,450 +1,525 @@
-# Login Page — Design System Documentation
+# Design System — Authentication UI
 
-## Overview
+## 1. Overview
 
-This design system was extracted from the `LoginPage` component and follows the same **Tailwind CSS v4 token architecture** as the Forgot Password page.
+This design system is derived from the `LoginPage` component and defines the visual foundations, design tokens, components, states, spacing, typography, and responsive behavior used by the authentication interface.
 
-The system uses semantic design tokens through `@theme`, making the visual language reusable across the authentication flow.
+The system is implemented using **Tailwind CSS v4** and its `@theme` directive.
 
----
+### Design principles
 
-# Design Principles
-
-### Goals
-
-* Clear and simple authentication flow
-* Strong visual hierarchy
-* Consistent authentication experience
-* Accessible form controls
-* Clear validation and account-status feedback
-* Responsive split-screen layout
-* Reusable semantic tokens
-* Consistent interaction states
-* Tailwind CSS v4 compatibility
+* **Clarity:** Authentication actions should be immediately understandable.
+* **Accessibility:** Focus, disabled, error, and warning states must be visually distinguishable.
+* **Consistency:** Components should use semantic tokens instead of hardcoded colors.
+* **Responsiveness:** The interface must adapt from mobile to desktop.
+* **Maintainability:** Visual values should be controlled through centralized design tokens.
 
 ---
 
-# Tailwind v4 Theme Tokens
+# 2. Design Tokens
+
+Design tokens are the single source of truth for the UI.
+
+The component should use semantic tokens such as:
+
+```text
+background
+surface
+surface-variant
+primary
+primary-hover
+accent
+text-primary
+text-secondary
+text-disabled
+border
+warning
+error
+```
+
+These names describe the **purpose** of a value rather than its specific color.
+
+---
+
+# 3. Tailwind CSS v4 Theme
+
+The following tokens can be placed in the project's global CSS file.
 
 ```css
+@import "tailwindcss";
+
 @theme {
-
-  /* ==========================================
+  /* ========================================
      COLORS
-  ========================================== */
+     ======================================== */
 
-  --color-primary: #2563eb;
-  --color-primary-hover: #1d4ed8;
-
-  --color-accent: #3b82f6;
-
-  --color-success: #22c55e;
-  --color-warning: #f59e0b;
-  --color-error: #ef4444;
-
+  /* Main page background */
   --color-background: #f8fafc;
 
+  /* Main component surface */
   --color-surface: #ffffff;
+
+  /* Inputs and secondary surfaces */
   --color-surface-variant: #f1f5f9;
 
-  --color-border: #e2e8f0;
+  /* Primary action */
+  --color-primary: #2563eb;
 
+  /* Primary hover state */
+  --color-primary-hover: #1d4ed8;
+
+  /* Secondary/accent action */
+  --color-accent: #2563eb;
+
+  /* Main text */
   --color-text-primary: #0f172a;
+
+  /* Secondary text */
   --color-text-secondary: #64748b;
+
+  /* Disabled / placeholder text */
   --color-text-disabled: #94a3b8;
 
+  /* Borders */
+  --color-border: #cbd5e1;
 
-  /* ==========================================
+  /* Feedback */
+  --color-warning: #d97706;
+  --color-error: #dc2626;
+  --color-success: #16a34a;
+
+  /* ========================================
      TYPOGRAPHY
-  ========================================== */
+     ======================================== */
 
-  --font-sans:
-    Inter,
-    ui-sans-serif,
-    system-ui,
-    sans-serif;
+  --font-family-sans: Inter, ui-sans-serif, system-ui, sans-serif;
 
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
 
-  /* ==========================================
-     FONT SIZES
-  ========================================== */
-
-  --text-xs: 0.75rem;
-  --text-sm: 0.875rem;
-  --text-base: 1rem;
-  --text-lg: 1.125rem;
-  --text-xl: 1.25rem;
-  --text-2xl: 1.5rem;
-  --text-3xl: 1.875rem;
-
-
-  /* ==========================================
-     FONT WEIGHTS
-  ========================================== */
-
-  --font-weight-regular: 400;
+  --font-weight-normal: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
 
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
 
-  /* ==========================================
+  /* ========================================
      SPACING
-  ========================================== */
+     ======================================== */
 
   --spacing-1: 0.25rem;
   --spacing-2: 0.5rem;
+  --spacing-3: 0.75rem;
   --spacing-4: 1rem;
+  --spacing-5: 1.25rem;
   --spacing-6: 1.5rem;
   --spacing-8: 2rem;
   --spacing-10: 2.5rem;
+  --spacing-12: 3rem;
 
-
-  /* ==========================================
-     RADIUS
-  ========================================== */
+  /* ========================================
+     BORDER RADIUS
+     ======================================== */
 
   --radius-sm: 0.25rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 0.75rem;
-  --radius-xl: 1rem;
-  --radius-2xl: 1.5rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+  --radius-3xl: 1.5rem;
+  --radius-full: 9999px;
 
-
-  /* ==========================================
+  /* ========================================
      SHADOWS
-  ========================================== */
+     ======================================== */
 
-  --shadow-card:
-    0 10px 25px rgba(37, 99, 235, 0.15);
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.05);
 
-  --shadow-modal:
-    0 20px 40px rgba(15, 23, 42, 0.15);
+  --shadow-md:
+    0 4px 6px -1px rgb(0 0 0 / 0.1),
+    0 2px 4px -2px rgb(0 0 0 / 0.1);
 
+  --shadow-lg:
+    0 10px 15px -3px rgb(0 0 0 / 0.1),
+    0 4px 6px -4px rgb(0 0 0 / 0.1);
 
-  /* ==========================================
-     TRANSITIONS
-  ========================================== */
-
-  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
-
-  --duration-fast: 150ms;
-  --duration-normal: 250ms;
+  --shadow-2xl:
+    0 25px 50px -12px rgb(0 0 0 / 0.25);
 }
 ```
 
+> **Note:** The original component establishes semantic token names but does not provide their exact color values. The values above are a baseline implementation and should be replaced with the project's approved brand colors if those already exist.
+
 ---
 
-# Color System
+# 4. Color System
 
-## Primary
+## 4.1 Background
 
-The primary color represents the main action of the authentication interface.
+| Token             | Tailwind class       | Purpose                           |
+| ----------------- | -------------------- | --------------------------------- |
+| `background`      | `bg-background`      | Main application/page background  |
+| `surface`         | `bg-surface`         | Cards, forms and elevated content |
+| `surface-variant` | `bg-surface-variant` | Inputs and secondary surfaces     |
 
-### Used for
+### Usage
 
-* Login button
-* Input focus ring
-* Input focus border
-* Checkbox accent
-* Primary interactive states
+```tsx
+<div className="bg-background">
+  <div className="bg-surface">
+    ...
+  </div>
+</div>
+```
 
-| Token           | Value     |
-| --------------- | --------- |
-| `primary`       | `#2563eb` |
-| `primary-hover` | `#1d4ed8` |
+---
+
+## 4.2 Primary
+
+| Token           | Tailwind class     | Purpose                     |
+| --------------- | ------------------ | --------------------------- |
+| `primary`       | `bg-primary`       | Main CTA/action             |
+| `primary-hover` | `bg-primary-hover` | Hover state                 |
+| `accent`        | `text-accent`      | Links and secondary actions |
+
+### Usage
+
+```tsx
+<button className="bg-primary hover:bg-primary-hover">
+  Login
+</button>
+```
+
+---
+
+## 4.3 Text
+
+| Token            | Tailwind class        | Purpose                              |
+| ---------------- | --------------------- | ------------------------------------ |
+| `text-primary`   | `text-text-primary`   | Headings, labels and primary content |
+| `text-secondary` | `text-text-secondary` | Supporting text                      |
+| `text-disabled`  | `text-text-disabled`  | Disabled/placeholder content         |
+
+### Hierarchy
+
+```text
+text-primary
+    ↓
+text-secondary
+    ↓
+text-disabled
+```
+
+---
+
+## 4.4 Feedback
+
+### Warning
+
+```tsx
+<div className="bg-warning/10 border border-warning text-warning">
+  Warning message
+</div>
+```
+
+### Error
+
+```tsx
+<div className="bg-error/10 border border-error text-error">
+  Error message
+</div>
+```
+
+### Success
+
+The `success` token is included for future authentication states.
+
+```tsx
+<div className="bg-success/10 border border-success text-success">
+  Success message
+</div>
+```
+
+---
+
+# 5. Typography
+
+The authentication interface uses a simple hierarchy.
+
+## Page title
+
+```text
+font-bold
+text-3xl
+text-text-primary
+text-center
+```
 
 Example:
 
-```html
-<button class="bg-primary hover:bg-primary-hover">
-```
-
----
-
-# Accent
-
-The accent color is used for secondary interactive elements.
-
-### Used for
-
-* Forgot password link
-* Sign-up link
-* Other navigation actions
-
-| Token    | Value     |
-| -------- | --------- |
-| `accent` | `#3b82f6` |
-
-Example:
-
-```html
-<Link class="text-accent hover:underline">
-```
-
----
-
-# Feedback Colors
-
-The login screen supports three semantic feedback states.
-
-| Token     | Purpose                    | Value     |
-| --------- | -------------------------- | --------- |
-| `success` | Successful operation       | `#22c55e` |
-| `warning` | Account requires attention | `#f59e0b` |
-| `error`   | Critical account issue     | `#ef4444` |
-
----
-
-## Warning
-
-Used when the user's account has not been verified.
-
-```html
-<div class="bg-warning/10 border border-warning text-warning">
-```
-
-Example message:
-
-```text
-Your account has not been verified yet.
-Check your email to activate it.
-```
-
----
-
-## Error
-
-Used when the account has been temporarily blocked.
-
-```html
-<div class="bg-error/10 border border-error text-error">
-```
-
-Example message:
-
-```text
-Your account is temporarily blocked due to
-too many failed attempts.
-```
-
----
-
-# Surface Colors
-
-| Token             | Usage                         |
-| ----------------- | ----------------------------- |
-| `background`      | Main application background   |
-| `surface`         | Authentication card/form area |
-| `surface-variant` | Input background              |
-
-```text
-Background       → #f8fafc
-Surface          → #ffffff
-Surface Variant  → #f1f5f9
-```
-
----
-
-# Text Colors
-
-| Token            | Usage                            |
-| ---------------- | -------------------------------- |
-| `text-primary`   | Headings, labels, main content   |
-| `text-secondary` | Supporting text                  |
-| `text-disabled`  | Disabled and placeholder content |
-
-```text
-Primary    → #0f172a
-Secondary  → #64748b
-Disabled   → #94a3b8
-```
-
----
-
-# Typography
-
-## Page Heading
-
-The login screen uses a large bold heading.
-
-```html
-<h1 class="text-text-primary font-bold text-3xl">
+```tsx
+<h1 className="text-text-primary font-bold text-3xl text-center">
   Sign in
 </h1>
 ```
 
-### Specifications
+## Labels
 
-| Property  | Value          |
-| --------- | -------------- |
-| Size      | `text-3xl`     |
-| Weight    | `bold`         |
-| Color     | `text-primary` |
-| Alignment | Center         |
+```text
+text-sm
+text-text-primary
+```
 
----
+Example:
 
-## Body Text
+```tsx
+<label className="text-text-primary text-sm">
+  Email Address
+</label>
+```
 
-Used for:
+## Supporting text
 
-* Supporting information
-* Account navigation
-* Form descriptions
+```text
+text-sm
+text-text-secondary
+```
 
-```html
-<p class="text-text-secondary text-sm">
+Example:
+
+```tsx
+<p className="text-text-secondary text-sm">
+  Don't have an account?
+</p>
+```
+
+## Links
+
+```text
+text-sm
+text-accent
+hover:underline
 ```
 
 ---
 
-## Form Labels
+# 6. Spacing System
 
-```html
-<label class="text-text-primary text-sm">
+The Login Page follows a consistent spacing scale.
+
+| Token        | Value | Typical usage              |
+| ------------ | ----: | -------------------------- |
+| `spacing-1`  |   4px | Label/input spacing        |
+| `spacing-2`  |   8px | Icon and text spacing      |
+| `spacing-3`  |  12px | Alerts and controls        |
+| `spacing-4`  |  16px | Standard component spacing |
+| `spacing-6`  |  24px | Form element separation    |
+| `spacing-10` |  40px | Form container padding     |
+| `spacing-12` |  48px | Large sections             |
+
+The Login form uses:
+
+```tsx
+gap-6
 ```
 
-### Specifications
-
-* Size: `text-sm`
-* Weight: Regular
-* Color: `text-primary`
+for vertical separation between form sections.
 
 ---
 
-# Layout System
+# 7. Border Radius
 
-## Main Page Container
+The system uses rounded components with progressively larger radii.
 
-```html
-<div class="min-h-screen flex items-center justify-center bg-background p-6">
+| Token         |  Value | Usage                    |
+| ------------- | -----: | ------------------------ |
+| `radius-sm`   |    4px | Small controls           |
+| `radius-md`   |    6px | Inputs                   |
+| `radius-lg`   |    8px | Buttons                  |
+| `radius-2xl`  |   16px | Cards                    |
+| `radius-3xl`  |   24px | Authentication container |
+| `radius-full` | 9999px | Circular elements        |
+
+The Login Page's main container uses:
+
+```tsx
+rounded-3xl
 ```
 
-### Responsibilities
+while inputs and buttons use:
 
-* Occupies the complete viewport
-* Centers authentication content
-* Provides responsive padding
-* Uses the global background token
+```tsx
+rounded
+```
 
 ---
 
-# Authentication Card
+# 8. Shadows
 
-```html
+The authentication card uses a strong elevation level.
+
+```tsx
+shadow-2xl
+```
+
+The primary color is also incorporated into the shadow:
+
+```tsx
+shadow-2xl shadow-primary/20
+```
+
+This creates a branded elevation effect.
+
+### Shadow hierarchy
+
+```text
+shadow-sm
+    ↓
+shadow-md
+    ↓
+shadow-lg
+    ↓
+shadow-2xl
+```
+
+---
+
+# 9. Component: Authentication Container
+
+The authentication layout is composed of two columns on desktop.
+
+```tsx
 <div
-  class="
+  className="
     flex
     w-full
     max-w-5xl
     rounded-3xl
     overflow-hidden
     shadow-2xl
+    shadow-primary/20
     border
     border-border
   "
 >
 ```
 
-### Specifications
+### Properties
 
-| Property  | Value           |
-| --------- | --------------- |
-| Width     | `100%`          |
-| Max Width | `max-w-5xl`     |
-| Radius    | `rounded-3xl`   |
-| Border    | `border-border` |
-| Overflow  | Hidden          |
-| Shadow    | Elevated        |
-
----
-
-# Responsive Layout
-
-## Desktop
-
-The authentication card uses two equal columns.
-
-```text
-┌─────────────────────┬─────────────────────┐
-│                     │                     │
-│                     │                     │
-│       IMAGE         │       LOGIN         │
-│                     │       FORM          │
-│                     │                     │
-│                     │                     │
-└─────────────────────┴─────────────────────┘
-```
-
-### Width
-
-```text
-Image → 50%
-Form  → 50%
-```
+* Maximum width: `max-w-5xl`
+* Width: `w-full`
+* Layout: `flex`
+* Radius: `rounded-3xl`
+* Overflow: `hidden`
+* Border: `border-border`
+* Elevation: `shadow-2xl`
+* Brand shadow: `shadow-primary/20`
 
 ---
 
-## Mobile
+# 10. Component: Image Panel
 
-The image disappears and the form occupies the full width.
+The image panel is displayed only on medium-sized screens and above.
+
+```tsx
+<div className="hidden md:block w-1/2 relative">
+  <img
+    src={login}
+    alt="Login banner"
+    className="w-full h-full object-cover"
+  />
+</div>
+```
+
+### Responsive behavior
+
+| Breakpoint     | Behavior  |
+| -------------- | --------- |
+| Mobile         | Hidden    |
+| `md` and above | Visible   |
+| Desktop        | 50% width |
+
+### Image rules
 
 ```text
-┌─────────────────────────┐
-│                         │
-│         LOGIN           │
-│         FORM            │
-│                         │
-└─────────────────────────┘
-```
-
-Breakpoint:
-
-```text
-md → 768px
-```
-
-Implementation:
-
-```html
-<div class="hidden md:block w-1/2">
-```
-
-and:
-
-```html
-<div class="w-full md:w-1/2">
+width: 100%
+height: 100%
+object-fit: cover
 ```
 
 ---
 
-# Form System
+# 11. Component: Form Panel
 
-The login form follows a vertical layout.
+The form panel occupies the entire screen width on mobile and half of the container on desktop.
 
-```html
-<form class="flex flex-col gap-6 w-full max-w-md">
+```tsx
+<div
+  className="
+    w-full
+    md:w-1/2
+    bg-surface
+    flex
+    items-center
+    justify-center
+    p-10
+  "
+>
 ```
 
-### Specifications
+### Responsive behavior
 
-| Property  | Value      |
-| --------- | ---------- |
-| Max Width | `max-w-md` |
-| Layout    | Column     |
-| Gap       | `24px`     |
-| Alignment | Centered   |
+```text
+Mobile:
+w-full
+
+Desktop:
+md:w-1/2
+```
 
 ---
 
-# Input Component
+# 12. Component: Form
 
-The same input system is used for email and password.
+The form uses a vertical layout.
 
-```html
+```tsx
+<form
+  className="
+    bg-transparent
+    flex
+    flex-col
+    gap-6
+    w-full
+    max-w-md
+  "
+>
+```
+
+### Rules
+
+* Full available width
+* Maximum width: `max-w-md`
+* Vertical layout
+* Consistent `gap-6`
+* Transparent form background
+
+---
+
+# 13. Component: Input
+
+Inputs share the same base style.
+
+```tsx
 <input
-  class="
+  className="
     w-full
     bg-surface-variant
     text-text-primary
@@ -458,254 +533,197 @@ The same input system is used for email and password.
     focus:ring-2
     focus:ring-primary
     focus:border-primary
+    disabled:opacity-60
   "
 />
 ```
 
-## Specifications
-
-| Property           | Value             |
-| ------------------ | ----------------- |
-| Height             | `48px`            |
-| Horizontal Padding | `16px`            |
-| Background         | `surface-variant` |
-| Border             | `border`          |
-| Radius             | `md`              |
-| Text               | `text-primary`    |
-
----
-
-# Input States
-
-## Default
+## Input dimensions
 
 ```text
-Background: Surface Variant
-Border: Border
-Text: Primary
+Height: 48px
+Horizontal padding: 16px
+Border: 1px
+Radius: 4px
+Width: 100%
 ```
 
----
+## Input states
 
-## Focus
+### Default
 
 ```text
-Ring: Primary
-Border: Primary
-Ring Width: 2px
+bg-surface-variant
+border-border
+text-text-primary
 ```
 
-Implementation:
+### Focus
 
-```html
+```text
 focus:ring-2
 focus:ring-primary
 focus:border-primary
 ```
 
----
+### Disabled
 
-## Disabled
-
-```html
+```text
 disabled:opacity-60
 ```
 
-Disabled inputs become visually less prominent while remaining readable.
-
----
-
-# Password Input
-
-The password field introduces an additional interactive component: the visibility toggle.
+### Placeholder
 
 ```text
-┌─────────────────────────────────────┐
-│ Password                         👁  │
-└─────────────────────────────────────┘
-```
-
-The input reserves additional right-side space:
-
-```html
-pr-10
-```
-
-The visibility button is positioned absolutely:
-
-```html
-class="absolute right-3 top-3.5"
+placeholder-text-disabled
 ```
 
 ---
 
-# Password Visibility Toggle
+# 14. Component: Password Input
 
-## Purpose
+Password inputs include an action button positioned inside the input.
 
-Allows users to switch between:
+```tsx
+<div className="relative">
+  <input className="w-full pr-10 ..." />
+
+  <button
+    type="button"
+    className="
+      absolute
+      right-3
+      top-3.5
+      text-text-secondary
+      hover:text-text-primary
+      disabled:opacity-60
+    "
+  >
+    ...
+  </button>
+</div>
+```
+
+### Password visibility states
 
 ```text
-password
+Hidden password
+    ↓
+Eye-off icon
+    ↓
+Visible password
+    ↓
+Eye icon
 ```
 
-and:
+The visibility control should:
 
-```text
-text
-```
+* Be keyboard accessible.
+* Remain inside the input boundary.
+* Use `text-text-secondary` by default.
+* Change to `text-text-primary` on hover.
+* Become visually disabled while submitting.
 
 ---
 
-## States
+# 15. Component: Primary Button
 
-### Hidden
+The primary button is the main authentication action.
 
-Displays the "eye-off" icon.
-
-### Visible
-
-Displays the "eye" icon.
-
----
-
-## Interactive States
-
-| State    | Behavior       |
-| -------- | -------------- |
-| Default  | Secondary text |
-| Hover    | Primary text   |
-| Disabled | 60% opacity    |
-
-```html
-text-text-secondary
-hover:text-text-primary
-disabled:opacity-60
-```
-
----
-
-# Forgot Password Link
-
-```html
-<Link
-  to="/forgot-password"
-  class="text-accent text-sm cursor-pointer hover:underline"
->
-  Forgot my password
-</Link>
-```
-
-### Specifications
-
-| Property  | Value     |
-| --------- | --------- |
-| Color     | Accent    |
-| Size      | `sm`      |
-| Hover     | Underline |
-| Alignment | Right     |
-
-The link is intentionally visually secondary to the primary login button.
-
----
-
-# Primary Button
-
-```html
+```tsx
 <button
-  class="
+  type="submit"
+  className="
     bg-primary
     hover:bg-primary-hover
     text-text-primary
     font-bold
     h-12
     rounded
+    mt-2
     transition
+    flex
+    items-center
+    justify-center
+    gap-2
+    disabled:opacity-70
+    disabled:cursor-not-allowed
   "
 >
   Login
 </button>
 ```
 
-## Specifications
-
-| Property    | Value         |
-| ----------- | ------------- |
-| Height      | `48px`        |
-| Background  | Primary       |
-| Hover       | Primary Hover |
-| Text Weight | Bold          |
-| Radius      | `md`          |
-| Transition  | Standard      |
-
----
-
-# Button States
-
-## Default
+## Button dimensions
 
 ```text
-Background → Primary
-Text       → Text Primary
+Height: 48px
+Width: 100%
+Radius: 4px
+Font weight: 700
 ```
 
-## Hover
+## Button states
 
-```text
-Background → Primary Hover
+### Default
+
+```tsx
+bg-primary
 ```
 
-## Loading
+### Hover
 
-The button displays a spinner and changes its label:
-
-```text
-Signing in...
+```tsx
+hover:bg-primary-hover
 ```
 
----
+### Disabled
 
-## Disabled
-
-```html
+```tsx
 disabled:opacity-70
 disabled:cursor-not-allowed
 ```
 
-The disabled state prevents multiple login submissions.
+### Loading
 
----
+The button replaces the text with:
 
-# Loading Spinner
-
-The spinner is reused from the Forgot Password screen.
-
-```html
-<svg class="animate-spin h-5 w-5">
+```text
+[Spinner] Signing in...
 ```
 
-### Specifications
+---
 
-| Property  | Value        |
-| --------- | ------------ |
-| Size      | `20px`       |
-| Animation | Spin         |
-| Color     | Text Primary |
-| State     | Loading      |
+# 16. Component: Loading Spinner
+
+The spinner uses an SVG with Tailwind's animation utility.
+
+```tsx
+<svg
+  className="animate-spin h-5 w-5 text-text-primary"
+  ...
+>
+```
+
+### Spinner tokens
+
+```text
+Size: 20px
+Animation: spin
+Color: text-primary
+```
 
 ---
 
-# Account Status Alerts
+# 17. Component: Alert
 
-The login system includes two contextual feedback components.
+Alerts communicate authentication-related feedback.
 
----
+## Warning
 
-## Unverified Account Alert
-
-```html
+```tsx
 <div
-  class="
+  className="
     bg-warning/10
     border
     border-warning
@@ -715,25 +733,15 @@ The login system includes two contextual feedback components.
     p-3
   "
 >
+  ...
+</div>
 ```
 
-### Semantic meaning
+## Error
 
-```text
-WARNING
-```
-
-Used when:
-
-> The user has an account but has not verified their email.
-
----
-
-## Blocked Account Alert
-
-```html
+```tsx
 <div
-  class="
+  className="
     bg-error/10
     border
     border-error
@@ -743,223 +751,138 @@ Used when:
     p-3
   "
 >
+  ...
+</div>
 ```
 
-### Semantic meaning
+### Alert anatomy
 
 ```text
-ERROR
+Background: semantic color at 10% opacity
+Border: semantic color
+Text: semantic color
+Typography: text-sm
+Padding: p-3
+Radius: rounded
 ```
-
-Used when:
-
-> The account is temporarily blocked because of failed login attempts.
 
 ---
 
-# Sign Up Navigation
+# 18. Component: Link
 
-```html
-<p class="text-text-secondary text-sm">
-  Don't have an account?
+Authentication links use the accent token.
 
-  <span class="text-accent font-semibold cursor-pointer hover:underline">
-    Sign up
-  </span>
-</p>
+```tsx
+<Link
+  to="/forgot-password"
+  className="
+    text-accent
+    text-sm
+    cursor-pointer
+    hover:underline
+  "
+>
+  Forgot my password
+</Link>
 ```
 
-### Hierarchy
+### Link states
 
-```text
-Don't have an account? → Secondary
-Sign up                → Accent + Semibold
+| State    | Style                                 |
+| -------- | ------------------------------------- |
+| Default  | `text-accent`                         |
+| Hover    | `underline`                           |
+| Disabled | Not applicable                        |
+| Focus    | Should include visible keyboard focus |
+
+Recommended accessibility enhancement:
+
+```tsx
+focus:outline-none
+focus:ring-2
+focus:ring-primary
+focus:ring-offset-2
 ```
-
-This creates a clear distinction between descriptive and interactive text.
 
 ---
 
-# Remember Me
+# 19. Component: Checkbox
 
-```html
+The Remember Me control uses a native checkbox.
+
+```tsx
 <label
-  class="
+  className="
     flex
     items-center
     gap-2
     text-text-secondary
     text-sm
+    mt-2
   "
 >
+  <input
+    type="checkbox"
+    className="accent-primary"
+  />
+
+  Remember me
+</label>
 ```
 
-### Structure
+### Checkbox rules
+
+* Native checkbox behavior should be preserved.
+* Accent color uses `primary`.
+* Label uses `text-secondary`.
+* Spacing between checkbox and label: `gap-2`.
+
+---
+
+# 20. Responsive Design
+
+The Login Page uses a mobile-first strategy.
+
+## Mobile
 
 ```text
-[ ✓ ] Remember me
+Image panel: hidden
+Form panel: 100% width
+Container: 100% width
+Form: max-width constrained
 ```
 
-The checkbox uses the primary color:
-
-```html
-accent-primary
-```
-
-### Specifications
-
-| Property | Value     |
-| -------- | --------- |
-| Text     | Secondary |
-| Size     | `sm`      |
-| Gap      | `8px`     |
-| Accent   | Primary   |
-
----
-
-# Border Radius System
-
-| Token | Value | Usage                   |
-| ----- | ----: | ----------------------- |
-| `sm`  |   4px | Small elements          |
-| `md`  |   8px | Inputs, buttons, alerts |
-| `lg`  |  12px | Medium containers       |
-| `xl`  |  16px | Larger components       |
-| `2xl` |  24px | Authentication card     |
-
-Current Login Page:
+## Medium screens and above
 
 ```text
-Input       → md
-Button      → md
-Alerts      → md
-Main Card   → 2xl / 3xl
+Image panel: 50%
+Form panel: 50%
+Authentication container: max-w-5xl
+```
+
+### Responsive implementation
+
+```tsx
+<div className="flex w-full max-w-5xl">
+  <div className="hidden md:block w-1/2">
+    ...
+  </div>
+
+  <div className="w-full md:w-1/2">
+    ...
+  </div>
+</div>
 ```
 
 ---
 
-# Spacing System
+# 21. Accessibility
 
-| Token | Value |
-| ----- | ----: |
-| `1`   |   4px |
-| `2`   |   8px |
-| `4`   |  16px |
-| `6`   |  24px |
-| `8`   |  32px |
-| `10`  |  40px |
-
-### Current usage
-
-```text
-Page padding      → 24px
-Form gap          → 24px
-Field gap         → 4px
-Card padding      → 40px
-Checkbox gap      → 8px
-```
-
----
-
-# Shadow System
-
-The authentication card uses an elevated shadow.
-
-```html
-shadow-2xl shadow-primary/20
-```
-
-### Design intention
-
-The shadow creates separation between the authentication card and the application background while subtly reinforcing the primary brand color.
-
----
-
-# Component Inventory
-
-## Page
-
-* `LoginPage`
-
-## Layout
-
-* `AuthContainer`
-* `AuthCard`
-* `ImagePanel`
-* `FormPanel`
-
-## Form Components
-
-* `EmailInput`
-* `PasswordInput`
-* `PasswordVisibilityToggle`
-* `RememberMeCheckbox`
-* `LoginButton`
-
-## Navigation
-
-* `ForgotPasswordLink`
-* `SignUpLink`
-
-## Feedback
-
-* `UnverifiedAccountAlert`
-* `BlockedAccountAlert`
-* `LoadingSpinner`
-
----
-
-# Authentication States
-
-The Login Page can be represented as the following state system:
-
-```text
-                    LOGIN PAGE
-                         │
-          ┌──────────────┴──────────────┐
-          │                             │
-       Default                       Loading
-          │                             │
-          │                    ┌────────┴────────┐
-          │                    │                 │
-       Login                  Spinner        Disabled
-          │
-     ┌────┴─────┐
-     │          │
-  Success     Failure
-                │
-        ┌───────┴────────┐
-        │                │
-    Unverified         Blocked
-      Warning           Error
-```
-
----
-
-# Interaction System
-
-## Standard Transition
-
-Interactive elements should use:
-
-```html
-transition
-```
-
-Recommended token:
-
-```css
---duration-normal: 250ms;
---ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
-```
-
----
-
-# Accessibility
+The design system should maintain the following accessibility rules.
 
 ## Labels
 
-Every input should have an associated label.
+Every form input must have an associated label.
 
 Recommended implementation:
 
@@ -970,122 +893,356 @@ Recommended implementation:
 
 <input
   id="email"
-  type="email"
+  name="email"
 />
 ```
 
-And:
+## Focus
 
-```tsx
-<label htmlFor="password">
-  Password
-</label>
-
-<input
-  id="password"
-  type="password"
-/>
-```
-
----
-
-## Password Toggle
-
-The visibility button should have an accessible label.
+Interactive controls must provide visible focus feedback.
 
 Recommended:
 
 ```tsx
+focus:outline-none
+focus:ring-2
+focus:ring-primary
+focus:ring-offset-2
+```
+
+## Disabled controls
+
+Disabled elements must communicate their state visually.
+
+```tsx
+disabled:opacity-60
+disabled:cursor-not-allowed
+```
+
+## Loading state
+
+While authentication is processing:
+
+```text
+Inputs → disabled
+Password toggle → disabled
+Submit button → disabled
+Spinner → visible
+Button text → "Signing in..."
+```
+
+---
+
+# 22. Component State Model
+
+The Login Page currently supports the following UI states.
+
+```text
+                    Login Page
+                        │
+        ┌───────────────┼───────────────┐
+        │               │               │
+      Default         Loading         Feedback
+        │               │               │
+        │               │       ┌───────┴───────┐
+        │               │       │               │
+     Editable        Disabled  Warning         Error
+        │
+        └── Password visibility
+                │
+          ┌─────┴─────┐
+          │           │
+        Hidden       Visible
+```
+
+---
+
+# 23. Semantic Token Rules
+
+Components should **not** use hardcoded colors.
+
+### Avoid
+
+```tsx
+<button className="bg-blue-600">
+```
+
+### Prefer
+
+```tsx
+<button className="bg-primary">
+```
+
+### Avoid
+
+```tsx
+<input className="text-gray-900 border-gray-300">
+```
+
+### Prefer
+
+```tsx
+<input className="text-text-primary border-border">
+```
+
+This allows the entire application's visual identity to be changed by modifying the theme rather than individual components.
+
+---
+
+# 24. Recommended Component API
+
+If the design system is expanded into reusable React components, the following APIs are recommended.
+
+## Button
+
+```tsx
+<Button
+  variant="primary"
+  loading={isSubmitting}
+  disabled={isSubmitting}
+>
+  Login
+</Button>
+```
+
+### Variants
+
+```text
+primary
+secondary
+ghost
+danger
+```
+
+---
+
+## Input
+
+```tsx
+<Input
+  label="Email Address"
+  type="email"
+  value={email}
+  onChange={...}
+  disabled={isSubmitting}
+/>
+```
+
+---
+
+## PasswordInput
+
+```tsx
+<PasswordInput
+  label="Password"
+  value={password}
+  onChange={...}
+  disabled={isSubmitting}
+/>
+```
+
+---
+
+## Alert
+
+```tsx
+<Alert variant="warning">
+  Your account has not been verified yet.
+</Alert>
+```
+
+### Variants
+
+```text
+warning
+error
+success
+info
+```
+
+---
+
+# 25. Token Usage Examples
+
+## Page
+
+```tsx
+<div className="min-h-screen bg-background">
+```
+
+## Card
+
+```tsx
+<div className="bg-surface border border-border rounded-3xl shadow-2xl">
+```
+
+## Heading
+
+```tsx
+<h1 className="text-text-primary text-3xl font-bold">
+```
+
+## Input
+
+```tsx
+<input
+  className="
+    bg-surface-variant
+    text-text-primary
+    border-border
+    focus:ring-primary
+  "
+/>
+```
+
+## Primary action
+
+```tsx
 <button
-  type="button"
-  aria-label={
-    showPassword
-      ? "Hide password"
-      : "Show password"
-  }
+  className="
+    bg-primary
+    hover:bg-primary-hover
+    text-text-primary
+  "
 >
 ```
 
-This ensures screen readers can understand the purpose of the icon-only control.
-
----
-
-## Loading State
-
-The current implementation correctly disables the form while submitting:
+## Secondary action
 
 ```tsx
-disabled={isSubmitting}
+<a className="text-accent hover:underline">
 ```
-
-This prevents duplicate authentication requests.
 
 ---
 
-# Design System Relationship
+# 26. Design System Architecture
 
-The Login Page and Forgot Password Page share the same foundation.
+Recommended project structure:
 
 ```text
-                 AUTH DESIGN SYSTEM
-                        │
-          ┌─────────────┴─────────────┐
-          │                           │
-      LOGIN PAGE               FORGOT PASSWORD
-          │                           │
-     ┌────┴────┐                 ┌────┴────┐
-     │         │                 │         │
-   Form      Alerts            Form      Success
-     │                           │
-     ├─ Email                    └─ Email
-     ├─ Password
-     ├─ Remember Me
-     └─ Login
+src/
+├── components/
+│   ├── ui/
+│   │   ├── Button.tsx
+│   │   ├── Input.tsx
+│   │   ├── PasswordInput.tsx
+│   │   ├── Alert.tsx
+│   │   └── Checkbox.tsx
+│   │
+│   └── auth/
+│       ├── AuthLayout.tsx
+│       └── AuthForm.tsx
+│
+├── pages/
+│   ├── LoginPage.tsx
+│   └── RecoverPassword.tsx
+│
+├── styles/
+│   └── globals.css
+│
+└── assets/
+    └── login.png
 ```
 
-This means the tokens should be maintained **globally**, rather than creating separate color systems for each page.
+The design tokens should live in:
+
+```text
+src/styles/globals.css
+```
 
 ---
 
-# Recommended Authentication Design Tokens
+# 27. Tailwind v4 Usage
 
-For the complete authentication system, the core semantic tokens are:
+With Tailwind CSS v4, tokens are defined directly using `@theme`.
 
 ```css
 @theme {
-
-  /* Brand */
   --color-primary: #2563eb;
   --color-primary-hover: #1d4ed8;
-  --color-accent: #3b82f6;
-
-  /* Feedback */
-  --color-success: #22c55e;
-  --color-warning: #f59e0b;
-  --color-error: #ef4444;
-
-  /* Surfaces */
   --color-background: #f8fafc;
   --color-surface: #ffffff;
-  --color-surface-variant: #f1f5f9;
-
-  /* Borders */
-  --color-border: #e2e8f0;
-
-  /* Typography */
-  --color-text-primary: #0f172a;
-  --color-text-secondary: #64748b;
-  --color-text-disabled: #94a3b8;
-
-  /* Layout */
-  --radius-md: 0.5rem;
-  --radius-2xl: 1.5rem;
-
-  /* Motion */
-  --duration-fast: 150ms;
-  --duration-normal: 250ms;
-
-  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
 }
 ```
- 
+
+These automatically become utilities:
+
+```text
+bg-primary
+bg-primary-hover
+bg-background
+bg-surface
+```
+
+Likewise:
+
+```css
+@theme {
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #64748b;
+}
+```
+
+creates:
+
+```text
+text-text-primary
+text-text-secondary
+```
+
+This makes the semantic design system directly usable inside React components.
+
+---
+
+# 28. Final Token Reference
+
+| Category | Token           | Utility               |
+| -------- | --------------- | --------------------- |
+| Color    | Background      | `bg-background`       |
+| Color    | Surface         | `bg-surface`          |
+| Color    | Surface Variant | `bg-surface-variant`  |
+| Color    | Primary         | `bg-primary`          |
+| Color    | Primary Hover   | `bg-primary-hover`    |
+| Color    | Accent          | `text-accent`         |
+| Color    | Text Primary    | `text-text-primary`   |
+| Color    | Text Secondary  | `text-text-secondary` |
+| Color    | Text Disabled   | `text-text-disabled`  |
+| Color    | Border          | `border-border`       |
+| Color    | Warning         | `text-warning`        |
+| Color    | Error           | `text-error`          |
+| Color    | Success         | `text-success`        |
+| Radius   | Small           | `rounded-sm`          |
+| Radius   | Medium          | `rounded-md`          |
+| Radius   | Large           | `rounded-lg`          |
+| Radius   | Extra Large     | `rounded-2xl`         |
+| Radius   | Authentication  | `rounded-3xl`         |
+| Shadow   | Small           | `shadow-sm`           |
+| Shadow   | Medium          | `shadow-md`           |
+| Shadow   | Large           | `shadow-lg`           |
+| Shadow   | Extra Large     | `shadow-2xl`          |
+
+---
+
+# 29. Design System Goal
+
+The final objective is to make the authentication interface **token-driven rather than component-driven**.
+
+The component should describe **what an element is**:
+
+```tsx
+bg-primary
+text-text-primary
+border-border
+```
+
+rather than **what color it happens to be**:
+
+```tsx
+bg-blue-600
+text-gray-900
+border-gray-300
+```
+
+This allows the visual identity of the application to evolve without rewriting the React components.
+
+The `LoginPage` therefore becomes an implementation of the design system rather than the place where the design system itself is defined.
