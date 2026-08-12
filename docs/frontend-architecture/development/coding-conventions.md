@@ -1,19 +1,13 @@
-# Coding Conventions
+# Convenciones de código
 
 ## Descripción
 
-Este documento establece las convenciones de desarrollo utilizadas en el proyecto con el objetivo de mantener un código consistente, legible y fácil de mantener.
-
-Todos los integrantes del equipo deberán seguir estas convenciones durante el desarrollo de nuevas funcionalidades.
-
----
+Este documento establece las convenciones de desarrollo del proyecto con el objetivo de mantener un código consistente, legible y fácil de mantener. Todos los integrantes del equipo deberán seguirlas durante el desarrollo de nuevas funcionalidades.
 
 ## Idioma
 
 - El código debe escribirse en inglés.
 - Los comentarios y la documentación podrán escribirse en español.
-
----
 
 ## Nomenclatura
 
@@ -27,13 +21,9 @@ LoginForm.tsx;
 SeatSelector.tsx;
 ```
 
----
-
 ### Archivos
 
-Los archivos deben utilizar nombres descriptivos.
-
-Ejemplo:
+Los archivos deben utilizar nombres descriptivos:
 
 ```text
 movie-card.ts
@@ -41,13 +31,7 @@ movie.service.ts
 auth.store.ts
 ```
 
-Cuando el archivo exporte un componente React, deberá utilizar el mismo nombre del componente.
-
-```text
-MovieCard.tsx
-```
-
----
+Cuando el archivo exporte un componente React, deberá utilizar el mismo nombre del componente (`MovieCard.tsx`).
 
 ### Variables
 
@@ -59,8 +43,6 @@ currentUser;
 totalPrice;
 ```
 
----
-
 ### Constantes
 
 Las constantes globales deben utilizar **UPPER_SNAKE_CASE**.
@@ -71,33 +53,9 @@ API_TIMEOUT;
 DEFAULT_LANGUAGE;
 ```
 
----
+### Interfaces y tipos
 
-### Interfaces
-
-Las interfaces deben utilizar **PascalCase**.
-
-```ts
-interface User {}
-
-interface Movie {}
-
-interface Seat {}
-```
-
----
-
-### Tipos
-
-Los tipos personalizados deben utilizar **PascalCase**.
-
-```ts
-type UserRole
-
-type PaymentMethod
-```
-
----
+La nomenclatura (`PascalCase`), los sufijos de archivo y la distinción entre `type` e `interface` se definen en la [guía de tipado §4](../../type-guides/typing-guide.md#4-referencia-rápida-nombrado-y-ubicación).
 
 ### Hooks
 
@@ -105,13 +63,9 @@ Los hooks personalizados deben comenzar con el prefijo **use**.
 
 ```ts
 useAuth();
-
 useCart();
-
 useMovies();
 ```
-
----
 
 ## Imports
 
@@ -121,8 +75,6 @@ Orden recomendado:
 2. Imports internos.
 3. Imports relativos.
 
-Ejemplo:
-
 ```ts
 import { useState } from "react";
 
@@ -131,11 +83,9 @@ import { Button } from "@/components";
 import "./styles.css";
 ```
 
----
-
 ## Exportaciones
 
-Siempre que sea posible, utilizar exportaciones nombradas.
+Siempre que sea posible, utilizar exportaciones nombradas:
 
 ```ts
 export function LoginForm() {}
@@ -143,15 +93,9 @@ export function LoginForm() {}
 
 Evitar el uso innecesario de `default export`.
 
----
-
 ## Comentarios
 
-Los comentarios deben utilizarse únicamente cuando aporten contexto o expliquen una decisión de implementación.
-
-Evitar comentar código evidente.
-
----
+Los comentarios deben utilizarse únicamente cuando aporten contexto o expliquen una decisión de implementación. Evitar comentar código evidente.
 
 ## Legibilidad
 
@@ -161,8 +105,13 @@ Evitar comentar código evidente.
 - Mantener responsabilidades bien definidas.
 - Evitar código duplicado.
 
----
-
 ## Consistencia
 
 Todo el código nuevo debe seguir estas convenciones para mantener uniformidad en el proyecto y facilitar el trabajo colaborativo.
+
+## Documentos relacionados
+
+- [Guía de tipado (TypeScript)](../../type-guides/typing-guide.md) — reglas específicas de tipos y nomenclatura (`type` vs `interface`, sufijos de archivos, ubicación).
+- [Convenciones de API](../../api/00-conventions.md#8-ids-y-enums) — los enums del backend son strings `snake_case` y los ids son UUIDs; el código debe copiar esos literales tal cual.
+- [Buenas prácticas](./best-practices.md)
+- [Path aliases](./path-aliases.md)
