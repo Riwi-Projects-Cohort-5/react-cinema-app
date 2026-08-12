@@ -119,5 +119,5 @@ Redirect to /login
 (On 400 duplicate email → show message on email field + link to login)
 ```
 
-## Pendiente de confirmación con el backend
+## Confirmación y pendientes
 - El backend aún no expone en la colección compartida el endpoint de verificación de correo (`POST /auth/verify-email`, #19) ni el flujo de membresía post-registro. Confirmar cuándo estén disponibles.

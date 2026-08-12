@@ -1,5 +1,9 @@
 # GET /api/v1/ai/history
 
+> **Pendiente de confirmación con el backend.** Este endpoint **no** aparece en la colección Postman
+> compartida. El contrato de abajo es la propuesta del frontend derivada del backlog; confirmar ruta,
+> payload y códigos cuando el backend lo exponga.
+
 ## Historia de usuario relacionada
 - **HU-FE-021** — Chatbot de recomendación de películas. Restaura una conversación cuando el usuario reabre la ventana de chat o recarga la página. Alias del backlog: `POST /ai/history` (el historial es una **lectura**, de ahí el GET).
 

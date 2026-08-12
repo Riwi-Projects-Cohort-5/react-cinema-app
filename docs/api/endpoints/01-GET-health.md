@@ -1,4 +1,9 @@
-# GET /api/v1/health
+# GET /health
+
+> **Pendiente de confirmación con el backend.** Este endpoint **no** aparece en la colección Postman
+> compartida (`GET /health` responde 404 en el mock). **HU-FE-001** ya monta `getHealth()` sobre este
+> endpoint para el banner de conectividad: sin respaldo del backend, mostrará "Conexión inestable"
+> permanentemente. Confirmar la ruta real cuando el backend la exponga.
 
 ## Historia de usuario relacionada
 - **HU-FE-001** — Configuración de la plataforma frontend (verificación de arranque). **HU-FE-029** — Consumo de API pública (conectividad/disponibilidad de la plataforma).
@@ -10,7 +15,7 @@ Sonda de liveness/readiness de la API de Multicine. Se llama **una vez al arranc
 GET
 
 ## URL
-`/api/v1/health` (URL completa: `https://api.multicine.com/api/v1/health`)
+`{{baseUrl}}/health`
 
 ## Autenticación
 - Pública. No se requiere token. No se aplica límite de peticiones más allá de las reglas compartidas (convenciones §10).

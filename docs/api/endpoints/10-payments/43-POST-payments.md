@@ -1,5 +1,9 @@
 # POST /api/v1/payments
 
+> **Pendiente de confirmación con el backend.** Este endpoint **no** aparece en la colección Postman
+> compartida. El contrato de abajo es la propuesta del frontend derivada del backlog; confirmar ruta,
+> payload y códigos cuando el backend lo exponga.
+
 ## Historia de usuario relacionada
 - **HU-FE-013** — Proceso de pago seguro. Crea la intención de pago sobre la que pivota todo el flujo de compra segura (retención de sillas → carrito → pago → orden).
 

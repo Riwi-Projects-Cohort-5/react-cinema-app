@@ -1,5 +1,9 @@
 # POST /api/v1/notifications/upcoming
 
+> **Pendiente de confirmación con el backend.** Este endpoint **no** aparece en la colección Postman
+> compartida. El contrato de abajo es la propuesta del frontend derivada del backlog; confirmar ruta,
+> payload y códigos cuando el backend lo exponga.
+
 ## Historia de usuario relacionada
 - **HU-FE-005** — Próximos estrenos. Acción complementaria de `GET /movies/upcoming` y `GET /movies/{movieId}`: esta es la llamada de suscripción "Notificarme". Sin alias de backlog — el backlog no separó esta acción en su propia ruta.
 

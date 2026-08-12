@@ -111,7 +111,7 @@ Todas usan el envelope de convenciones §4 (`{ "error": "..." }`). Códigos rele
 2. Los horarios por película se agrupan por cine/sala usando `functions[].room.cinema`.
 3. El usuario elige una función `AVAILABLE` → navegar al flujo de selección de sillas con `functionId`.
 
-## Pendiente de confirmación con el backend
+## Respaldo en la colección Postman
 - Endpoint confirmado en la colección Postman compartida (incluye `functions`, `room` y `cinema`
   embebidos, con las reglas **RN-010** y **RN-012**). El respaldo coincide con la guía de HU-FE-003.
 - El backend no documenta parámetros de consulta (p. ej. `cityId`); confirmar si los aceptará cuando

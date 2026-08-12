@@ -107,5 +107,5 @@ Todas usan el envelope de convenciones §4 (`{ "error": "..." }`). Códigos rele
 2. Las tarjetas resultantes se renderizan; cada función lleva su sala y formato.
 3. El usuario elige una función → navegar al flujo de selección de sillas con `functionId`.
 
-## Pendiente de confirmación con el backend
+## Respaldo en la colección Postman
 - La colección Postman incluye este endpoint con los parámetros aquí documentados. Confirmar el soporte de `cityId` como filtro cuando el backend lo exponga.

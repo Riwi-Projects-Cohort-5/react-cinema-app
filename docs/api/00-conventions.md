@@ -82,9 +82,9 @@ Toda respuesta no-2xx usa esta forma (mensaje legible, en español):
 |---|---|---|
 | 400 | Petición malformada / payload inválido / correo duplicado | Mostrar el mensaje de `error` (p. ej. "El correo electrónico ya se encuentra registrado") |
 | 401 | Credenciales inválidas | "Credenciales inválidas"; si el backend indica intentos restantes, mostrarlos (ver login) |
-| 423 | Cuenta bloqueada temporalmente (5 fallos seguidos) | Mostrar cuenta regresiva ~15 min y deshabilitar el envío |
 | 404 | Recurso inexistente o película inactiva | "Película no disponible" con enlace de vuelta a la cartelera |
-| 429 | Rate limit | Respetar la cabecera `Retry-After` / `x-ratelimit-reset` (ver §10) |
+| 423 | Cuenta bloqueada temporalmente (5 fallos seguidos) | Mostrar cuenta regresiva ~15 min y deshabilitar el envío |
+| 429 | Rate limit | Respetar la cabecera `x-ratelimit-reset` (ver §10) |
 | 500 | Error inesperado | Error genérico reintentable (§13) |
 | 503 | Mantenimiento / degradado | Banner no bloqueante (§13) |
 
@@ -134,7 +134,7 @@ Toda respuesta no-2xx usa esta forma (mensaje legible, en español):
 
 - Todos los ids de recursos son **enteros autoincrementales** (p. ej. `"id": 1`) — **no** UUIDs.
   Las sub-rutas estáticas (`/movies/weekly`, `/movies/today`, `/movies/filter`) se resuelven por
-  literal de ruta antes que `{movieId}`, así que no hay colisión.
+  literal de ruta antes que `{movieId}`, así que no hay colisión (a confirmar con el backend).
 - Los enums/categorías se exponen como **strings legibles de display** (p. ej. `genre: "Accion"`,
   `classification: "PG-13"`, `language: "Ingles"`, `format: "IMAX"`), no snake_case.
 - Los booleanos se usan para flags de estado (`isActive`, `isSubtitled`, `available`).

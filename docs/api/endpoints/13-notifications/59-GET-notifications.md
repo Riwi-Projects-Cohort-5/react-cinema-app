@@ -1,5 +1,9 @@
 # GET /api/v1/notifications
 
+> **Pendiente de confirmación con el backend.** Este endpoint **no** aparece en la colección Postman
+> compartida. El contrato de abajo es la propuesta del frontend derivada del backlog; confirmar ruta,
+> payload y códigos cuando el backend lo exponga.
+
 ## Historia de usuario relacionada
 - **HU-FE-015** — Notificaciones por correo. Alias de backlog: `GET /notifications/history` → este endpoint (el historial de notificaciones ES la colección de notificaciones; no hay ruta separada de "historial").
 

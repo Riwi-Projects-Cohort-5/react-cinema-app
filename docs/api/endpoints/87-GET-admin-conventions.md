@@ -1,5 +1,9 @@
 # /api/v1/admin/* — Admin API conventions & resource catalog
 
+> **Pendiente de confirmación con el backend.** Este endpoint **no** aparece en la colección Postman
+> compartida. El contrato de abajo es la propuesta del frontend derivada del backlog; confirmar ruta,
+> payload y códigos cuando el backend lo exponga.
+
 ## Historia de usuario relacionada
 - **HU-FE-020** — Panel administrativo. **No es un endpoint único**: este documento define el **patrón CRUD uniforme** para todo el panel administrativo (todos los recursos del rol `ADMIN`) además de un catálogo de recursos y dos ejemplos totalmente desarrollados. Los detalles por módulo se añaden aquí a medida que se implementan los módulos.
 

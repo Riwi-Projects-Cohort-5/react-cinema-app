@@ -1,5 +1,9 @@
 # POST /api/v1/tickets/transfer
 
+> **Pendiente de confirmación con el backend.** Este endpoint **no** aparece en la colección Postman
+> compartida. El contrato de abajo es la propuesta del frontend derivada del backlog; confirmar ruta,
+> payload y códigos cuando el backend lo exponga.
+
 ## Historia de usuario relacionada
 - **HU-FE-017** — Transferencia de entradas. Inicia una transferencia PENDING; el QR actual sigue siendo válido hasta que el destinatario acepte.
 

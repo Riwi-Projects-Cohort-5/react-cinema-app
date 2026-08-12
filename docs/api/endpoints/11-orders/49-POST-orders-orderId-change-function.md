@@ -1,5 +1,9 @@
 # POST /api/v1/orders/{orderId}/change-function
 
+> **Pendiente de confirmación con el backend.** Este endpoint **no** aparece en la colección Postman
+> compartida. El contrato de abajo es la propuesta del frontend derivada del backlog; confirmar ruta,
+> payload y códigos cuando el backend lo exponga.
+
 ## Historia de usuario relacionada
 - **HU-FE-016** — Cambio de función. Alias del backlog: `PUT /reservations/change` (rediseñado — la operación es una transición de estado sobre el recurso de la orden, no un PUT genérico).
 

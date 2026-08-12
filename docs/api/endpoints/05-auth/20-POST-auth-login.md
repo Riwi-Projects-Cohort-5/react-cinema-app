@@ -130,5 +130,5 @@ Redirect to location.state?.from (or /)
 (On 423 → countdown ~15 min)
 ```
 
-## Pendiente de confirmación con el backend
+## Confirmación y pendientes
 - La colección compartida no incluye `rememberMe` ni CAPTCHA en login. Confirmar si el backend los soporta antes de exponerlos en la UI.

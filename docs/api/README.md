@@ -2,11 +2,17 @@
 
 Contrato de API orientado a frontend para la plataforma web de Multicine.
 
-> Alcance: este documento es la **fuente de verdad para los equipos de frontend**. Se derivó del
-> backlog de producto *"Historia de usuario Multicine Typescript React"* (HU-FE-001 → HU-FE-029).
-> Cada endpoint tiene su propio documento de contrato. Lee primero **`00-conventions.md`** — define
-> las reglas compartidas (autenticación, envelope de error, paginación, dinero, idempotencia, rate
-> limiting) que usa todo endpoint.
+> Alcance: este documento es la **fuente de verdad para los equipos de frontend**. Cada endpoint
+> tiene su propio documento de contrato. Lee primero **`00-conventions.md`** — define las reglas
+> compartidas (autenticación, envelope de error, paginación, dinero, idempotencia, rate limiting)
+> que usa todo endpoint.
+>
+> **Estado de confirmación con el backend:** la colección Postman compartida por el backend es la
+> fuente de verdad. Los endpoints **confirmados** son `#2`, `#3`, `#4`, `#6`, `#9`, `#10`, `#11`,
+> `#18`, `#20`–`#24` y `#88`–`#90`; sus documentos reflejan los payloads reales. El resto del
+> catálogo sigue derivado del backlog *"Historia de usuario Multicine Typescript React"*
+> (HU-FE-001 → HU-FE-029) y está marcado como **"Pendiente de confirmación con el backend"** en su
+> documento: es contrato propuesto, a validar cuando el backend lo exponga.
 
 ## Cómo usar este documento
 

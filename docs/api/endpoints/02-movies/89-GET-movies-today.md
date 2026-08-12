@@ -90,7 +90,7 @@ Todas usan el envelope de convenciones §4 (`{ "error": "..." }`). Códigos rele
 1. La vista "hoy" de la cartelera se monta → `GET /api/v1/movies/today` → esqueletos → tarjetas con horarios del día.
 2. El usuario elige una función disponible → navegar al flujo de selección de sillas con `functionId`.
 
-## Pendiente de confirmación con el backend
+## Respaldo en la colección Postman
 - Endpoint confirmado en la colección Postman compartida (películas con funciones del día actual,
   00:00–23:59). El respaldo coincide con la guía de HU-FE-003.
 - El backend no documenta parámetros de consulta (p. ej. `cityId`); confirmar si los aceptará cuando

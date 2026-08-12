@@ -1,5 +1,9 @@
 # GET /api/v1/recommendations/history
 
+> **Pendiente de confirmación con el backend.** Este endpoint **no** aparece en la colección Postman
+> compartida. El contrato de abajo es la propuesta del frontend derivada del backlog; confirmar ruta,
+> payload y códigos cuando el backend lo exponga.
+
 ## Historia de usuario relacionada
 - **HU-FE-022** — Recomendaciones personalizadas. La lista "Mi actividad" — una auditoría de las recomendaciones mostradas, en las que se hizo clic y ocultas para el usuario autenticado.
 

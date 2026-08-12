@@ -1,5 +1,9 @@
 # GET /api/v1/movies/cineflash
 
+> **Pendiente de confirmación con el backend.** Este endpoint **no** aparece en la colección Postman
+> compartida (`GET /movies/cineflash` responde 404 en el mock). El contrato de abajo es la propuesta
+> del frontend derivada del backlog; confirmar ruta, payload y códigos cuando el backend lo exponga.
+
 ## Historia de usuario relacionada
 - **HU-FE-019** — Cine Flash. Alias del backlog: `GET /cineflash` (aplanado bajo `/movies` por consistencia REST; este endpoint es el feed de precios/funciones por película que consume el frontend para la sección Cine Flash y los badges de la cartelera).
 
