@@ -1,4 +1,3 @@
-import { Cards, movies } from "../../components/cards";
 import { Header } from "../../components/Header";
 import { Footer } from "../../components/Footer";
 
@@ -16,15 +15,6 @@ export const Home = () => {
         experience.
       </p>
 
-      <section className="grid grid-cols-5 gap-5 mt-2 p-15 ">
-        
-        {movies.map((movie) => (
-          <Cards 
-            key={movie.id}
-            {...movie}
-          />
-        ))}
-      </section>
 
       <Footer />
     </main>

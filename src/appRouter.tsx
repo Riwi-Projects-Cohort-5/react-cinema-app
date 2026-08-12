@@ -6,8 +6,8 @@ export const appRouter = createBrowserRouter([
     path: "/",
     element: <Home/>
   },
-  {
-    path: "/auth",
+  {    
+    path: "/catalog",
     element: 'Renderizar aqui tus rutas de auth'
   }
 ]);
