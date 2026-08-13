@@ -64,21 +64,25 @@ Ejemplos reales del dominio Multicine (basados en `docs/api/endpoints/02-movies/
 `docs/api/endpoints/03-functions/14-GET-functions-functionId-seats.md`):
 
 ```ts
-// Entidad → interface
+// Entidad → interface (forma del #6 GET /movies, confirmada en la colección)
 interface Movie {
-  id: string;
+  id: number;
   title: string;
+  synopsis: string;
+  genre: string;
+  classification: string;
+  duration: number;
+  director: string;
+  language: string;
+  isSubtitled: boolean;
   posterUrl: string;
-  genres: string[];
-  classification: { code: string; label: string };
-  durationMinutes: number;
-  rating: { average: number; count: number };
-  isPremiere: boolean;
-  isCineFlash: boolean;
-  priceFrom: Money;
+  trailerUrl: string | null;
+  releaseDate: string; // YYYY-MM-DD — convenciones §7
+  rating: number;
+  isActive: boolean;
 }
 
-// Unión de literales → type
+// Unión de literales → type (sillas del #14, contrato pendiente de confirmación)
 type SeatState = "AVAILABLE" | "RESERVED" | "SOLD" | "DISABLED";
 type SeatType = "GENERAL" | "PREFERENTIAL" | "VIP" | "DISABLED" | "ACCESSIBLE";
 ```
@@ -101,7 +105,7 @@ estoy creando?* → nombre de archivo, sufijo del tipo/interfaz, y carpeta exact
 | Forma cruda del backend, cuando difiere del modelo de UI | `movie.dto.ts` (junto a `movie.interface.ts`) | `Dto` → `MovieDto` | Misma carpeta que la entidad (`shared/` o local, según §5) |
 | Props de un componente | Mismo archivo del componente (`MovieCard.tsx`) | `Props` → `MovieCardProps` | Junto al componente |
 | Valores de un formulario | El schema los infiere, ver §7 | `FormValues` → `LoginFormValues` | `features/<feature>/validations/` |
-| Envelope/respuesta cruda de API (paginación, error) | `api.interface.ts` | `Response` → `PaginatedResponse<T>` | `src/shared/interfaces/` |
+| Envelope de error de API | `api.interface.ts` | `ApiErrorBody` | `src/shared/interfaces/` |
 | Unión de estados/variantes de una entidad (`SeatState`, `PaymentMethod`) | Mismo archivo que la entidad relacionada | *(ninguno, es un `type` unión)* | Misma carpeta que la entidad |
 
 **Regla de decisión único-criterio:** ¿el tipo se importa (o se va a importar) desde más de una
@@ -109,13 +113,14 @@ feature? Si sí → `src/shared/interfaces/`. Si no → `features/<feature>/inte
 en que una segunda feature necesita importar un tipo local, **se mueve** a `shared/interfaces/` ese
 mismo día — no se copia ni se re-declara.
 
-**Union types de string vs. `enum`:** usar siempre union de literales, nunca `enum`. Los valores de
-`docs/api/00-conventions.md` §8 ya son strings (`"RESERVED"`, `"PSE"`, `"PENDING"`) — un union type
-copia el contrato del backend literalmente y no genera código JS extra en el bundle:
+**Union types de string vs. `enum`:** usar siempre union de literales, nunca `enum`. Los enums del
+contrato se exponen como strings de display (`docs/api/00-conventions.md` §8): `genre: "Accion"`,
+`classification: "PG-13"`, `language: "Ingles"`. Un union type copia el literal exacto del contrato
+y no genera código JS extra en el bundle:
 
 ```ts
 // Correcto — copia el literal exacto que envía el backend
-type SeatState = "AVAILABLE" | "RESERVED" | "SOLD" | "DISABLED";
+type SeatState = "AVAILABLE" | "RESERVED" | "SOLD" | "DISABLED"; // #14, pendiente de confirmación
 
 // Prohibido — enum no coincide 1:1 con el string del backend sin mapeo manual
 enum SeatState { Available, Reserved, Sold, Disabled }
@@ -138,8 +143,7 @@ src/
 │       ├── movie.interface.ts       # Movie, MovieDto — usado por Cartelera, Detalle, Admin
 │       ├── seat.interface.ts        # Seat, SeatState, SeatType — usado por Funciones, Checkout
 │       ├── user.interface.ts        # User, Membership — usado por Auth, Perfil, Admin
-│       ├── money.interface.ts       # Money — usado por Cartelera, Carrito, Pagos
-│       └── api.interface.ts         # ApiResponse<T>, ApiError, PaginatedResponse<T>
+│       └── api.interface.ts         # ApiErrorBody
 └── features/
     ├── auth/
     │   └── interfaces/
@@ -174,72 +178,48 @@ Antes de escribir el primer archivo dentro de `interfaces/`, sigue este orden:
 ## 6. Tipado de la capa de servicios
 
 Aún no existe ningún archivo en `features/*/services/`, así que esta sección fija el patrón a seguir
-desde el primer servicio que se escriba, alineado con `docs/api/00-conventions.md` §5 y §12 (cliente
-Axios centralizado, envelope de paginación, ningún componente hace fetch directo).
+desde el primer servicio que se escriba, alineado con `docs/api/00-conventions.md` §4, §5 y §12
+(envelope de error `{ "error": "..." }`, listados como arreglo plano, cliente Axios centralizado,
+ningún componente hace fetch directo).
 
 - **Toda función de servicio declara su tipo de retorno explícitamente.** Nunca dejar que TypeScript
   lo infiera del `axios.get(...)`.
-- **DTO ≠ modelo de UI.** El DTO es la forma cruda del backend (fechas ISO string, `Money` como
-  objeto, ids UUID). Si la UI necesita una forma distinta (ej. fecha ya formateada), se mapea en el
-  servicio, no en el componente.
-- Todo endpoint de listado usa el mismo genérico de paginación (§5 de las convenciones de API).
+- **DTO ≠ modelo de UI.** El DTO es la forma cruda del backend (fechas ISO string, montos como
+  enteros COP, ids enteros). Si la UI necesita una forma distinta (ej. fecha ya formateada), se mapea
+  en el servicio, no en el componente.
+- Los endpoints de listado devuelven **arreglos planos** (convenciones §5); no hay envelope de
+  paginación que tipar.
 
 ```ts
 // src/shared/interfaces/api.interface.ts
-export interface Pagination {
-  page: number;
-  pageSize: number;
-  totalItems: number;
-  totalPages: number;
-}
-
-export interface PaginatedResponse<T> {
-  data: T[];
-  pagination: Pagination;
-}
-
 export interface ApiErrorBody {
-  code: string;
-  message: string;
-  details?: { field: string; message: string }[];
-  requestId: string;
-  retryAfterSeconds?: number;
+  error: string; // mensaje legible en español — convenciones API §4
 }
 
 // src/shared/interfaces/movie.interface.ts
-export interface Money {
-  amount: number; // entero, COP sin decimales — ver convenciones API §6
-  currency: "COP";
-}
-
 export interface Movie {
-  id: string;
+  id: number;
   title: string;
+  synopsis: string;
+  genre: string;
+  classification: string;
+  duration: number;
+  director: string;
+  language: string;
+  isSubtitled: boolean;
   posterUrl: string;
-  genres: string[];
-  classification: { code: string; label: string };
-  durationMinutes: number;
-  rating: { average: number; count: number };
-  isPremiere: boolean;
-  isCineFlash: boolean;
-  priceFrom: Money;
+  trailerUrl: string | null;
+  releaseDate: string; // YYYY-MM-DD — convenciones API §7
+  rating: number;
+  isActive: boolean;
 }
 
 // features/movies/services/movies.service.ts (patrón a seguir, aún no implementado)
 import { httpClient } from "@/shared/lib/http-client";
-import type { Movie, PaginatedResponse } from "@/shared/interfaces";
+import type { Movie } from "@/shared/interfaces";
 
-interface GetMoviesParams {
-  cityId: string;
-  date?: string;
-  dateTo?: string;
-  genre?: string;
-  page?: number;
-  pageSize?: number;
-}
-
-export function getMovies(params: GetMoviesParams): Promise<PaginatedResponse<Movie>> {
-  return httpClient.get("/movies", { params }).then((res) => res.data);
+export function getMovies(): Promise<Movie[]> {
+  return httpClient.get("/movies").then((res) => res.data);
 }
 ```
 
@@ -320,7 +300,7 @@ redeclarar una forma parecida a mano (viola la regla de §3 de no duplicar `Movi
 
 ```ts
 // Panel admin — crear película (HU-FE-020)
-type CreateMoviePayload = Omit<Movie, "id" | "isCineFlash">;
+type CreateMoviePayload = Omit<Movie, "id" | "isActive">;
 
 // Leyenda del mapa de sillas (HU-FE-010)
 const seatStateLabel: Record<SeatState, string> = {
@@ -351,7 +331,7 @@ Basado en lo encontrado en la auditoría de `develop` (no en una lista genérica
   con `strict` activo esto ahora falla en build, no solo en code review.
 - **Duplicar a mano el tipo de un formulario** que ya tiene un schema de Zod/Yup (ver §7).
 - **Servicios sin tipo de retorno explícito** (`export function getMovies(params) {...}` sin `:
-  Promise<PaginatedResponse<Movie>>`).
+  Promise<Movie[]>`).
 
 ---
 

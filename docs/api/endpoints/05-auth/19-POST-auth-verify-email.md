@@ -1,7 +1,11 @@
 # POST /api/v1/auth/verify-email
 
+> **Pendiente de confirmación con el backend.** Este endpoint **no** aparece en la colección Postman
+> compartida. El contrato de abajo es la propuesta del frontend; confirmar ruta, payload y códigos
+> cuando el backend lo exponga. El registro actual (`POST /users`) no devuelve tokens ni crea sesión.
+
 ## Historia de usuario relacionada
-- **HU-FE-006** — Registro de usuario. Se invoca cuando el usuario abre el enlace de activación enviado por `POST /auth/register`. Confirma el correo; la cuenta se vuelve activa y el flujo de membresía (HU-FE-006) puede comenzar.
+- **HU-FE-006** — Registro de usuario. Se invoca cuando el usuario abre el enlace de activación enviado por `POST /users` (#18). Confirma el correo; la cuenta se vuelve activa y el flujo de membresía (HU-FE-006) puede comenzar.
 
 ## Propósito
 Confirma la dirección de correo usando el token de un solo uso del enlace de activación. Al éxito, la cuenta se vuelve activa y queda lista para iniciar sesión. Según la historia, el usuario **no** entra automáticamente tras la verificación — el frontend muestra una pantalla de confirmación con un botón para ir al inicio de sesión.

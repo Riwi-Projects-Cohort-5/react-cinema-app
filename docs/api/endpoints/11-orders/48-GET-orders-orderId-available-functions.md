@@ -1,5 +1,9 @@
 # GET /api/v1/orders/{orderId}/available-functions
 
+> **Pendiente de confirmación con el backend.** Este endpoint **no** aparece en la colección Postman
+> compartida. El contrato de abajo es la propuesta del frontend derivada del backlog; confirmar ruta,
+> payload y códigos cuando el backend lo exponga.
+
 ## Historia de usuario relacionada
 - **HU-FE-016** — Cambio de función. Alias del backlog: `GET /reservations/{id}/available-functions` (rediseñado — las reservas se convirtieron en órdenes).
 

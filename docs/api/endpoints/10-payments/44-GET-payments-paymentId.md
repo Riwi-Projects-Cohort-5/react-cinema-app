@@ -1,5 +1,9 @@
 # GET /api/v1/payments/{paymentId}
 
+> **Pendiente de confirmación con el backend.** Este endpoint **no** aparece en la colección Postman
+> compartida. El contrato de abajo es la propuesta del frontend derivada del backlog; confirmar ruta,
+> payload y códigos cuando el backend lo exponga.
+
 ## Historia de usuario relacionada
 - **HU-FE-013** — Proceso de pago seguro. Alias de backlog: `GET /payments/status` (rediseñado para consistencia REST — el estado se lee del recurso).
 

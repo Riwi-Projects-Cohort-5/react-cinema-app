@@ -1,5 +1,9 @@
 # GET /api/v1/orders
 
+> **Pendiente de confirmación con el backend.** Este endpoint **no** aparece en la colección Postman
+> compartida. El contrato de abajo es la propuesta del frontend derivada del backlog; confirmar ruta,
+> payload y códigos cuando el backend lo exponga.
+
 ## Historia de usuario relacionada
 - **HU-FE-016** — Cambio de función. **HU-FE-014** — Entradas digitales y factura. El historial de compras del usuario ("Mis compras"); también el punto de entrada para encontrar órdenes elegibles para un cambio de función.
 

@@ -1,5 +1,9 @@
 # POST /api/v1/ai/chat
 
+> **Pendiente de confirmación con el backend.** Este endpoint **no** aparece en la colección Postman
+> compartida. El contrato de abajo es la propuesta del frontend derivada del backlog; confirmar ruta,
+> payload y códigos cuando el backend lo exponga.
+
 ## Historia de usuario relacionada
 - **HU-FE-021** — Chatbot de recomendación de películas. Asistente conversacional que recomienda películas y responde preguntas sobre la cartelera actual; un botón flotante abre la ventana de chat.
 

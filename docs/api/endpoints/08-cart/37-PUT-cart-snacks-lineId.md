@@ -1,5 +1,9 @@
 # PUT /api/v1/cart/snacks/{lineId}
 
+> **Pendiente de confirmación con el backend.** Este endpoint **no** aparece en la colección Postman
+> compartida. El contrato de abajo es la propuesta del frontend derivada del backlog; confirmar ruta,
+> payload y códigos cuando el backend lo exponga.
+
 ## Historia de usuario relacionada
 - **HU-FE-012** — Compra de productos de confitería. Alias de backlog: `PUT /cart/snacks` (rediseñado para consistencia REST — con alcance por ítem).
 

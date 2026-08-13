@@ -1,5 +1,9 @@
 # POST /api/v1/promotions
 
+> **Pendiente de confirmación con el backend.** Este endpoint **no** aparece en la colección Postman
+> compartida. El contrato de abajo es la propuesta del frontend derivada del backlog; confirmar ruta,
+> payload y códigos cuando el backend lo exponga.
+
 ## Historia de usuario relacionada
 - **HU-FE-026** — Administración de promociones y cupones. Crea una promoción en el panel de administración. Las promociones comienzan **inactivas** (`isActive: false`) y se activan más adelante desde el endpoint de edición (HU-FE-026).
 

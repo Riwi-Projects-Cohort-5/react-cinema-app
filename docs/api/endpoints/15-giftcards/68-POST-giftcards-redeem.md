@@ -1,5 +1,9 @@
 # POST /api/v1/giftcards/redeem
 
+> **Pendiente de confirmación con el backend.** Este endpoint **no** aparece en la colección Postman
+> compartida. El contrato de abajo es la propuesta del frontend derivada del backlog; confirmar ruta,
+> payload y códigos cuando el backend lo exponga.
+
 ## Historia de usuario relacionada
 - **HU-FE-018** — Bonos de regalo digitales. Agrega un bono de regalo recibido al saldo del usuario (o lo aplica al carrito actual). La consulta es `GET /giftcards/{code}`, aplicar en el carrito es `POST /cart/apply-giftcard`.
 

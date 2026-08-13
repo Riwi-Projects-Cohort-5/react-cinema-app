@@ -1,5 +1,9 @@
 # POST /api/v1/coupons
 
+> **Pendiente de confirmación con el backend.** Este endpoint **no** aparece en la colección Postman
+> compartida. El contrato de abajo es la propuesta del frontend derivada del backlog; confirmar ruta,
+> payload y códigos cuando el backend lo exponga.
+
 ## Historia de usuario relacionada
 - **HU-FE-026** — Administración de promociones y cupones. Crea un código de cupón en el panel de administración.
 

@@ -1,5 +1,9 @@
 # GET /api/v1/orders/{orderId}/invoice
 
+> **Pendiente de confirmación con el backend.** Este endpoint **no** aparece en la colección Postman
+> compartida. El contrato de abajo es la propuesta del frontend derivada del backlog; confirmar ruta,
+> payload y códigos cuando el backend lo exponga.
+
 ## Historia de usuario relacionada
 - **HU-FE-014** — Entradas digitales y factura. Alias del backlog: `GET /invoice/{id}` (rediseñado — la factura vive bajo la orden a la que pertenece).
 

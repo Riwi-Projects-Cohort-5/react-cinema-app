@@ -1,5 +1,9 @@
 # GET /api/v1/movies/upcoming
 
+> **Pendiente de confirmación con el backend.** Este endpoint **no** aparece en la colección Postman
+> compartida (`GET /movies/upcoming` responde 404 en el mock). El contrato de abajo es la propuesta
+> del frontend derivada del backlog; confirmar ruta, payload y códigos cuando el backend lo exponga.
+
 ## Historia de usuario relacionada
 - **HU-FE-005** — Próximos estrenos. Alias del backlog para el detalle: `GET /movies/upcoming/{id}` → reutiliza `GET /movies/{movieId}` (las películas próximas son películas). Este endpoint es el listado; la pantalla de detalle es `GET /movies/{movieId}`.
 

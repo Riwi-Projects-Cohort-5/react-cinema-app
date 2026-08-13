@@ -1,5 +1,9 @@
 # PUT /api/v1/recommendations/preferences
 
+> **Pendiente de confirmación con el backend.** Este endpoint **no** aparece en la colección Postman
+> compartida. El contrato de abajo es la propuesta del frontend derivada del backlog; confirmar ruta,
+> payload y códigos cuando el backend lo exponga.
+
 ## Historia de usuario relacionada
 - **HU-FE-022** — Recomendaciones personalizadas. Alias del backlog: `POST /recommendations/preferences` (verbo semántico → put de recurso). Soportar la acción de descartar "ocultar esta recomendación" y el editor de preferencias.
 

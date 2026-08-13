@@ -1,5 +1,9 @@
 # GET /api/v1/promotions
 
+> **Pendiente de confirmación con el backend.** Este endpoint **no** aparece en la colección Postman
+> compartida. El contrato de abajo es la propuesta del frontend derivada del backlog; confirmar ruta,
+> payload y códigos cuando el backend lo exponga.
+
 ## Historia de usuario relacionada
 - **HU-FE-029** — Consumo de API pública (visualización pública de promociones activas). **HU-FE-026** — Administración de promociones y cupones (el lado de lectura orientado al cliente de las promociones creadas por el administrador).
 

@@ -2,11 +2,17 @@
 
 Contrato de API orientado a frontend para la plataforma web de Multicine.
 
-> Alcance: este documento es la **fuente de verdad para los equipos de frontend**. Se derivó del
-> backlog de producto *"Historia de usuario Multicine Typescript React"* (HU-FE-001 → HU-FE-029).
-> Cada endpoint tiene su propio documento de contrato. Lee primero **`00-conventions.md`** — define
-> las reglas compartidas (autenticación, envelope de error, paginación, dinero, idempotencia, rate
-> limiting) que usa todo endpoint.
+> Alcance: este documento es la **fuente de verdad para los equipos de frontend**. Cada endpoint
+> tiene su propio documento de contrato. Lee primero **`00-conventions.md`** — define las reglas
+> compartidas (autenticación, envelope de error, paginación, dinero, idempotencia, rate limiting)
+> que usa todo endpoint.
+>
+> **Estado de confirmación con el backend:** la colección Postman compartida por el backend es la
+> fuente de verdad. Los endpoints **confirmados** son `#2`, `#3`, `#4`, `#6`, `#9`, `#10`, `#11`,
+> `#18`, `#20`–`#24` y `#88`–`#90`; sus documentos reflejan los payloads reales. El resto del
+> catálogo sigue derivado del backlog *"Historia de usuario Multicine Typescript React"*
+> (HU-FE-001 → HU-FE-029) y está marcado como **"Pendiente de confirmación con el backend"** en su
+> documento: es contrato propuesto, a validar cuando el backend lo exponga.
 
 ## Cómo usar este documento
 
@@ -14,9 +20,9 @@ Contrato de API orientado a frontend para la plataforma web de Multicine.
 2. Busca tu historia de usuario en el [mapa Historia → Endpoints](#mapa-historia--endpoints) de abajo.
 3. Abre el/los contrato(s) correspondiente(s) bajo [`endpoints/`](endpoints/).
 
-URL base: `https://api.multicine.com/api/v1` (configurable vía `VITE_API_BASE_URL`, ver convenciones §1).
+URL base: `{{baseUrl}}` (configurable vía `VITE_API_BASE_URL`, ver convenciones §1).
 
-Cada endpoint tiene un **número único (1–87)** usado para referenciarlo en todo el proyecto (PRs,
+Cada endpoint tiene un **número único (1–90)** usado para referenciarlo en todo el proyecto (PRs,
 tareas, pruebas, planeación). El número es estable e independiente del nombre del archivo del doc.
 
 ---
@@ -32,8 +38,8 @@ tareas, pruebas, planeación). El número es estable e independiente del nombre 
 | # | Endpoint | Auth | Historia de usuario |
 |---|---|---|---|
 | 2 | [`GET /countries`](endpoints/01-location/02-GET-countries.md) | Público | HU-FE-002, HU-FE-020 |
-| 3 | [`GET /countries/{countryId}/departments`](endpoints/01-location/03-GET-countries-countryId-departments.md) | Público | HU-FE-002 |
-| 4 | [`GET /departments/{departmentId}/cities`](endpoints/01-location/04-GET-departments-departmentId-cities.md) | Público | HU-FE-002 |
+| 3 | [`GET /departments/{countryId}`](endpoints/01-location/03-GET-departments-countryId.md) | Público | HU-FE-002 |
+| 4 | [`GET /cities/{departmentId}`](endpoints/01-location/04-GET-cities-departmentId.md) | Público | HU-FE-002 |
 | 5 | [`POST /users/location`](endpoints/01-location/05-POST-users-location.md) | Autenticado | HU-FE-002 |
 
 ### Películas y cartelera
@@ -44,7 +50,10 @@ tareas, pruebas, planeación). El número es estable e independiente del nombre 
 | 8 | [`GET /movies/cineflash`](endpoints/02-movies/08-GET-movies-cineflash.md) | Público | HU-FE-019 |
 | 9 | [`GET /movies/{movieId}`](endpoints/02-movies/09-GET-movies-movieId.md) | Público | HU-FE-004, HU-FE-005, HU-FE-029 |
 | 10 | [`GET /movies/{movieId}/functions`](endpoints/02-movies/10-GET-movies-movieId-functions.md) | Público | HU-FE-004, HU-FE-009 |
-| 11 | [`GET /movies/{movieId}/recommendations`](endpoints/02-movies/11-GET-movies-movieId-recommendations.md) | Público (auth opcional) | HU-FE-004 |
+| 11 | [`GET /movies/{movieId}/recommendations`](endpoints/02-movies/11-GET-movies-movieId-recommendations.md) | Público | HU-FE-004 |
+| 88 | [`GET /movies/weekly`](endpoints/02-movies/88-GET-movies-weekly.md) | Público | HU-FE-003 |
+| 89 | [`GET /movies/today`](endpoints/02-movies/89-GET-movies-today.md) | Público | HU-FE-003 |
+| 90 | [`GET /movies/filter`](endpoints/02-movies/90-GET-movies-filter.md) | Público | HU-FE-003 |
 
 ### Funciones
 | # | Endpoint | Auth | Historia de usuario |
@@ -63,11 +72,11 @@ tareas, pruebas, planeación). El número es estable e independiente del nombre 
 ### Autenticación
 | # | Endpoint | Auth | Historia de usuario |
 |---|---|---|---|
-| 18 | [`POST /auth/register`](endpoints/05-auth/18-POST-auth-register.md) | Público (CAPTCHA) | HU-FE-006 |
+| 18 | [`POST /users`](endpoints/05-auth/18-POST-users.md) | Público | HU-FE-006 |
 | 19 | [`POST /auth/verify-email`](endpoints/05-auth/19-POST-auth-verify-email.md) | Público (token) | HU-FE-006 |
 | 20 | [`POST /auth/login`](endpoints/05-auth/20-POST-auth-login.md) | Público | HU-FE-007, HU-FE-029 |
-| 21 | [`POST /auth/refresh`](endpoints/05-auth/21-POST-auth-refresh.md) | Cookie | HU-FE-007, HU-FE-029 |
-| 22 | [`POST /auth/logout`](endpoints/05-auth/22-POST-auth-logout.md) | Cookie | HU-FE-007 |
+| 21 | [`POST /auth/refresh`](endpoints/05-auth/21-POST-auth-refresh.md) | Público (refreshToken en cuerpo) | HU-FE-007, HU-FE-029 |
+| 22 | [`POST /auth/logout`](endpoints/05-auth/22-POST-auth-logout.md) | Autenticado (Bearer) | HU-FE-007 |
 | 23 | [`POST /auth/forgot-password`](endpoints/05-auth/23-POST-auth-forgot-password.md) | Público | HU-FE-007 |
 | 24 | [`POST /auth/reset-password`](endpoints/05-auth/24-POST-auth-reset-password.md) | Público (token) | HU-FE-007 |
 
@@ -206,7 +215,7 @@ tareas, pruebas, planeación). El número es estable e independiente del nombre 
 |---|---|
 | **HU-FE-001** Configuración de la plataforma frontend | `#1` |
 | **HU-FE-002** Selección de país, departamento y ciudad | `#2` `#3` `#4` `#5` |
-| **HU-FE-003** Visualización de la cartelera semanal | `#6` (+filtros), `#8` |
+| **HU-FE-003** Visualización de la cartelera semanal | `#6` `#88` `#89` `#90` |
 | **HU-FE-004** Detalle de una película | `#9` `#10` `#11` |
 | **HU-FE-005** Próximos estrenos | `#7` `#9` `#58` |
 | **HU-FE-006** Registro de usuario | `#18` `#19` `#31` |
@@ -239,10 +248,11 @@ tareas, pruebas, planeación). El número es estable e independiente del nombre 
 > reutilizar los existentes). Cada documento de endpoint anota su alias del backlog en **Historia de
 > usuario relacionada**. Mapeos clave:
 >
-> - `GET /movies/weekly`, `GET /movies/today`, `GET /movies/filter` → `#6 GET /movies` (query params)
+> - `GET /movies/weekly`, `GET /movies/today`, `GET /movies/filter` → expuestos por el backend como
+>   endpoints propios `#88`, `#89`, `#90` (confirmados en la colección Postman compartida)
 > - `GET /movies/upcoming/{id}` → `#9 GET /movies/{movieId}` (los próximos estrenos son películas)
-> - `GET /departments/{countryId}` → `#3 GET /countries/{countryId}/departments`
-> - `GET /cities/{departmentId}` → `#4 GET /departments/{departmentId}/cities`
+> - `GET /countries/{countryId}/departments` → `#3 GET /departments/{countryId}` (ruta del backend)
+> - `GET /departments/{departmentId}/cities` → `#4 GET /cities/{departmentId}` (ruta del backend)
 > - `POST /reservations/lock-seats` → `#15 POST /functions/{functionId}/seat-holds`
 > - `DELETE /reservations/release-seats` → `#16 DELETE /functions/{functionId}/seat-holds/{holdId}`
 > - `GET /payments/status` → `#44 GET /payments/{paymentId}`

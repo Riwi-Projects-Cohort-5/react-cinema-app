@@ -1,5 +1,9 @@
 # GET /api/v1/points
 
+> **Pendiente de confirmación con el backend.** Este endpoint **no** aparece en la colección Postman
+> compartida. El contrato de abajo es la propuesta del frontend derivada del backlog; confirmar ruta,
+> payload y códigos cuando el backend lo exponga.
+
 ## Historia de usuario relacionada
 - **HU-FE-023** — Programa de fidelización y puntos. Lado de lectura del programa de fidelización; la acción de canje es `POST /points/redeem`. Las definiciones de nivel las sirve `GET /membership/levels`.
 

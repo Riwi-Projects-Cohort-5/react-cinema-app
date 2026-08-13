@@ -1,5 +1,10 @@
 # POST /api/v1/users/location
 
+> **Pendiente de confirmación con el backend.** Este endpoint **no** aparece en la colección Postman
+> compartida: el mock solo expone los GET de ubicación (`#2`–`#4`), esta mutación no está respaldada.
+> El contrato de abajo es la propuesta del frontend derivada del backlog; confirmar ruta, payload y
+> códigos cuando el backend lo exponga.
+
 ## Historia de usuario relacionada
 - **HU-FE-002** — Selección de país, departamento y ciudad. Persiste la ciudad elegida en el servidor para que la ubicación del usuario sobreviva entre dispositivos y sesiones.
 
@@ -92,7 +97,7 @@ Todos los errores usan el envelope de convenciones §4. Códigos relevantes: `40
 - Nunca bloquear las transiciones de la UI mientras esta petición esté en vuelo.
 
 ## Reglas de negocio
-- Una ciudad solo se puede persistir si tiene al menos un cine activo (espejo de `GET /departments/{departmentId}/cities`).
+- Una ciudad solo se puede persistir si tiene al menos un cine activo (espejo de `GET /cities/{departmentId}`, `#4`).
 - Invitado → el servidor nunca almacena nada; la ubicación es anónima por diseño.
 
 ## Notas de seguridad

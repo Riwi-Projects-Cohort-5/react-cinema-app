@@ -1,27 +1,25 @@
 # POST /api/v1/auth/login
 
 ## Historia de usuario relacionada
-- **HU-FE-007** — Inicio de sesión y autenticación segura. También la consume HU-FE-029 (consumo de API pública). Único punto de entrada para iniciar una sesión; aquí se establece la cookie de refresh.
+- **HU-FE-007** — Inicio de sesión y autenticación segura. También la consume HU-FE-029 (consumo de API pública). Único punto de entrada para iniciar una sesión.
 
 ## Propósito
-Autentica a un usuario con correo + contraseña e inicia una sesión. Devuelve un token de acceso de corta duración (guardado en memoria por el frontend, convenciones §3) y establece una cookie `refresh_token` de larga duración (HttpOnly, Secure, SameSite=Lax). `rememberMe` solo influye en la duración del token de refresh.
+Autentica a un usuario con correo + contraseña. Si es exitoso, emite un `accessToken` JWT de corta duración (15 min, **RN-028**) y un `refreshToken` de larga duración (7 días, **RN-029**). **Ambos tokens viajan en el cuerpo JSON** (no en cookies).
 
 ## Método HTTP
 POST
 
 ## URL
-`/api/v1/auth/login` (URL completa: `https://api.multicine.com/api/v1/auth/login`)
+`/api/v1/auth/login` (referencia: `{{baseUrl}}/auth/login`)
 
 ## Autenticación
-- Público (sin cabecera Authorization). Puede requerirse CAPTCHA tras fallos repetidos (ver `captchaToken?`).
+Pública (sin cabecera Authorization).
 
 ## Cabeceras
 | Cabecera | ¿Obligatoria? | Descripción |
 |---|---|---|
 | `Content-Type` | Sí | `application/json` (convenciones §2) |
 | `Accept` | Recomendada | `application/json` |
-| `Accept-Language` | Opcional | `es` (idioma de la interfaz; el backend localiza los mensajes de error) |
-| `X-Request-Id` | Opcional | UUID generado por el cliente, replicado por el servidor para trazabilidad |
 
 ## Parámetros de ruta
 Ninguno.
@@ -32,10 +30,8 @@ Ninguno.
 ## Cuerpo de la petición
 ```json
 {
-  "email": "valentina.rojas@example.com",
-  "password": "ClaveSegura#2026",
-  "rememberMe": true,
-  "captchaToken": "03AFcWeA2sx...Q7"
+  "email": "john.doe@example.com",
+  "password": "password123"
 }
 ```
 
@@ -43,90 +39,63 @@ Ninguno.
 |---|---|---|---|
 | `email` | string | Sí | Correo del usuario |
 | `password` | string | Sí | Contraseña en texto plano (solo en el cable a través de HTTPS) |
-| `rememberMe` | boolean | No | `true` → el token de refresh dura ~30 días; `false`/ausente → ~1 día (solo sesión). **No** cambia el token de acceso. |
-| `captchaToken` | string | No | Requerido cuando el backend lo exige después de intentos fallidos |
 
 ## Respuestas de éxito
 
-**200 OK** — autenticado. La respuesta incluye el token de acceso **y** establece la cookie de refresh.
+**200 OK** — autenticado. Devuelve ambos tokens y un resumen del usuario.
 
 ```json
 {
   "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-  "tokenType": "Bearer",
-  "expiresInSeconds": 900,
+  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
   "user": {
-    "id": "7f1a2b3c-4d5e-6f78-9abc-1d2e3f4a5b6c",
-    "email": "valentina.rojas@example.com",
-    "firstName": "Valentina",
-    "lastName": "Rojas",
-    "roles": ["CUSTOMER"],
-    "membershipLevel": "BASIC",
-    "avatarUrl": "https://cdn.multicine.com/avatars/7f1a2b3c.png"
+    "id": 1,
+    "name": "John Doe",
+    "email": "john.doe@example.com",
+    "role_id": 1
   }
 }
-```
-
-Cabecera de respuesta (gestionada por el backend; el cliente nunca la lee):
-```
-Set-Cookie: refresh_token=<jwt>; HttpOnly; Secure; SameSite=Lax; Path=/api/v1/auth; Max-Age=2592000
 ```
 
 | Campo | Tipo | Notas |
 |---|---|---|
-| `accessToken` | string | JWT, válido por `expiresInSeconds` (900 s = 15 min, convenciones §3) |
-| `tokenType` | string | Siempre `Bearer` |
-| `user.id` | UUID | Convenciones §8 |
-| `user.roles` | string[] | p. ej. `CUSTOMER` (roles de admin/gerente para apps de staff) |
-| `user.membershipLevel` | string \| null | p. ej. `BASIC`; `null` cuando aún no hay membresía |
-| `user.avatarUrl` | string \| null | URL de CDN, opcional |
+| `accessToken` | string | JWT, válido 15 minutos (**RN-028**) |
+| `refreshToken` | string | JWT, válido 7 días (**RN-029**); se envía en el cuerpo de `#21`/`#22` |
+| `user.id` | integer | Id del usuario |
+| `user.role_id` | integer | Rol del usuario (p. ej. `1` = cliente) |
 
 ## Respuestas de error
-Todos los errores usan el sobre compartido (convenciones §4). Códigos relevantes — cada `401` se mapea a una UX distinta:
+Todas usan el envelope de convenciones §4 (`{ "error": "..." }`).
 
-| HTTP | Código | Significado / comportamiento de frontend |
+| HTTP | Escenario | Comportamiento de frontend |
 |---|---|---|
-| 401 | `INVALID_CREDENTIALS` | Correo/contraseña incorrectos → "Correo o contraseña incorrectos" |
-| 401 | `EMAIL_NOT_VERIFIED` | La cuenta existe, el correo no está verificado → CTA "verifica tu correo" con reenvío |
-| 401 | `ACCOUNT_LOCKED` | Demasiados fallos → mostrar cuenta regresiva usando `retryAfterSeconds` (§4) |
-| 401 | `ACCOUNT_INACTIVE` | Usuario deshabilitado → mensaje de contacto con soporte |
-| 400 | `VALIDATION_ERROR` / `INVALID_CAPTCHA` | Payload malformado o CAPTCHA rechazado |
-| 429 | `RATE_LIMITED` | Demasiados intentos; respetar `retryAfterSeconds` (§10) |
-| 500 / 503 | `SERVER_ERROR` / `SERVICE_UNAVAILABLE` | Reintentable / banner de mantenimiento (§13) |
+| 401 | Credenciales inválidas | Mostrar el mensaje (p. ej. "Credenciales inválidas. Intento fallido 1 de 5.") |
+| 423 | Cuenta bloqueada temporalmente | Mostrar el mensaje de bloqueo (~15 min) y deshabilitar el envío con cuenta regresiva |
+| 429 | Rate limit | Respetar la cabecera `Retry-After` (§10) |
+| 500 / 503 | Error de servidor | Error genérico reintentable / banner de mantenimiento (§13) |
 
-Ejemplo completo — cuenta bloqueada (`401`):
+Ejemplo — credenciales inválidas (`401`):
 
 ```json
 {
-  "error": {
-    "code": "ACCOUNT_LOCKED",
-    "message": "Demasiados intentos fallidos. Intenta de nuevo más tarde.",
-    "requestId": "req_01HZ8...",
-    "retryAfterSeconds": 300
-  }
+  "error": "Credenciales invalidas. Intento fallido 1 de 5."
 }
 ```
 
-Ejemplo completo — correo no verificado (`401`):
+Ejemplo — cuenta bloqueada (`423`):
 
 ```json
 {
-  "error": {
-    "code": "EMAIL_NOT_VERIFIED",
-    "message": "Debes verificar tu correo antes de iniciar sesión.",
-    "requestId": "req_01HZ9..."
-  }
+  "error": "Cuenta bloqueada temporalmente por exceder 5 intentos fallidos. Intenta de nuevo en 15 minutos."
 }
 ```
 
 ## Consideraciones de frontend
 - Toggle mostrar/ocultar contraseña en el input de contraseña.
-- El checkbox "Recuérdame" se mapea a `rememberMe`; solo afecta la duración del token de refresh, no el comportamiento actual de la UX.
-- Guardar el token de acceso **en memoria** (Zustand/context, convenciones §3) — nunca en `localStorage`/`sessionStorage`.
-- La cookie de refresh la gestiona el navegador; el cliente nunca la toca.
-- Mapear cada código `401` a un mensaje específico (tabla anterior). `EMAIL_NOT_VERIFIED` → pantalla/CTA para reenviar la verificación; `ACCOUNT_LOCKED` → botón con cuenta regresiva usando `retryAfterSeconds`.
-- Spinner de carga al enviar; deshabilitar el envío mientras está en curso.
-- Al éxito: obtener el perfil (`GET /profile`, clave `["profile"]`) y redirigir a la ruta prevista (`location.state?.from` desde el guard de autenticación), por defecto al home.
+- Guardar el `accessToken` **en memoria** (Zustand/context, convenciones §3) — nunca en `localStorage`/`sessionStorage`.
+- Guardar también el `refreshToken` para renovar la sesión (`#21`) — mantenerlo fuera del almacenamiento persistente mientras la política del proyecto lo permita.
+- Al éxito: obtener el perfil si aplica y redirigir a la ruta prevista (`location.state?.from`), por defecto al home.
+- En `401` mostrar el mensaje del backend (incluye el conteo de intentos fallidos); en `423` mostrar cuenta regresiva de ~15 min.
 - En 429, mostrar el mensaje informativo y respetar la espera proporcionada por el servidor (§10); no reintentar de inmediato.
 - Los flujos de sesión caducada los gestiona el interceptor (§3), no esta pantalla.
 
@@ -137,16 +106,15 @@ Validar ANTES de enviar:
 - Ambos campos recortados antes de enviar.
 
 ## Reglas de negocio
-- Después de `ACCOUNT_LOCKED`, los intentos posteriores quedan bloqueados hasta que transcurra `retryAfterSeconds`; la UI debe mostrar la cuenta regresiva.
-- Las cuentas no verificadas nunca pueden autenticarse (`EMAIL_NOT_VERIFIED`) — sin bypass silencioso de inicio de sesión.
-- `rememberMe` cambia solo el `Max-Age` del token de refresh (sesión ~1 día vs ~30 días).
+- **RN-027:** si el usuario falla 5 intentos consecutivos, la cuenta se bloquea por 15 minutos (HTTP `423 Locked`).
+- **RN-028:** el Access Token tiene vigencia de 15 minutos.
+- **RN-029:** el Refresh Token tiene vigencia de 7 días.
+- **RN-030:** cada inicio de sesión desactiva e invalida el Refresh Token previo.
 
 ## Notas de seguridad
 - El token de acceso vive solo en memoria (convenciones §3) — nunca se persiste.
-- El token de refresh es una cookie HttpOnly, Secure, SameSite=Lax (convenciones §3); el frontend nunca la lee.
-- Nunca almacenar credenciales (correo/contraseña) del lado del cliente; no pre-rellenar la contraseña desde cachés de autocompletado más allá de lo que gestiona el navegador.
-- El CAPTCHA se activa automáticamente después de intentos sospechosos — el cliente debe volver a renderizar el reto cuando el backend lo solicite.
-- Nunca registrar contraseñas; evitar registrar el token de acceso.
+- Nunca almacenar credenciales (correo/contraseña) del lado del cliente.
+- Nunca registrar contraseñas; evitar registrar el token de acceso o refresh.
 
 ## Flujo de ejemplo
 ```
@@ -154,11 +122,13 @@ User clicks "Iniciar sesión"
 ↓
 Validate form (email format, password non-empty)
 ↓
-POST /auth/login { email, password, rememberMe }
+POST /auth/login { email, password }
 ↓
-Store accessToken in memory (Zustand)
-↓
-Fetch profile (GET /profile)
+200 → store accessToken + refreshToken in memory (Zustand)
 ↓
 Redirect to location.state?.from (or /)
+(On 423 → countdown ~15 min)
 ```
+
+## Confirmación y pendientes
+- La colección compartida no incluye `rememberMe` ni CAPTCHA en login. Confirmar si el backend los soporta antes de exponerlos en la UI.
