@@ -1,115 +1,43 @@
-# React Cinema App — Sistema de Diseño
+# React Cinema App — Design System
 
-Sistema de diseño oficial de **React Cinema App**.
+Documentación oficial de identidad visual y fundamentos de UI (UI Foundations) de **React Cinema App**.
 
-Esta documentación define los fundamentos visuales, principios de diseño,
-reglas y estándares que deben seguirse durante el desarrollo de la aplicación.
+Esta carpeta es la fuente única de verdad sobre estilo visual del proyecto: paleta, tipografía, espaciado, radios, elevación, bordes, opacidad, iconografía y tokens de diseño. Todo el equipo (diseño y desarrollo) debe referenciar estos documentos antes de construir cualquier componente o pantalla.
 
-El objetivo es mantener una experiencia visual **consistente, clara,
-accesible y coherente** en todas las pantallas, componentes y flujos del
-producto.
+Ruta: `docs/ui/design-system/`
 
 ---
 
-## Documentación
+## Índice
 
-### Identidad Visual
-
-- [Identidad Visual](./visual-identity.md)
-
-Define la personalidad visual de la aplicación, su filosofía, principios
-de diseño, atmósfera y referencias visuales.
-
----
-
-### Fundamentos Visuales
-
-- [Colores](./colors.md)
-- [Tipografía](./typography.md)
-- [Espaciado](./spacing.md)
-- [Forma y Bordes](./shape.md)
-- [Elevación](./elevation.md)
-- [Iconografía](./iconography.md)
-
-Estos documentos definen los valores fundamentales utilizados para construir
-la interfaz visual del producto.
+| #   | Documento                                    | Contenido                                                                     |
+| --- | -------------------------------------------- | ----------------------------------------------------------------------------- |
+| 01  | [Filosofía del diseño](./01-filosofia.md)    | Objetivo del sistema, personalidad de marca, principios, sensaciones buscadas |
+| 02  | [Identidad visual](./02-identidad-visual.md) | Mood, estilo gráfico, inspiración, nivel de minimalismo                       |
+| 03  | [Paleta de colores](./03-colores.md)         | Colores base, semánticos y de marca, con hex y justificación                  |
+| 04  | [Tipografía](./04-tipografia.md)             | Fuentes y escala tipográfica completa                                         |
+| 05  | [Espaciado](./05-espaciado.md)               | Sistema de espaciado base 4px                                                 |
+| 06  | [Border radius](./06-border-radius.md)       | Escala de radios                                                              |
+| 07  | [Elevación](./07-elevacion.md)               | Sistema de sombras                                                            |
+| 08  | [Bordes](./08-bordes.md)                     | Grosores, colores y casos de uso                                              |
+| 09  | [Opacidad](./09-opacidad.md)                 | Sistema de opacidades por estado                                              |
+| 10  | [Iconografía](./10-iconografia.md)           | Librería de íconos y reglas de uso                                            |
+| 11  | [Design Tokens](./11-desing-token.md)        | Tabla completa de tokens Light/Dark, listos para implementar                  |
 
 ---
 
-### Layout y Responsive
+## Cómo usar esta documentación
 
-- [Layout](./layout.md)
+- **Diseño (Figma):** los documentos 03, 04, 05, 06 y 07 son la base directa para crear los Color Styles, Text Styles, Effect Styles y Variables en Figma.
+- **Desarrollo (código):** el documento 11 (Design Tokens) es el que se traduce directamente a variables CSS o al archivo de configuración de Tailwind/theme del proyecto.
+- **Cualquier duda de "qué valor uso aquí":** siempre se resuelve consultando estos documentos, nunca inventando un valor nuevo. Si un caso no está cubierto, se documenta y se agrega aquí antes de usarse en producción.
 
-Define el sistema de grid, contenedores, breakpoints y comportamiento
-responsive de la aplicación.
+## Resumen rápido de identidad
 
----
+**Concepto:** _Obsidian Indigo_ — cine nocturno de autor con alma de producto tecnológico. Interfaz oscura, minimalista, elegante y tecnológica (estilo Linear/Stripe/Notion), evitando por completo el rojo/amarillo/negro-rojo tradicional del cine.
 
-### Movimiento
-
-- [Animaciones y Movimiento](./motion.md)
-
-Define las duraciones, curvas de animación, transiciones y principios de
-movimiento utilizados en la interfaz.
-
----
-
-### Accesibilidad
-
-- [Accesibilidad](./accessibility.md)
-
-Define los requisitos mínimos de accesibilidad, contraste, navegación por
-teclado, estados de foco y áreas táctiles.
-
----
-
-### Tokens de Diseño
-
-- [Tokens de Diseño](./design-tokens.md)
-
-Define la nomenclatura y estructura de los valores reutilizables del sistema
-de diseño.
-
----
-
-### Reglas y Lineamientos
-
-- [Reglas Generales](./guidelines.md)
-
-Define las reglas obligatorias que deben seguirse al diseñar y desarrollar
-nuevos componentes, pantallas y funcionalidades.
-
----
-
-## Estructura del Sistema de Diseño
-
-```text
-design-system/
-│
-├── README.md
-│
-├── Identidad Visual
-│   └── visual-identity.md
-│
-├── Fundamentos Visuales
-│   ├── colors.md
-│   ├── typography.md
-│   ├── spacing.md
-│   ├── shape.md
-│   ├── elevation.md
-│   └── iconography.md
-│
-├── Layout
-│   └── layout.md
-│
-├── Movimiento
-│   └── motion.md
-│
-├── Accesibilidad
-│   └── accessibility.md
-│
-├── Tokens
-│   └── design-tokens.md
-│
-└── Lineamientos
-    └── guidelines.md
+- **Primario:** Índigo eléctrico `#5B5FEF`
+- **Acento:** Cian-menta `#2CE0C1`
+- **Tipografía principal:** Space Grotesk
+- **Tipografía secundaria:** General Sans
+- **Base de espaciado:** 4px
