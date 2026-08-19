@@ -22,7 +22,11 @@ Ruta: `docs/ui/design-system/`
 | 08  | [Bordes](./08-bordes.md)                     | Grosores, colores y casos de uso                                              |
 | 09  | [Opacidad](./09-opacidad.md)                 | Sistema de opacidades por estado                                              |
 | 10  | [Iconografía](./10-iconografia.md)           | Librería de íconos y reglas de uso                                            |
-| 11  | [Design Tokens](./11-design-tokens.md)        | Tabla completa de tokens Light/Dark, listos para implementar                  |
+| 11  | [Design Tokens](./11-design-tokens.md)        | Tabla completa de tokens Light/Dark, listos para implementar            
+| 12  | [Sistema de Grid](./12-grid.md)               | Columnas, gutter y contenedores por breakpoint                           |
+| 13  | [Responsive Foundations](./13-responsive.md)  | Breakpoints oficiales y comportamiento responsive por componente          |
+| 14  | [Animaciones](./14-animaciones.md)             | Duraciones, curvas de easing y principios de movimiento                  |
+| 15  | [Accesibilidad](./15-accesibilidad.md)         | Reglas WCAG 2.2 AA aplicadas al proyecto                                 |      |
 
 ---
 
