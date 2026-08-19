@@ -6,7 +6,7 @@ Paleta original bajo el concepto **"Obsidian Indigo"**: base neutra azul-carbón
 
 El proyecto es **dark-first** (el modo oscuro es la experiencia por defecto), pero cada color tiene definida su variante **Light** para una futura expansión, manteniendo el primario y el acento como constantes de marca en ambos modos.
 
-> Para la tabla lista para implementar en código (nombre de variable CSS, valor Light, valor Dark, uso), ver [15 — Design Tokens](./15-design-tokens.md). Este documento explica el **porqué** de cada color; ese otro documento es la referencia técnica de implementación.
+> Para la tabla lista para implementar en código (nombre de variable CSS, valor Light, valor Dark, uso), ver [15 — Design Tokens](./11-design-tokens.md). Este documento explica el **porqué** de cada color; ese otro documento es la referencia técnica de implementación.
 
 ## Fondos y superficies
 

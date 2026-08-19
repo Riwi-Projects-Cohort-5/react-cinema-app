@@ -1,6 +1,6 @@
 [⬅ Volver al índice](./README.md)
 
-# 15 — Design Tokens
+# 11 — Design Tokens
 
 Esta es la tabla de referencia técnica: cada fila es una variable de diseño (token) lista para implementarse como variable CSS, variable de Tailwind/theme, o Variable de Figma. El **nombre del token nunca cambia entre modos**; lo único que cambia es su valor.
 

@@ -15,6 +15,6 @@
 
 - Separación de contenedores sobre fondos del mismo tono de superficie (donde la sombra no es suficiente).
 - Delimitación de campos interactivos (inputs, selects).
-- Indicación de estado (focus, error, selección) mediante cambio de color de borde, siempre combinado con otro indicador — nunca el color del borde como único indicador de estado (ver 
+- Indicación de estado (focus, error, selección) mediante cambio de color de borde, siempre combinado con otro indicador — nunca el color del borde como único indicador de estado.
 
 ---

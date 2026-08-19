@@ -10,13 +10,13 @@ El grid es la estructura invisible que da ritmo a cada pantalla. React Cinema Ap
 
 ## Breakpoints y configuración de columnas
 
-| Breakpoint | Nombre   | Rango px      | Columnas | Gutter | Margen lateral | Ancho máx. contenedor |
+| Breakpoint | Nombre   | Valor px      | Columnas | Gutter | Margen lateral | Ancho máx. contenedor |
 | ---------- | -------- | ------------- | -------- | ------ | --------------- | ---------------------- |
-| `xs`       | Mobile S | 0 – 359px     | 4        | 16px   | 16px            | 100%                   |
-| `sm`       | Mobile   | 360 – 767px   | 4        | 16px   | 20px            | 100%                   |
-| `md`       | Tablet   | 768 – 1023px  | 8        | 24px   | 32px            | 100%                   |
-| `lg`       | Desktop  | 1024 – 1279px | 12       | 24px   | 40px            | 1240px                 |
-| `xl`       | Wide     | 1280 – 1535px | 12       | 32px   | 48px            | 1440px                 |
+| `xs`       | Mobile S | 360px     | 4        | 16px   | 16px            | 100%                   |
+| `sm`       | Mobile   | 768px   | 4        | 16px   | 20px            | 100%                   |
+| `md`       | Tablet   | 1024px  | 8        | 24px   | 32px            | 100%                   |
+| `lg`       | Desktop  | 1280px | 12       | 24px   | 40px            | 1240px                 |
+| `xl`       | Wide     | 1536px | 12       | 32px   | 48px            | 1440px                 |
 | `2xl`      | Ultra    | 1536px+       | 12       | 32px   | auto (centrado) | 1600px                 |
 
 ---
@@ -62,7 +62,6 @@ En tablet, el póster va encima del bloque de info (stacked).
 
 ## Reglas de uso
 
-1. Nunca usar columnas impares en layouts de cards.
-2. El gutter entre cards usa `--spacing-4` en móvil y `--spacing-5` en desktop.
-3. Elementos full-bleed usan `container-fluid` o margin negativo si están dentro de `container`.
-4. Sidebar de filtros solo en `lg+`. En inferiores va en drawer o panel colapsable.
+1. El gutter entre cards usa `--spacing-4` en móvil y `--spacing-5` en desktop.
+2. Elementos full-bleed usan `container-fluid` o margin negativo si están dentro de `container`.
+3. Sidebar de filtros solo en `lg+`. En inferiores va en drawer o panel colapsable.
