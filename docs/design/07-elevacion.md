@@ -20,4 +20,4 @@ En modo Light, las mismas opacidades funcionan sobre `#000000`, pero se recomien
 
 ---
 
-[⬅ Border radius](./06-border-radius.md) · [Volver al índice](./README.md) · [Siguiente: Bordes ➡](./08-bordes.md)
+

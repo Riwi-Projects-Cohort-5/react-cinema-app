@@ -42,4 +42,3 @@ Cada decisión visual —color, tipografía, espaciado, movimiento— responde a
 
 ---
 
-[⬅ Volver al índice](./README.md) · [Siguiente: Identidad visual ➡](./02-identidad-visual.md)

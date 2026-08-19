@@ -34,4 +34,3 @@ Cuanto más relacionados semánticamente estén dos elementos, menor debe ser el
 
 ---
 
-[⬅ Tipografía](./04-tipografia.md) · [Volver al índice](./README.md) · [Siguiente: Border radius ➡](./06-border-radius.md)

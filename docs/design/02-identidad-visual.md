@@ -47,4 +47,4 @@ Iluminación conceptual tipo "luz de proyector": puntos de foco suaves y difusos
 
 ---
 
-[⬅ Filosofía](./01-filosofia.md) · [Volver al índice](./README.md) · [Siguiente: Paleta de colores ➡](./03-colores.md)
+

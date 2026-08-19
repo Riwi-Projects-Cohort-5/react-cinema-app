@@ -72,13 +72,3 @@ React Cinema App apunta al nivel **WCAG 2.2 AA** como mínimo. La accesibilidad 
 
 ---
 
-## Checklist antes de PR
-
-- [ ] Contraste ≥ 4.5:1 en texto normal, ≥ 3:1 en texto grande y UI
-- [ ] Un solo `<h1>` por página, sin saltos de nivel
-- [ ] Todo elemento interactivo alcanzable y operable con teclado
-- [ ] Focus visible en todos los estados `:focus-visible`
-- [ ] Imágenes con `alt` adecuado
-- [ ] Modales con trampa de foco
-- [ ] Skip link presente
-- [ ] `prefers-reduced-motion` implementado

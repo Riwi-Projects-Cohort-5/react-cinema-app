@@ -30,4 +30,4 @@ Todos los íconos deben provenir de la misma librería y variante de grosor dent
 
 ---
 
-[⬅ Opacidad](./09-opacidad.md) · [Volver al índice](./README.md) · [Siguiente: Sistema de grid ➡](./11-grid.md)
+
