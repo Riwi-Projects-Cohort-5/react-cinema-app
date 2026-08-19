@@ -4,7 +4,7 @@ Documentación oficial de identidad visual y fundamentos de UI (UI Foundations) 
 
 Esta carpeta es la fuente única de verdad sobre estilo visual del proyecto: paleta, tipografía, espaciado, radios, elevación, bordes, opacidad, iconografía y tokens de diseño. Todo el equipo (diseño y desarrollo) debe referenciar estos documentos antes de construir cualquier componente o pantalla.
 
-Ruta: `docs/ui/design-system/`
+Ruta: `docs/design/`
 
 ---
 

@@ -53,7 +53,7 @@ El proyecto es **dark-first** (el modo oscuro es la experiencia por defecto), pe
 
 - Ningún color fuera de esta tabla puede introducirse en una pantalla sin pasar por una actualización formal de este documento.
 - El **Accent** es un recurso escaso: máximo un elemento destacado por vista (salvo excepciones justificadas, ej. estados "en cartelera ahora").
-- El color nunca es el único mecanismo para comunicar estado o jerarquía (ver [14 — Accesibilidad](./14-accesibilidad.md)).
+- El color nunca es el único mecanismo para comunicar estado o jerarquía (ver [14 — Accesibilidad](./15-accesibilidad.md)).
 - Toda superficie adicional se deriva de la escala Background → Surface → Surface Variant; no se introducen tonos intermedios no documentados.
 
 ---
