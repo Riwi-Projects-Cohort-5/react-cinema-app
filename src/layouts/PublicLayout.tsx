@@ -4,8 +4,8 @@ import { PATHS } from "@routes/paths";
 
 export function PublicLayout() {
   return (
-    <div className="flex min-h-screen flex-col bg-gray-50">
-      <header className="border-b border-gray-200 bg-white">
+    <div className="flex min-h-screen flex-col ">
+      <header className="border-b border-gray-200">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
           <Link to={PATHS.home} className="text-lg font-bold text-gray-900">
             Multicine
@@ -31,7 +31,7 @@ export function PublicLayout() {
         <Outlet />
       </main>
 
-      <footer className="border-t border-gray-200 bg-white">
+      <footer className="border-t border-gray-200">
         <div className="mx-auto max-w-6xl px-4 py-4 text-center text-sm text-gray-500">
           © {new Date().getFullYear()} Multicine
         </div>
