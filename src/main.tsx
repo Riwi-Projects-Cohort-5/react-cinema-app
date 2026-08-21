@@ -2,7 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
 import App from "./App.tsx";
-import "../src/styles/main.css";
+import "./styles/main.css";
 import { registerGlobalErrorHandlers } from "@services/globalErrorHandlers";
 import { ErrorBoundary } from "@shared/components/ErrorBoundary";
 

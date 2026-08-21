@@ -66,22 +66,20 @@
   --shadow-xl: 0px 16px 40px rgba(0, 0, 0, 0.32);
 
   /* ── Tipografía: tamaños ────────────────────────────────────────────────── */
-  --font-size-display: 57px;
-  --font-size-headline: 40px;
-  --font-size-title: 28px;
-  --font-size-subtitle: 20px;
-  --font-size-body: 16px;
-  --font-size-caption: 13px;
-  --font-size-overline: 11px;
-
-  /* ── Tipografía: line-height ────────────────────────────────────────────── */
-  --leading-display: 64px;
-  --leading-headline: 48px;
-  --leading-title: 36px;
-  --leading-subtitle: 28px;
-  --leading-body: 24px;
-  --leading-caption: 18px;
-  --leading-overline: 16px;
+  --text-display: 57px;
+  --text-display--line-height: 64px;
+  --text-headline: 40px;
+  --text-headline--line-height: 48px;
+  --text-title: 28px;
+  --text-title--line-height: 36px;
+  --text-subtitle: 20px;
+  --text-subtitle--line-height: 28px;
+  --text-body: 16px;
+  --text-body--line-height: 24px;
+  --text-caption: 13px;
+  --text-caption--line-height: 18px;
+  --text-overline: 11px;
+  --text-overline--line-height: 16px;
 
   /* ── Tipografía: letter-spacing ─────────────────────────────────────────── */
   --tracking-display: -0.02em;
@@ -110,7 +108,7 @@
   --spacing-9: 96px;
   --spacing-10: 128px;
 
-  /* ── Border radius ──────────────────────────────────────────────────────── */
+  /* ── Border radius ─────────────────────────────────────────────── */
   --radius-xs: 4px;
   --radius-sm: 8px;
   --radius-md: 12px;
@@ -118,26 +116,19 @@
   --radius-xl: 24px;
   --radius-full: 999px;
 
-  /* ── Opacidad ───────────────────────────────────────────────────────────── */
+  /* ── Opacidad ──────────────────────────────────────────────────── */
   --opacity-hover: 0.08;
   --opacity-active: 0.12;
   --opacity-disabled: 0.4;
   --opacity-overlay: 0.64;
   --opacity-scrim: 0.72;
 
-  /* ── Animación: duraciones ──────────────────────────────────────────────── */
-  --duration-instant: 100ms;
-  --duration-fast: 150ms;
-  --duration-base: 200ms;
-  --duration-moderate: 300ms;
-  --duration-slow: 400ms;
-
-  /* ── Animación: curvas ──────────────────────────────────────────────────── */
+  /* ── Animación: curvas ────────────────────────────────────────── */
   --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
   --ease-decelerate: cubic-bezier(0, 0, 0.2, 1);
   --ease-accelerate: cubic-bezier(0.4, 0, 1, 1);
 
-  /* ── Grid / layout ──────────────────────────────────────────────────────── */
+  /* ── Grid / layout ────────────────────────────────────────────── */
   --container-max-width: 1280px;
   --grid-margin-desktop: 64px;
   --grid-margin-tablet: 32px;
@@ -145,6 +136,26 @@
   --grid-gutter-desktop: 24px;
   --grid-gutter-tablet: 20px;
   --grid-gutter-mobile: 16px;
+}
+
+@utility duration-instant {
+  transition-duration: 100ms;
+}
+
+@utility duration-fast {
+  transition-duration: 150ms;
+}
+
+@utility duration-base {
+  transition-duration: 200ms;
+}
+
+@utility duration-moderate {
+  transition-duration: 300ms;
+}
+
+@utility duration-slow {
+  transition-duration: 400ms;
 }
 
 /* ============================================================================
@@ -171,7 +182,7 @@
   --color-info: #2b7fd6;
 
   --color-text-primary: #101217;
-  --color-text-secondary: #4b4f5c;
+  --color-text-secondary: #414f7e;
   --color-text-disabled: #9ca0ac;
 
   --color-border: #e1e4ec;
@@ -191,7 +202,7 @@
    Ejemplo: un elemento que en light es blanco pero en dark es surface.
    ============================================================================ */
 
-@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+@custom-variant dark (&:where(:not([data-theme="light"], [data-theme="light"] *)));
 
 /* ============================================================================
    5. ESTILOS BASE
@@ -215,8 +226,8 @@ body {
   background-color: var(--color-background);
   color: var(--color-text-primary);
   font-family: var(--font-secondary);
-  font-size: var(--font-size-body);
-  line-height: var(--leading-body);
+  font-size: var(--text-body);
+  line-height: var(--text-body--line-height);
   font-weight: var(--font-weight-regular);
   min-height: 100svh;
   transition:
@@ -259,12 +270,6 @@ textarea,
 select {
   font: inherit;
   color: inherit;
-}
-
-button {
-  cursor: pointer;
-  background: none;
-  border: none;
 }
 
 ul,
