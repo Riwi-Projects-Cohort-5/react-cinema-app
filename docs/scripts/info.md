@@ -4,24 +4,26 @@ Este script permite automatizar la creación de la estructura de carpetas y arch
 
 ## 🚀 Cómo usarlo
 
-Ejecuta el siguiente comando en la terminal reemplazando `<nombre-del-feature>` por el nombre del módulo que deseas crear:
+Ejecuta el siguiente comando en la terminal reemplazando `<modulo>/<feature>` por el módulo y la feature que deseas crear:
 
 ```bash
-npm run feature <nombre-del-feature>
+npm run feature <modulo>/<feature>
 ```
 Ejemplo:
 ```bash
-npm run feature profiles
+npm run feature profiles/auth
 ```
 📁 Lo que genera el script
 
-El script creará automáticamente una nueva carpeta en src/features/<nombre-del-feature>/ con la siguiente estructura estandarizada:
+El script creará automáticamente una nueva carpeta en `src/features/<modulo>/<feature>/` con la siguiente estructura estandarizada:
 ```tree
-src/features/<nombre-del-feature>/
-├── components/          # Componentes visuales puros del módulo
-├── interfaces/          # Tipos y contratos TypeScript específicos
-├── layouts/             # Estructuras de pantallas y vistas
-├── pages/               # Páginas contenedoras y de enrutamiento
-├── services/            # Endpoints y llamadas asíncronas
-└── store/               # Estado local o global del módulo
+src/features/
+└── <modulo>/
+    └── <feature>/
+        ├── components/          # Componentes visuales puros de la feature
+        ├── interfaces/          # Tipos y contratos TypeScript específicos
+        ├── layouts/             # Estructuras de pantallas y vistas
+        ├── pages/               # Páginas contenedoras y de enrutamiento
+        ├── services/            # Endpoints y llamadas asíncronas
+        └── store/               # Estado local o global de la feature
 ```
