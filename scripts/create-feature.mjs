@@ -19,7 +19,7 @@ const parts = argument.split("/");
 
 if (parts.length !== 2 || !parts[0].trim() || !parts[1].trim()) {
   console.error(
-    "\x1b[31mError:\x1b[0m Debes especificar el módulo y el feature separados por "/"."
+    '\x1b[31mError:\x1b[0m Debes especificar el módulo y el feature separados por "/".'
   );
   console.log(
     "\x1b[36mEjemplo:\x1b[0m npm run feature products/cart"
