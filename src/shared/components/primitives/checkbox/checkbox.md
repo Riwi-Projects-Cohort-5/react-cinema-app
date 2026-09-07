@@ -93,7 +93,7 @@ const FilaAcepto = ({ checked, onChange }: {
     className="flex cursor-pointer items-center gap-2"
     onClick={() => onChange(!checked)}
   >
-    {/* Sin onChange: aquí el Checkbox es presentacional; el label gestiona el toggle
+{/* Sin onChange: aquí el Checkbox es presentacional; el label gestiona el toggle
         y evita que el clic sobre la caja dispare dos veces. */}
     <Checkbox checked={checked} />
     Acepto los términos y condiciones
