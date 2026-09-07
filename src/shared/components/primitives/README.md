@@ -15,6 +15,7 @@ import { Checkbox, CheckboxRobot } from "@shared/components/primitives";
 | Primitiva | Descripción |
 | --------- | ----------- |
 | [Checkbox](./checkbox/checkbox.md) | Check interactivo. Variante estándar (token `primary`) y "no soy un robot" (token `success`). |
+| [Dropdown](./dropdown/dropdown.md) | Select (combobox) con navegación por teclado y filtrado de opciones opcional. |
 
 ## Cómo agregar una primitiva
 

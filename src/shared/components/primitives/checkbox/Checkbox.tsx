@@ -51,7 +51,7 @@ export const Checkbox = ({
         aria-hidden="true"
         className={`flex justify-center items-center w-[1.125rem] h-[1.125rem] rounded-xs border transition-colors duration-fast ${
           checked
-            ? "border-primary bg-primary text-text-primary"
+            ? "border-primary bg-primary text-white"
             : "border-border bg-transparent text-text-disabled"
         }`}
       >
@@ -110,7 +110,7 @@ export const CheckboxRobot = ({
         aria-hidden="true"
         className={`flex justify-center items-center w-[1.375rem] h-[1.375rem] rounded-xs border-2 transition-colors duration-fast ${
           checked
-            ? "border-success bg-success text-text-primary"
+            ? "border-success bg-success text-white"
             : "border-border bg-background text-text-disabled"
         }`}
       >

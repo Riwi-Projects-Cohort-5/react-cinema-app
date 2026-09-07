@@ -126,7 +126,7 @@ const FilaAcepto = ({ checked, onChange }: {
 | Ícono | Phosphor `Check`, `size={16}`, `weight="bold"` | idem |
 
 - Colores por token: `primary` (`#5b5fef`), `success` (`#3dd68c`), `border` (`#272b36`), `background` (`#0a0b10`).
-- Ícono según convención de [Iconografía](../../../../../docs/design/10-iconografia.md): variante **Bold** para estados activos/seleccionados, tamaño base `icon-sm` (16px), color `text-text-primary`.
+- Ícono según convención de [Iconografía](../../../../../docs/design/10-iconografia.md): variante **Bold** para estados activos/seleccionados, tamaño base `icon-sm` (16px), color siempre `text-white` en estado checked (pares con contraste validado: `#FFFFFF` sobre `primary`/`success`).
 - Transición de color con `duration-fast` (150ms).
 - Soporta tema `dark` y `light` (`data-theme`) por estar basado en tokens.
 
