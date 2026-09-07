@@ -7,7 +7,6 @@ Componentes primitivos del sistema de diseño de **React Cinema App**. Cada prim
 Importación recomendada (desde el barrel):
 
 ```tsx
-<<<<<<< HEAD
 import {
   Checkbox,
   CheckboxRobot,
@@ -17,9 +16,6 @@ import {
   IconLink,
   Input,
 } from "@shared/components/primitives";
-=======
-import { Checkbox, CheckboxRobot } from "@shared/components/primitives";
->>>>>>> f5bcd3c (feat: add checkbox primitives with barrel and docs)
 ```
 
 ## Catálogo
@@ -27,7 +23,6 @@ import { Checkbox, CheckboxRobot } from "@shared/components/primitives";
 | Primitiva | Descripción |
 | --------- | ----------- |
 | [Checkbox](./checkbox/checkbox.md) | Check interactivo. Variante estándar (token `primary`) y "no soy un robot" (token `success`). |
-<<<<<<< HEAD
 | [Countdown](./countdown/countdown.md) | Cuenta regresiva viva `HH:MM:SS` con reloj y `tabular-nums`; clampa en cero y dispara `onExpire`. Respaldada por `useCountdown` (`src/shared/hooks`). |
 | [Dropdown](./dropdown/dropdown.md) | Select (combobox) con navegación por teclado y filtrado de opciones opcional. |
 | [IconBadge](./icon-badge/icon-badge.md) | Contenedor cuadrado para íconos decorativos, borde/fondo al 20/12 % del tono. |
@@ -49,8 +44,6 @@ className={cn(
 ```
 
 **Regla del sistema:** no se usan clases con `!important` (`!border-0`, etc.). Cuando una primitiva necesita anular estilos de otra, el override se resuelve por **especificidad** (p. ej. variantes `[&_input:]` sobre el wrapper) en lugar de `!`.
-=======
->>>>>>> f5bcd3c (feat: add checkbox primitives with barrel and docs)
 
 ## Cómo agregar una primitiva
 
