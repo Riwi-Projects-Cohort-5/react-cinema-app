@@ -33,6 +33,7 @@ Los aliases se definen en **dos lugares** y deben mantenerse sincronizados:
 import { env } from "@config/env";
 import { httpClient } from "@services/httpClient";
 import { useHealth } from "@features/health/hooks/useHealth";
+import { cn } from "@shared/utils/cn";
 ```
 
 ### Reglas
