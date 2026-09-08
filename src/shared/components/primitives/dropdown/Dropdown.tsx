@@ -286,10 +286,6 @@ useEffect(() => {
                 type="search"
                 state="idle"
                 value={query}
-                aria-expanded={open}
-                aria-controls={listboxId}
-                aria-activedescendant={activeDescendant}
-                aria-autocomplete="list"
                 onChange={(event) => {
                   setQuery(event.target.value);
                   setHighlightedIndex(0);
