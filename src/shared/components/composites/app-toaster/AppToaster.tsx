@@ -16,7 +16,7 @@ export function AppToaster({ theme: forcedTheme }: AppToasterProps = {}) {
       position="top-right"
       closeButton
       richColors={false}
-style={
+      style={
         {
           "--normal-bg": "var(--color-surface)",
           "--normal-border": "var(--color-border)",
