@@ -7,7 +7,15 @@ Componentes primitivos del sistema de diseño de **React Cinema App**. Cada prim
 Importación recomendada (desde el barrel):
 
 ```tsx
-import { Checkbox, CheckboxRobot } from "@shared/components/primitives";
+import {
+  Checkbox,
+  CheckboxRobot,
+  Countdown,
+  Dropdown,
+  IconBadge,
+  IconLink,
+  Input,
+} from "@shared/components/primitives";
 ```
 
 ## Catálogo
@@ -15,7 +23,10 @@ import { Checkbox, CheckboxRobot } from "@shared/components/primitives";
 | Primitiva | Descripción |
 | --------- | ----------- |
 | [Checkbox](./checkbox/checkbox.md) | Check interactivo. Variante estándar (token `primary`) y "no soy un robot" (token `success`). |
+| [Countdown](./countdown/countdown.md) | Cuenta regresiva viva `HH:MM:SS` con reloj y `tabular-nums`; clampa en cero y dispara `onExpire`. Respaldada por `useCountdown` (`src/shared/hooks`). |
 | [Dropdown](./dropdown/dropdown.md) | Select (combobox) con navegación por teclado y filtrado de opciones opcional. |
+| [IconBadge](./icon-badge/icon-badge.md) | Contenedor cuadrado para íconos decorativos, borde/fondo al 20/12 % del tono. |
+| [IconLink](./icon-link/icon-link.md) | Acción inline (link o botón) con flecha al final y hover. |
 | [Input](./Input.tsx) | Campo de texto, textarea y select con variantes, estados, iconos y soporte para helper/error messages. |
 
 ## Composición de clases (`cn`)
