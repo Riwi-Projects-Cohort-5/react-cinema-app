@@ -1,6 +1,7 @@
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 import type { KeyboardEvent, ReactNode } from "react";
 import { CaretDown, Check, MagnifyingGlass } from "@phosphor-icons/react";
+import { Input } from "@shared/components/primitives";
 
 export interface DropdownOption<V = string> {
   value: V;
@@ -165,6 +166,8 @@ export function Dropdown<V = string>({
     }
   };
 
+  const handleKeyDownRef = useRef(handleKeyDown);
+
   useEffect(() => {
     if (open && filterable) searchInputRef.current?.focus();
   }, [open, filterable]);
@@ -172,6 +175,10 @@ export function Dropdown<V = string>({
   useEffect(() => {
     if (open) highlightedOptionRef.current?.scrollIntoView?.({ block: "nearest" });
   }, [highlightedIndex, open, filteredOptions]);
+
+  const inputIsCombobox = filterable && open;
+  const activeDescendant =
+    open && highlightedOption ? `${listboxId}-option-${highlightedIndex}` : undefined;
 
   useEffect(() => {
     if (!open) return;
@@ -182,9 +189,40 @@ export function Dropdown<V = string>({
     return () => document.removeEventListener("pointerdown", onPointerDown);
   }, [open]);
 
-  const inputIsCombobox = filterable && open;
-  const activeDescendant =
-    open && highlightedOption ? `${listboxId}-option-${highlightedIndex}` : undefined;
+  useEffect(() => {
+    handleKeyDownRef.current = handleKeyDown;
+  });
+
+  useEffect(() => {
+    if (!(open && filterable)) return;
+    const input = searchInputRef.current;
+    if (!input) return;
+    input.setAttribute("role", "combobox");
+    input.setAttribute("aria-expanded", "true");
+    input.setAttribute("aria-controls", listboxId);
+    input.setAttribute("aria-autocomplete", "list");
+    input.setAttribute("aria-label", filterPlaceholder);
+    const onKeyDown = (event: globalThis.KeyboardEvent) =>
+      handleKeyDownRef.current(event as unknown as KeyboardEvent<HTMLElement>);
+    input.addEventListener("keydown", onKeyDown);
+    return () => {
+      input.removeEventListener("keydown", onKeyDown);
+      input.removeAttribute("role");
+      input.removeAttribute("aria-expanded");
+      input.removeAttribute("aria-controls");
+      input.removeAttribute("aria-autocomplete");
+      input.removeAttribute("aria-label");
+      input.removeAttribute("aria-activedescendant");
+    };
+  }, [open, filterable, listboxId, filterPlaceholder]);
+
+  useEffect(() => {
+    if (!(open && filterable)) return;
+    const input = searchInputRef.current;
+    if (!input) return;
+    if (activeDescendant) input.setAttribute("aria-activedescendant", activeDescendant);
+    else input.removeAttribute("aria-activedescendant");
+  }, [open, filterable, activeDescendant]);
 
   return (
     <div ref={containerRef} id={id} className={`relative ${className}`}>
@@ -232,23 +270,17 @@ export function Dropdown<V = string>({
           {filterable && (
             <div className="flex items-center gap-2 border-b border-divider px-3">
               <MagnifyingGlass size={16} aria-hidden="true" className="shrink-0 text-text-secondary" />
-              <input
+              <Input
                 ref={searchInputRef}
-                type="text"
-                role="combobox"
+                type="search"
+                state="idle"
                 value={query}
-                aria-expanded={open}
-                aria-controls={listboxId}
-                aria-activedescendant={activeDescendant}
-                aria-autocomplete="list"
                 onChange={(event) => {
                   setQuery(event.target.value);
                   setHighlightedIndex(0);
                 }}
-                onKeyDown={handleKeyDown}
                 placeholder={filterPlaceholder}
-                aria-label={filterPlaceholder}
-                className="w-full bg-transparent py-2 text-body text-text-primary outline-none focus:outline-hidden! placeholder:text-text-secondary"
+                className="!border-0 !bg-transparent !py-2 !text-body !text-text-primary !outline-none !focus:ring-0 !focus:outline-hidden! !placeholder:text-text-secondary !shadow-none"
               />
             </div>
           )}
