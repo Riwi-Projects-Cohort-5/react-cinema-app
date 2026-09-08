@@ -136,6 +136,7 @@ Nota: pasar también `onChange` al `<Checkbox>` interno haría que un clic sobre
 - Ícono según convención de [Iconografía](../../../../../docs/design/10-iconografia.md): variante **Bold** para estados activos/seleccionados, tamaño base `icon-sm` (16px), color siempre `text-white` en estado checked (pares con contraste validado: `#FFFFFF` sobre `primary`/`success`).
 - Transición de color con `duration-fast` (150ms).
 - Soporta tema `dark` y `light` (`data-theme`) por estar basado en tokens.
+- Los `className` condicionales (estado `checked`/`disabled`, `${className}` del consumidor) se componen con el util compartido [`cn`](../../README.md#composición-de-clases-cn), sin `!important`.
 
 ## Documentos relacionados
 
