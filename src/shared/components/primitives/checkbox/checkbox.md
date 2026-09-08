@@ -24,6 +24,8 @@ Ambos componentes comparten la misma API:
 | `defaultChecked` | `boolean` | `false` | Estado inicial en modo no-controlado. |
 | `disabled` | `boolean` | `false` | Deshabilita la interacción y aplica `opacity-40`. |
 | `className` | `string` | `""` | Clases adicionales sobre el contenedor. |
+| `ariaLabel` | `string` | — | Nombre accesible directo (`aria-label`) sobre el `role="checkbox"`. |
+| `ariaLabelledBy` | `string` | — | Id de un elemento que nombra el checkbox (`aria-labelledby`). |
 
 Los componentes no son `checked` por defecto: el valor inicial en modo no-controlado es `false`.
 
@@ -80,7 +82,7 @@ const VerificacionRobot = () => {
 
 ### Con texto / etiqueta
 
-El componente es un `div` con `role="checkbox"` — no un `<input>` — por lo que un `<label>` nativo **no** activa el toggle al hacer clic sobre el texto. Si se quiere clickear también la etiqueta, ampliar el target de clic desde el contenedor:
+El componente es un `div` con `role="checkbox"` — no un `<input>` — por lo que un `<label>` nativo **no** activa el toggle al hacer clic sobre el texto. Si se quiere clickear también la etiqueta, ampliar el target de clic desde el contenedor y dejar que **un solo elemento** gestione el toggle para evitar un doble disparo por burbujeo:
 
 ```tsx
 const FilaAcepto = ({ checked, onChange }: {
@@ -91,11 +93,15 @@ const FilaAcepto = ({ checked, onChange }: {
     className="flex cursor-pointer items-center gap-2"
     onClick={() => onChange(!checked)}
   >
-    <Checkbox checked={checked} onChange={onChange} />
+    {/* Sin onChange: aquí el Checkbox es presentacional; el label gestiona el toggle
+        y evita que el clic sobre la caja dispare dos veces. */}
+    <Checkbox checked={checked} />
     Acepto los términos y condiciones
   </label>
 );
 ```
+
+Nota: pasar también `onChange` al `<Checkbox>` interno haría que un clic sobre la caja ejecute el `onClick` del checkbox y luego burbujee al `onClick` del `<label>`, revirtiendo el estado (doble toggle).
 
 ### Deshabilitado
 
@@ -108,6 +114,7 @@ const FilaAcepto = ({ checked, onChange }: {
 ## Accesibilidad
 
 - `role="checkbox"`, `aria-checked` y `aria-disabled` gestionados automáticamente.
+- **Nombre accesible obligatorio:** al ser un `div` sin texto visible, hay que nombrarlo vía `aria-label` o `aria-labelledby`. Sin nombre, los lectores de pantalla anunciarán sólo "checkbox, no marcado".
 - Navegación por teclado: `tabIndex={0}` y alternancia con `Espacio` / `Enter`.
 - En estado `disabled`, `tabIndex={-1}`, `opacity-40` y bloqueo del toggle.
 - El foco visible sigue la regla global de [Accesibilidad](../../../../../docs/design/15-accesibilidad.md) (outline `primary` de 2px).

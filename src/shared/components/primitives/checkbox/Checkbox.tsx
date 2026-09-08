@@ -8,6 +8,8 @@ interface CheckboxProps {
   defaultChecked?: boolean;
   disabled?: boolean;
   className?: string;
+  ariaLabel?: string;
+  ariaLabelledBy?: string;
 }
 
 export const Checkbox = ({
@@ -16,6 +18,8 @@ export const Checkbox = ({
   defaultChecked = false,
   disabled = false,
   className = "",
+  ariaLabel,
+  ariaLabelledBy,
 }: CheckboxProps) => {
   const [internalChecked, setInternalChecked] = useState(defaultChecked);
   const isControlled = checkedProp !== undefined;
@@ -40,6 +44,8 @@ export const Checkbox = ({
       role="checkbox"
       aria-checked={checked}
       aria-disabled={disabled}
+      aria-label={ariaLabel}
+      aria-labelledby={ariaLabelledBy}
       tabIndex={disabled ? -1 : 0}
       onClick={toggle}
       onKeyDown={handleKeyDown}
@@ -67,6 +73,8 @@ interface CheckboxRobotProps {
   defaultChecked?: boolean;
   disabled?: boolean;
   className?: string;
+  ariaLabel?: string;
+  ariaLabelledBy?: string;
 }
 
 export const CheckboxRobot = ({
@@ -75,6 +83,8 @@ export const CheckboxRobot = ({
   defaultChecked = false,
   disabled = false,
   className = "",
+  ariaLabel,
+  ariaLabelledBy,
 }: CheckboxRobotProps) => {
   const [internalChecked, setInternalChecked] = useState(defaultChecked);
   const isControlled = checkedProp !== undefined;
@@ -99,6 +109,8 @@ export const CheckboxRobot = ({
       role="checkbox"
       aria-checked={checked}
       aria-disabled={disabled}
+      aria-label={ariaLabel}
+      aria-labelledby={ariaLabelledBy}
       tabIndex={disabled ? -1 : 0}
       onClick={toggle}
       onKeyDown={handleKeyDown}
