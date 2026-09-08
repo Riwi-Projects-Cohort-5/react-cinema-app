@@ -1,3 +1,7 @@
+export { Countdown } from "./countdown/Countdown";
+export { IconBadge } from "./icon-badge/IconBadge";
+export { IconLink } from "./icon-link/IconLink";
+
 export { default as Input } from "./Input";
 
 export { Checkbox, CheckboxRobot } from "./checkbox/Checkbox";
