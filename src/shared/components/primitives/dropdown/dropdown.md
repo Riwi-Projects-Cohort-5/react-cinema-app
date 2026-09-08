@@ -121,6 +121,7 @@ Al abrir, el foco va al campo de búsqueda; escribir filtra la lista y `Enter` s
 La primitiva implementa el patrón **combobox + listbox** de WAI-ARIA APG:
 
 - Trigger con `role="combobox"`, `aria-expanded`, `aria-haspopup="listbox"`, `aria-controls` y `aria-activedescendant`.
+- En modo `filterable`, al abrir el patrón combobox se traslada al campo de búsqueda (que recibe el foco): `role="combobox"`, `aria-expanded`, `aria-controls`, `aria-activedescendant` y `aria-autocomplete="list"` sobre el input, para que el lector de pantalla anuncie la opción resaltada mientras se filtra.
 - Listado con `role="listbox"`/`role="option"` y `aria-selected`.
 - Foco restaurado al cerrar y cierre con click fuera y `Escape`.
 - En estado `disabled`: bloqueo de interacción y `opacity-40`.

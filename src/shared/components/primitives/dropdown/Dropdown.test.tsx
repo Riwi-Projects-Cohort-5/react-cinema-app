@@ -98,4 +98,68 @@ describe("Dropdown", () => {
 
     expect(onChange).toHaveBeenCalledWith("col");
   });
+
+  it("does not match a number value to a string option that stringifies the same", () => {
+    render(
+      <Dropdown<number | string>
+        options={[
+          { value: 1, label: "Uno" },
+          { value: "1", label: "Uno (texto)" },
+        ]}
+        value={1}
+        onChange={() => {}}
+      />
+    );
+
+    expect(screen.getByRole("combobox")).toHaveTextContent("Uno");
+    expect(screen.getByRole("combobox")).not.toHaveTextContent("Uno (texto)");
+
+    fireEvent.click(screen.getByRole("combobox"));
+    expect(screen.getByRole("option", { name: "Uno" })).toHaveAttribute("aria-selected", "true");
+    expect(screen.getByRole("option", { name: "Uno (texto)" })).toHaveAttribute(
+      "aria-selected",
+      "false",
+    );
+  });
+
+  it("does not treat distinct objects that stringify the same as equal", () => {
+    const selected = { code: "col" };
+    const other = { code: "col" };
+
+    render(
+      <Dropdown<{ code: string }>
+        options={[
+          { value: selected, label: "Colombia" },
+          { value: other, label: "Otro" },
+        ]}
+        value={selected}
+        onChange={() => {}}
+      />
+    );
+
+    expect(screen.getByRole("combobox")).toHaveTextContent("Colombia");
+
+    fireEvent.click(screen.getByRole("combobox"));
+    expect(screen.getByRole("option", { name: "Colombia" })).toHaveAttribute(
+      "aria-selected",
+      "true",
+    );
+    expect(screen.getByRole("option", { name: "Otro" })).toHaveAttribute("aria-selected", "false");
+  });
+
+  it("moves the combobox pattern to the search input when filterable and open", () => {
+    render(<Dropdown options={OPTIONS} filterable />);
+
+    const trigger = screen.getByRole("combobox");
+    expect(trigger.tagName).toBe("BUTTON");
+
+    fireEvent.click(trigger);
+
+    const search = screen.getByRole("combobox");
+    expect(search.tagName).toBe("INPUT");
+    expect(search).toHaveAttribute("aria-expanded", "true");
+    expect(search).toHaveAttribute("aria-autocomplete", "list");
+    expect(search).toHaveAttribute("aria-activedescendant", expect.stringContaining("option-0"));
+    expect(screen.getByRole("listbox")).toBeInTheDocument();
+  });
 });

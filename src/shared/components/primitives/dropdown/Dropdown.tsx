@@ -29,7 +29,7 @@ export interface DropdownProps<V = string> {
 const defaultFilter = (option: DropdownOption<unknown>, query: string): boolean =>
   option.label.toLowerCase().includes(query.toLowerCase());
 
-const valuesEqual = (a: unknown, b: unknown): boolean => String(a) === String(b);
+const valuesEqual = (a: unknown, b: unknown): boolean => Object.is(a, b);
 
 export function Dropdown<V = string>({
   options,
@@ -182,6 +182,7 @@ export function Dropdown<V = string>({
     return () => document.removeEventListener("pointerdown", onPointerDown);
   }, [open]);
 
+  const inputIsCombobox = filterable && open;
   const activeDescendant =
     open && highlightedOption ? `${listboxId}-option-${highlightedIndex}` : undefined;
 
@@ -201,13 +202,13 @@ export function Dropdown<V = string>({
       <button
         type="button"
         disabled={disabled}
-        role="combobox"
+        role={inputIsCombobox ? undefined : "combobox"}
         aria-expanded={open}
         aria-haspopup="listbox"
         aria-controls={listboxId}
         aria-labelledby={label ? labelId : undefined}
         aria-label={label ? undefined : placeholder ?? undefined}
-        aria-activedescendant={activeDescendant}
+        aria-activedescendant={inputIsCombobox ? undefined : activeDescendant}
         onClick={() => (open ? closeList() : openList())}
         onKeyDown={handleKeyDown}
         className={`flex h-12 w-full items-center justify-between gap-3 rounded-md border bg-background px-4 text-body transition-colors duration-fast ${
@@ -234,7 +235,12 @@ export function Dropdown<V = string>({
               <input
                 ref={searchInputRef}
                 type="text"
+                role="combobox"
                 value={query}
+                aria-expanded={open}
+                aria-controls={listboxId}
+                aria-activedescendant={activeDescendant}
+                aria-autocomplete="list"
                 onChange={(event) => {
                   setQuery(event.target.value);
                   setHighlightedIndex(0);
