@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { KeyboardEvent } from "react";
 import { Check as CheckIcon } from "@phosphor-icons/react";
+import { cn } from "@shared/utils/cn";
 
 interface CheckboxProps {
   checked?: boolean;
@@ -49,17 +50,20 @@ export const Checkbox = ({
       tabIndex={disabled ? -1 : 0}
       onClick={toggle}
       onKeyDown={handleKeyDown}
-      className={`flex cursor-pointer select-none items-start p-px ${
-        disabled ? "cursor-not-allowed opacity-40" : ""
-      } ${className}`}
+      className={cn(
+        "flex cursor-pointer select-none items-start p-px",
+        disabled && "cursor-not-allowed opacity-40",
+        className,
+      )}
     >
       <div
         aria-hidden="true"
-        className={`flex justify-center items-center w-[1.125rem] h-[1.125rem] rounded-xs border transition-colors duration-fast ${
+        className={cn(
+          "flex justify-center items-center w-[1.125rem] h-[1.125rem] rounded-xs border transition-colors duration-fast",
           checked
             ? "border-primary bg-primary text-white"
-            : "border-border bg-transparent text-text-disabled"
-        }`}
+            : "border-border bg-transparent text-text-disabled",
+        )}
       >
         {checked && <CheckIcon size={16} weight="bold" aria-hidden="true" />}
       </div>
@@ -114,17 +118,20 @@ export const CheckboxRobot = ({
       tabIndex={disabled ? -1 : 0}
       onClick={toggle}
       onKeyDown={handleKeyDown}
-      className={`flex cursor-pointer select-none items-center justify-center ${
-        disabled ? "cursor-not-allowed opacity-40" : ""
-      } ${className}`}
+      className={cn(
+        "flex cursor-pointer select-none items-center justify-center",
+        disabled && "cursor-not-allowed opacity-40",
+        className,
+      )}
     >
       <div
         aria-hidden="true"
-        className={`flex justify-center items-center w-[1.375rem] h-[1.375rem] rounded-xs border-2 transition-colors duration-fast ${
+        className={cn(
+          "flex justify-center items-center w-[1.375rem] h-[1.375rem] rounded-xs border-2 transition-colors duration-fast",
           checked
             ? "border-success bg-success text-white"
-            : "border-border bg-background text-text-disabled"
-        }`}
+            : "border-border bg-background text-text-disabled",
+        )}
       >
         {checked && <CheckIcon size={16} weight="bold" aria-hidden="true" />}
       </div>

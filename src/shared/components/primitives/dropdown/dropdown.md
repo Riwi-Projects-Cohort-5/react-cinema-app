@@ -125,7 +125,7 @@ La primitiva implementa el patrón **combobox + listbox** de WAI-ARIA APG:
 - Listado con `role="listbox"`/`role="option"` y `aria-selected`.
 - Foco restaurado al cerrar y cierre con click fuera y `Escape`.
 - En estado `disabled`: bloqueo de interacción y `opacity-40`.
-- El campo de búsqueda del popover no muestra anillo de foco (`outline-hidden!`): el foco se indica con el caret y el contexto del popover, a pedido del equipo.
+- El campo de búsqueda del popover no muestra anillo de foco (`outline-hidden`): el foco se indica con el caret y el contexto del popover, a pedido del equipo. Los overrides sobre la primitiva `Input` (borde `border-0`, fondo `bg-transparent`, ausencia de ring y placeholder `text-text-secondary`) se aplican desde el wrapper de la fila de búsqueda con variantes de especificidad `[&_input:]` (selector `.wrapper input`), evitando el uso de `!important`.
 
 **Nota:** este patrón reemplaza justificadamente el `role="menu"`/`menuitem` sugerido en [Accesibilidad](../../../../../docs/design/15-accesibilidad.md): el patrón menu sirve para acciones de menú, no para selección con filtrado y type-ahead (el APG de `menuitem` no define navegación por texto ni `aria-activedescendant`).
 
