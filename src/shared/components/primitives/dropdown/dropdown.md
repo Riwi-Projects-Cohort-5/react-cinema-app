@@ -92,6 +92,7 @@ const SelectorCiudad = () => {
 Al abrir, el foco va al campo de búsqueda; escribir filtra la lista y `Enter` selecciona el resultado resaltado.
 
 > El campo de búsqueda utiliza la primitiva **`Input`** (`type="search"`). Como `Input` no reenvía props de ARIA/teclado, el patrón combobox (`role`, `aria-*`, keydown) se sincroniza sobre el input nativo vía `ref` + `useEffect`. El aspecto sin borde/fondo/ring se logra con overrides por especificidad `[&_input:]` aplicados en el wrapper (sin `!important`).
+
 ### Con ícono y opción opcional
 
 ```tsx
