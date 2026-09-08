@@ -4,14 +4,15 @@ import { Link } from "react-router";
 
 import { cn } from "@shared/utils/cn";
 
-interface IconLinkProps {
+interface IconLinkContentProps {
   children: ReactNode;
-  to?: string;
-  onClick?: () => void;
   className?: string;
 }
 
-export function IconLink({ children, to, onClick, className }: IconLinkProps) {
+type IconLinkProps = IconLinkContentProps & ({ to: string } | { onClick: () => void });
+
+export function IconLink(props: IconLinkProps) {
+  const { children, className } = props;
   const classes = cn(
     "group inline-flex items-center gap-1 text-caption font-medium text-primary transition-colors duration-fast hover:text-primary-hover",
     className
@@ -28,16 +29,16 @@ export function IconLink({ children, to, onClick, className }: IconLinkProps) {
     </>
   );
 
-  if (to) {
+  if ("to" in props) {
     return (
-      <Link to={to} className={classes}>
+      <Link to={props.to} className={classes}>
         {content}
       </Link>
     );
   }
 
   return (
-    <button type="button" onClick={onClick} className={classes}>
+    <button type="button" onClick={props.onClick} className={classes}>
       {content}
     </button>
   );

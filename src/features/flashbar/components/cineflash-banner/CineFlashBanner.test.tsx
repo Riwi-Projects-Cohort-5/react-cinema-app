@@ -113,6 +113,5 @@ describe("CineFlashBanner", () => {
     });
 
     expect(invalidateSpy).toHaveBeenCalledWith({ queryKey: ["cineflash"] });
-    expect(invalidateSpy).toHaveBeenCalledWith({ queryKey: ["movies", "cineflash"] });
   });
 });

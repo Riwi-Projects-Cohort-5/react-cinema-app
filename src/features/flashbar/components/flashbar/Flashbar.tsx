@@ -128,11 +128,17 @@ export function Flashbar({
         )}
       </div>
 
-      {actionLabel && (actionTo || onAction) && (
-        <IconLink to={actionTo} onClick={onAction} className="shrink-0">
-          {actionLabel}
-        </IconLink>
-      )}
+      {actionLabel &&
+        (actionTo || onAction) &&
+        (actionTo ? (
+          <IconLink to={actionTo} className="shrink-0">
+            {actionLabel}
+          </IconLink>
+        ) : (
+          <IconLink onClick={() => onAction?.()} className="shrink-0">
+            {actionLabel}
+          </IconLink>
+        ))}
 
       {onDismiss && (
         <button

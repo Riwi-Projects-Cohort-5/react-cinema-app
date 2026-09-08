@@ -31,7 +31,7 @@ export function useCountdown(remainingSeconds: number, options: UseCountdownOpti
     const deadline = Date.now() + Math.max(0, Math.floor(remainingSeconds)) * 1000;
 
     const tick = (): void => {
-      const next = Math.max(0, Math.round((deadline - Date.now()) / 1000));
+      const next = Math.max(0, Math.ceil((deadline - Date.now()) / 1000));
       setSecondsLeft(next);
       if (next === 0 && !hasExpired.current) {
         hasExpired.current = true;

@@ -34,8 +34,7 @@ se monta en `App.tsx`; `notifySuccess/Error/Info/Warning` no cambian.
 - `hooks/useCineFlash.ts` — TanStack Query `["cineflash", cityId]`, `staleTime` 30 s,
   `refetchInterval` 60 s, `refetchOnWindowFocus`.
 - `components/cineflash-banner/CineFlashBanner.tsx` — oculta el banner cuando `pending`/`error`/`!active`
-  (no se renderiza un banner vacío); invalida `["cineflash"]` y `["movies", "cineflash"]`
-  cuando la cuenta regresiva termina.
+  (no se renderiza un banner vacío); al terminar la cuenta regresiva invalida `["cineflash"]`.
 
 ## Deuda técnica (pendientes MULT-243)
 
