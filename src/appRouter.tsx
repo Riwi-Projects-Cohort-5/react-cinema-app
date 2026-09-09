@@ -1,5 +1,7 @@
 import { createBrowserRouter } from "react-router";
 import { Home } from "./features/auth/pages/home/Home";
+import { Catalog } from "./features/auth/pages/home/catalog";
+
 
 export const appRouter = createBrowserRouter([
   {
@@ -8,6 +10,6 @@ export const appRouter = createBrowserRouter([
   },
   {    
     path: "/catalog",
-    element: 'Renderizar aqui tus rutas de auth'
+    element:<Catalog/>
   }
 ]);
