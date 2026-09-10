@@ -118,7 +118,7 @@ describe("Dropdown", () => {
     expect(screen.getByRole("option", { name: "Uno" })).toHaveAttribute("aria-selected", "true");
     expect(screen.getByRole("option", { name: "Uno (texto)" })).toHaveAttribute(
       "aria-selected",
-      "false",
+      "false"
     );
   });
 
@@ -142,7 +142,7 @@ describe("Dropdown", () => {
     fireEvent.click(screen.getByRole("combobox"));
     expect(screen.getByRole("option", { name: "Colombia" })).toHaveAttribute(
       "aria-selected",
-      "true",
+      "true"
     );
     expect(screen.getByRole("option", { name: "Otro" })).toHaveAttribute("aria-selected", "false");
   });

@@ -5,12 +5,8 @@ import path from "path";
 const argument = process.argv[2];
 
 if (!argument) {
-  console.error(
-    "\x1b[31mError:\x1b[0m Por favor, especifica el módulo y el feature."
-  );
-  console.log(
-    "\x1b[36mEjemplo:\x1b[0m npm run feature products/cart"
-  );
+  console.error("\x1b[31mError:\x1b[0m Por favor, especifica el módulo y el feature.");
+  console.log("\x1b[36mEjemplo:\x1b[0m npm run feature products/cart");
   process.exit(1);
 }
 
@@ -21,9 +17,7 @@ if (parts.length !== 2 || !parts[0].trim() || !parts[1].trim()) {
   console.error(
     '\x1b[31mError:\x1b[0m Debes especificar el módulo y el feature separados por "/".'
   );
-  console.log(
-    "\x1b[36mEjemplo:\x1b[0m npm run feature products/cart"
-  );
+  console.log("\x1b[36mEjemplo:\x1b[0m npm run feature products/cart");
   process.exit(1);
 }
 
@@ -32,23 +26,10 @@ const moduleName = parts[0].trim().toLowerCase();
 const featureName = parts[1].trim().toLowerCase();
 
 // 4. Definir la ruta final
-const featureDir = path.join(
-  process.cwd(),
-  "src",
-  "features",
-  moduleName,
-  featureName
-);
+const featureDir = path.join(process.cwd(), "src", "features", moduleName, featureName);
 
 // 5. Definir las subcarpetas de la arquitectura Feature-First
-const subdirectories = [
-  "components",
-  "interfaces",
-  "layouts",
-  "pages",
-  "services",
-  "store",
-];
+const subdirectories = ["components", "interfaces", "layouts", "pages", "services", "store"];
 
 // 6. Definir archivos iniciales
 const initialFiles = {
@@ -68,9 +49,7 @@ try {
     process.exit(1);
   }
 
-  console.log(
-    `\x1b[34mCreando feature:\x1b[0m ${moduleName}/${featureName}...`
-  );
+  console.log(`\x1b[34mCreando feature:\x1b[0m ${moduleName}/${featureName}...`);
 
   // Crear módulo y feature
   fs.mkdirSync(featureDir, { recursive: true });
@@ -82,20 +61,13 @@ try {
 
   // Crear archivos base
   for (const [filePath, content] of Object.entries(initialFiles)) {
-    fs.writeFileSync(
-      path.join(featureDir, filePath),
-      content,
-      "utf8"
-    );
+    fs.writeFileSync(path.join(featureDir, filePath), content, "utf8");
   }
 
   console.log(
     `\x1b[32m¡Éxito!\x1b[0m Feature "${featureName}" creado correctamente en \x1b[2msrc/features/${moduleName}/${featureName}\x1b[0m.`
   );
 } catch (error) {
-  console.error(
-    "\x1b[31mError inesperado al crear el feature:\x1b[0m",
-    error
-  );
+  console.error("\x1b[31mError inesperado al crear el feature:\x1b[0m", error);
   process.exit(1);
 }
