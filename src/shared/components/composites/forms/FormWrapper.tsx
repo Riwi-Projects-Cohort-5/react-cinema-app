@@ -36,8 +36,9 @@ function FormWrapperInner<T>(
   { schema, onSubmit, initialValues = {}, children, className = "" }: FormWrapperProps<T>,
   ref: React.ForwardedRef<HTMLFormElement>
 ) {
-  const { errors, isSubmitting, validateField, validateForm, setErrors, clearErrors } =
-    useFormValidation(schema);
+  const { errors, validateField, validateForm, setErrors, clearErrors } = useFormValidation(schema);
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [values, setValues] = useState<Record<string, unknown>>(
     initialValues as Record<string, unknown>
@@ -62,36 +63,39 @@ function FormWrapperInner<T>(
     [setErrors]
   );
 
-  // Manejar envío del formulario
   const handleSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       clearErrors();
+      setIsSubmitting(true);
 
-      const isValid = await validateForm(values as unknown);
+      try {
+        const isValid = await validateForm(values as unknown);
 
-      if (isValid) {
-        try {
-          await onSubmit(values as unknown as T);
-        } catch (error) {
-          console.error("Error al enviar formulario:", error);
-          if (error instanceof Error) {
-            setErrors((prev) => ({
-              ...prev,
-              _form: error.message || "Error al enviar el formulario",
-            }));
+        if (isValid) {
+          try {
+            await onSubmit(values as unknown as T);
+          } catch (error) {
+            console.error("Error al enviar formulario:", error);
+            if (error instanceof Error) {
+              setErrors((prev) => ({
+                ...prev,
+                _form: error.message || "Error al enviar el formulario",
+              }));
+            }
           }
         }
+      } finally {
+        setIsSubmitting(false);
       }
     },
     [values, validateForm, onSubmit, setErrors, clearErrors]
   );
 
-  // Registrar un campo (retorna props para Input)
   const register = useCallback(
     (fieldName: string, fieldSchema: ZodType<unknown>) => ({
       name: fieldName,
-      value: values[fieldName] ?? "",
+      value: (values[fieldName] ?? "") as string | number,
       onChange: (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
       ) => {
@@ -123,10 +127,6 @@ function FormWrapperInner<T>(
     </form>
   );
 }
-
-// ============================================================================
-// EXPORTACIÓN CON TIPADO GENÉRICO
-// ============================================================================
 
 export const FormWrapper = React.forwardRef(FormWrapperInner) as <T>(
   props: FormWrapperProps<T> & { ref?: React.ForwardedRef<HTMLFormElement> }

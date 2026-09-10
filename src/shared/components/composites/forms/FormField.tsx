@@ -9,33 +9,29 @@ interface FormFieldProps {
   className?: string;
 }
 
-export const FormField = React.forwardRef<HTMLDivElement, FormFieldProps>(
-  ({ label, error, helperText, required = false, children, className = "" }, ref) => {
-    const isError = Boolean(error);
-
-    return (
-      <div ref={ref} className={`w-full space-y-1 ${className}`.trim()}>
-        {label && (
-          <label
-            className={`block text-sm font-medium mb-2 ${
-              isError ? "text-error" : "text-text-secondary"
-            }`}
-          >
-            {label}
-            {required && <span className="text-error ml-1">*</span>}
-          </label>
-        )}
-
-        <div className="relative">{children}</div>
-
-        {(error || helperText) && (
-          <p className={`text-sm mt-1 ${isError ? "text-error" : "text-text-secondary"}`}>
-            {error || helperText}
-          </p>
-        )}
-      </div>
-    );
-  }
-);
+export const FormField: React.FC<FormFieldProps> = ({
+  label,
+  error,
+  helperText,
+  required = false,
+  children,
+  className = "",
+}) => {
+  return (
+    <div className={className}>
+      {React.Children.map(children, (child) => {
+        if (React.isValidElement(child)) {
+          return React.cloneElement(child, {
+            label: label || (child.props as any).label,
+            error: error || (child.props as any).error,
+            helperText: helperText || (child.props as any).helperText,
+            required: required || (child.props as any).required,
+          } as any);
+        }
+        return child;
+      })}
+    </div>
+  );
+};
 
 FormField.displayName = "FormField";

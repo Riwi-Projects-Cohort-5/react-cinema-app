@@ -169,6 +169,7 @@ const Input = React.forwardRef<
       fieldSchema,
       error,
       onBlurValidation,
+      onBlur,
       icon,
     },
     ref
@@ -209,6 +210,9 @@ const Input = React.forwardRef<
                 icon?.right ? "pr-10" : ""
               }`}
               onBlur={(e) => {
+                if (onBlur) {
+                  onBlur(e);
+                }
                 if (onBlurValidation && fieldSchema && fieldName) {
                   onBlurValidation(fieldName, e.currentTarget.value, fieldSchema);
                 }
@@ -224,6 +228,9 @@ const Input = React.forwardRef<
                 icon?.right ? "pr-10" : ""
               }`}
               onBlur={(e) => {
+                if (onBlur) {
+                  onBlur(e);
+                }
                 if (onBlurValidation && fieldSchema && fieldName) {
                   onBlurValidation(fieldName, e.currentTarget.value, fieldSchema);
                 }
@@ -238,6 +245,9 @@ const Input = React.forwardRef<
                 icon?.right ? "pr-10" : ""
               }`}
               onBlur={(e) => {
+                if (onBlur) {
+                  onBlur(e);
+                }
                 if (onBlurValidation && fieldSchema && fieldName) {
                   onBlurValidation(fieldName, e.currentTarget.value, fieldSchema);
                 }

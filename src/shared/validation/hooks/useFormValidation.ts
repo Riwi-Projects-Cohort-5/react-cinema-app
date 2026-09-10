@@ -50,7 +50,6 @@ export function useFormValidation<T>(schema: ZodType<unknown>): UseFormValidatio
   };
 
   const validateForm = async (data: T): Promise<boolean> => {
-    setIsSubmitting(true);
     try {
       await schema.parseAsync(data);
       setErrors({});
@@ -68,8 +67,6 @@ export function useFormValidation<T>(schema: ZodType<unknown>): UseFormValidatio
       }
       setErrors(newErrors);
       return false;
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
