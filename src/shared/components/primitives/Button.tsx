@@ -1,3 +1,5 @@
+import { cn } from "@shared/utils/cn";
+
 type Variant = "primary" | "secondary" | "outline";
 type State = "default" | "loading" | "disabled";
 type ButtonSize = "xs" | "sm" | "md" | "lg" | "xl" | "icon";
@@ -68,16 +70,16 @@ const Button = ({
 
   return (
     <button
-      className={`
-        font-secondary font-medium transition-colors duration-base
-        flex items-center justify-center gap-2
-        ${variantClasses[variant]}
-        ${stateClasses[state]}
-        ${sizeClasses[size]}
-        ${radiusClasses[radius]}
-        ${shadowClasses[shadow]}
-        ${className}
-      `}
+      className={cn(
+        "font-secondary font-medium transition-colors duration-base",
+        "flex items-center justify-center gap-2",
+        variantClasses[variant],
+        stateClasses[state],
+        sizeClasses[size],
+        radiusClasses[radius],
+        shadowClasses[shadow],
+        className
+      )}
       disabled={isDisabled}
     >
       {state === "loading" ? "Cargando..." : children}
