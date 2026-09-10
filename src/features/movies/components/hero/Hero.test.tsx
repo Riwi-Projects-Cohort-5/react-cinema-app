@@ -65,7 +65,7 @@ describe("Hero component", () => {
     vi.clearAllMocks();
   });
 
-  it("renders skeleton while isPending=true without rounded-[1.25rem] and with section geometry", () => {
+  it("renders skeleton while isPending=true without outer card border radius and with section geometry", () => {
     vi.mocked(useMovies).mockReturnValue({
       data: undefined,
       isPending: true,
@@ -87,7 +87,7 @@ describe("Hero component", () => {
     expect(skeleton).toHaveClass("md:h-[430px]");
     expect(skeleton).toHaveClass("min-h-[600px]");
     expect(skeleton).toHaveClass("md:min-h-0");
-    expect(skeleton).not.toHaveClass("rounded-[1.25rem]");
+    expect(window.getComputedStyle(skeleton!).borderRadius).not.toMatch(/1\.25rem/);
   });
 
   it("renders error message and retry button on error, clicking retry calls refetch", () => {
@@ -112,7 +112,7 @@ describe("Hero component", () => {
     expect(errorContainer).toHaveClass("md:h-[430px]");
     expect(errorContainer).toHaveClass("min-h-[600px]");
     expect(errorContainer).toHaveClass("md:min-h-0");
-    expect(errorContainer).not.toHaveClass("rounded-[1.25rem]");
+    expect(window.getComputedStyle(errorContainer!).borderRadius).not.toMatch(/1\.25rem/);
 
     fireEvent.click(retryButton);
     expect(mockRefetch).toHaveBeenCalledTimes(1);
@@ -137,7 +137,7 @@ describe("Hero component", () => {
     expect(emptyContainer).toHaveClass("md:h-[430px]");
     expect(emptyContainer).toHaveClass("min-h-[600px]");
     expect(emptyContainer).toHaveClass("md:min-h-0");
-    expect(emptyContainer).not.toHaveClass("rounded-[1.25rem]");
+    expect(window.getComputedStyle(emptyContainer!).borderRadius).not.toMatch(/1\.25rem/);
   });
 
   it("renders 3 slides in correct order and accessible region container", () => {
@@ -186,15 +186,15 @@ describe("Hero component", () => {
     expect(activeBackdrop?.getAttribute("style")).toContain(expectedBackdropUrl);
   });
 
-  it("does not render any floating corner poster <img> element", () => {
+  it("does not render any floating poster <img> element", () => {
     const { container } = render(<Hero />);
 
     const posterImgs = container.querySelectorAll("img");
-    // Progress is mocked, so Hero itself must have zero <img> tags (no corner poster)
+    // Progress is mocked, so Hero itself must have zero <img> tags (no floating poster artwork)
     expect(posterImgs.length).toBe(0);
 
-    const cornerPosterAlt = screen.queryByAltText(/póster/i);
-    expect(cornerPosterAlt).not.toBeInTheDocument();
+    const posterAlt = screen.queryByAltText(/póster/i);
+    expect(posterAlt).not.toBeInTheDocument();
   });
 
   it("ensures section and viewport containers do not overflow", () => {
@@ -204,7 +204,7 @@ describe("Hero component", () => {
     expect(section).toBeInTheDocument();
     expect(section).toHaveClass("overflow-hidden");
     expect(section).toHaveClass("w-full");
-    expect(section).not.toHaveClass("rounded-[1.25rem]");
+    expect(window.getComputedStyle(section!).borderRadius).not.toMatch(/1\.25rem/);
 
     const viewport = container.querySelector("#hero-carousel");
     expect(viewport).toBeInTheDocument();
