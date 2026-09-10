@@ -24,6 +24,7 @@ const Button = ({
   size = "md",
   radius = "md",
   shadow = "none",
+  ...props // ← AGREGA ESTO
 }: ButtonProps) => {
   const variantClasses = {
     primary:
@@ -81,6 +82,7 @@ const Button = ({
         className
       )}
       disabled={isDisabled}
+      {...props}
     >
       {state === "loading" ? "Cargando..." : children}
     </button>
