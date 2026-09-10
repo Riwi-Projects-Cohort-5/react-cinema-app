@@ -11,7 +11,7 @@ interface UseFormValidationReturn<T> {
   ) => Promise<boolean>;
   validateForm: (data: T) => Promise<boolean>;
   clearErrors: () => void;
-  setErrors: (errors: Record<string, string>) => void;
+  setErrors: React.Dispatch<React.SetStateAction<Record<string, string>>>;
 }
 
 export function useFormValidation<T>(schema: ZodType<unknown>): UseFormValidationReturn<T> {
