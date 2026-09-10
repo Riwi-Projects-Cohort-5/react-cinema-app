@@ -21,6 +21,10 @@ const envSchema = z.object({
     })
     .default("/api/v1"),
   VITE_API_TIMEOUT_MS: z.coerce.number().int().positive().default(15000),
+  VITE_ENABLE_MOCKS: z
+    .enum(["true", "false"])
+    .default("false")
+    .transform((value) => value === "true"),
 });
 
 const parsedEnv = envSchema.safeParse(import.meta.env);
@@ -35,4 +39,5 @@ if (!parsedEnv.success) {
 export const env = {
   apiBaseUrl: parsedEnv.data.VITE_API_BASE_URL,
   apiTimeoutMs: parsedEnv.data.VITE_API_TIMEOUT_MS,
+  enableMocks: parsedEnv.data.VITE_ENABLE_MOCKS,
 };
