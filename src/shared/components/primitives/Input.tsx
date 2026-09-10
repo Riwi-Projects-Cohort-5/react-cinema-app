@@ -1,5 +1,6 @@
 import React from "react";
 import type { ZodType } from "zod";
+import { useFormField } from "../composites/forms/useFormField";
 
 type InputType =
   "text" | "email" | "password" | "number" | "tel" | "url" | "search" | "textarea" | "select";
@@ -177,6 +178,11 @@ const Input = React.forwardRef<
     const isError = state === "error";
     const isDisabled = state === "disabled";
     const inputId = id || name;
+    const field = useFormField();
+    const resolvedLabel = label ?? field.label;
+    const resolvedError = error ?? field.error;
+    const resolvedHelperText = helperText ?? field.helperText;
+    const resolvedRequired = required || field.required; // ← AGREGAR ;
     const baseInputClasses = getBaseInputClasses(state);
     const finalInputClasses = `${baseInputClasses} ${className}`.trim();
 
@@ -271,15 +277,15 @@ const Input = React.forwardRef<
     };
 
     // Determinar qué mensaje mostrar
-    const displayMessage = error || (isError ? errorMessage : helperText);
+    const displayMessage = resolvedError || (isError ? errorMessage : resolvedHelperText);
     const messageClassName = error || isError ? "text-error" : "text-text-secondary";
 
     return (
       <div className="w-full space-y-1">
-        {label && (
+        {resolvedLabel && (
           <label htmlFor={inputId} className={getLabelClasses(state)}>
-            {label}
-            {required && <span className="text-error ml-1">*</span>}
+            {resolvedLabel}
+            {resolvedRequired && <span className="text-error ml-1">*</span>}
           </label>
         )}
 

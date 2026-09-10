@@ -1,10 +1,7 @@
 import React from "react";
+import { FormFieldContext, type FormFieldContextValue } from "./useFormField";
 
-interface FormFieldProps {
-  label?: string;
-  error?: string;
-  helperText?: string;
-  required?: boolean;
+interface FormFieldProps extends FormFieldContextValue {
   children: React.ReactNode;
   className?: string;
 }
@@ -16,29 +13,10 @@ export const FormField: React.FC<FormFieldProps> = ({
   required = false,
   children,
   className = "",
-}) => {
-  return (
-    <div className={className}>
-      {React.Children.map(children, (child) => {
-        if (
-          React.isValidElement<{
-            label?: string;
-            error?: string;
-            helperText?: string;
-            required?: boolean;
-          }>(child)
-        ) {
-          return React.cloneElement(child, {
-            label: label || child.props.label,
-            error: error || child.props.error,
-            helperText: helperText || child.props.helperText,
-            required: required || child.props.required,
-          });
-        }
-        return child;
-      })}
-    </div>
-  );
-};
+}) => (
+  <FormFieldContext.Provider value={{ label, error, helperText, required }}>
+    <div className={className}>{children}</div>
+  </FormFieldContext.Provider>
+);
 
 FormField.displayName = "FormField";
