@@ -31,9 +31,13 @@ interface InputProps {
 
   // Validación
   fieldName?: string;
-  fieldSchema?: any;
+  fieldSchema?: ZodType<unknown>;
   error?: string;
-  onBlurValidation?: (fieldName: string, value: any, fieldSchema: any) => Promise<void>;
+  onBlurValidation?: (
+    fieldName: string,
+    value: unknown,
+    fieldSchema: ZodType<unknown>
+  ) => Promise<void>;
 
   // Para iconos
   icon?: {
@@ -63,7 +67,7 @@ interface InputProps {
 const getStateClasses = (state: InputState): string => {
   const baseTransition = "transition-colors duration-base";
 
-  const stateMap = {
+  const stateMap: Record<InputState, string> = {
     idle: `border-border text-text-primary focus:border-primary focus:ring-primary/50 ${baseTransition}`,
     error: `border-error text-error focus:border-error focus:ring-error/50 ${baseTransition}`,
     disabled: `opacity-40 cursor-not-allowed ${baseTransition}`,
@@ -75,11 +79,6 @@ const getStateClasses = (state: InputState): string => {
 const getLabelClasses = (state: InputState): string => {
   const isError = state === "error";
   return `block text-sm font-medium mb-2 ${isError ? "text-error" : "text-text-secondary"}`;
-};
-
-const getHelperClasses = (state: InputState): string => {
-  const isError = state === "error";
-  return `text-sm mt-1 ${isError ? "text-error" : "text-text-secondary"}`;
 };
 
 const getBaseInputClasses = (state: InputState): string => {
@@ -187,6 +186,7 @@ const Input = React.forwardRef<
       placeholder,
       className: finalInputClasses,
     };
+
     // Renderizar el elemento correcto según el tipo
     const renderField = () => {
       const fieldContent = (
@@ -202,10 +202,12 @@ const Input = React.forwardRef<
               ref={ref as React.Ref<HTMLTextAreaElement>}
               rows={rows}
               {...commonProps}
-              className={`${finalInputClasses} ${icon?.left ? "pl-10" : ""} ${icon?.right ? "pr-10" : ""}`}
+              className={`${finalInputClasses} ${icon?.left ? "pl-10" : ""} ${
+                icon?.right ? "pr-10" : ""
+              }`}
               onBlur={(e) => {
                 if (onBlurValidation && fieldSchema && fieldName) {
-                  onBlurValidation(fieldName, e.target.value, fieldSchema);
+                  onBlurValidation(fieldName, e.currentTarget.value, fieldSchema);
                 }
               }}
             />
@@ -215,10 +217,12 @@ const Input = React.forwardRef<
               options={options}
               selectPlaceholder={selectPlaceholder}
               {...commonProps}
-              className={`${finalInputClasses} ${icon?.left ? "pl-10" : ""} ${icon?.right ? "pr-10" : ""}`}
+              className={`${finalInputClasses} ${icon?.left ? "pl-10" : ""} ${
+                icon?.right ? "pr-10" : ""
+              }`}
               onBlur={(e) => {
                 if (onBlurValidation && fieldSchema && fieldName) {
-                  onBlurValidation(fieldName, e.target.value, fieldSchema);
+                  onBlurValidation(fieldName, e.currentTarget.value, fieldSchema);
                 }
               }}
             />
@@ -227,10 +231,12 @@ const Input = React.forwardRef<
               ref={ref as React.Ref<HTMLInputElement>}
               type={type}
               {...commonProps}
-              className={`${finalInputClasses} ${icon?.left ? "pl-10" : ""} ${icon?.right ? "pr-10" : ""}`}
+              className={`${finalInputClasses} ${icon?.left ? "pl-10" : ""} ${
+                icon?.right ? "pr-10" : ""
+              }`}
               onBlur={(e) => {
                 if (onBlurValidation && fieldSchema && fieldName) {
-                  onBlurValidation(fieldName, e.target.value, fieldSchema);
+                  onBlurValidation(fieldName, e.currentTarget.value, fieldSchema);
                 }
               }}
             />
@@ -250,9 +256,10 @@ const Input = React.forwardRef<
         </div>
       );
     };
-    // Mostrar mensaje: error si hay estado error, sino helper text
-    const showMessage = isError ? errorMessage : helperText;
-    const showMessageClass = isError ? "text-error" : "text-text-secondary";
+
+    // Determinar qué mensaje mostrar
+    const displayMessage = error || (isError ? errorMessage : helperText);
+    const messageClassName = error || isError ? "text-error" : "text-text-secondary";
 
     return (
       <div className="w-full space-y-1">
@@ -263,11 +270,9 @@ const Input = React.forwardRef<
           </label>
         )}
 
-        <div className="relative"> {renderField()}</div>
+        <div className="relative">{renderField()}</div>
 
-        {(error || (isError && errorMessage) || helperText) && (
-          <p className={showMessageClass}>{error || errorMessage || helperText}</p>
-        )}
+        {displayMessage && <p className={messageClassName}>{displayMessage}</p>}
       </div>
     );
   }

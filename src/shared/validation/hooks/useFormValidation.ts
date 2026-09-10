@@ -1,23 +1,27 @@
 import { useState } from "react";
-import type { ZodType } from "zod";
+import type { ZodType, ZodError } from "zod";
 
 interface UseFormValidationReturn<T> {
   errors: Record<string, string>;
   isSubmitting: boolean;
-  validateField: (fieldName: string, value: any, fieldSchema: ZodType) => Promise<boolean>;
+  validateField: (
+    fieldName: string,
+    value: unknown,
+    fieldSchema: ZodType<unknown>
+  ) => Promise<boolean>;
   validateForm: (data: T) => Promise<boolean>;
   clearErrors: () => void;
   setErrors: (errors: Record<string, string>) => void;
 }
 
-export function useFormValidation<T>(schema: ZodType): UseFormValidationReturn<T> {
+export function useFormValidation<T>(schema: ZodType<unknown>): UseFormValidationReturn<T> {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const validateField = async (
     fieldName: string,
-    value: any,
-    fieldSchema: ZodType
+    value: unknown,
+    fieldSchema: ZodType<unknown>
   ): Promise<boolean> => {
     try {
       await fieldSchema.parseAsync(value);
@@ -27,12 +31,19 @@ export function useFormValidation<T>(schema: ZodType): UseFormValidationReturn<T
         return newErrors;
       });
       return true;
-    } catch (error: any) {
-      if (error.issues?.[0]) {
-        setErrors((prev) => ({
-          ...prev,
-          [fieldName]: error.issues[0].message,
-        }));
+    } catch (error) {
+      const zodError = error as ZodError;
+      const issues = zodError.issues;
+
+      if (issues && issues.length > 0) {
+        const firstIssue = issues[0];
+
+        if (firstIssue) {
+          setErrors((prev) => ({
+            ...prev,
+            [fieldName]: firstIssue.message,
+          }));
+        }
       }
       return false;
     }
@@ -44,12 +55,16 @@ export function useFormValidation<T>(schema: ZodType): UseFormValidationReturn<T
       await schema.parseAsync(data);
       setErrors({});
       return true;
-    } catch (error: any) {
+    } catch (error) {
       const newErrors: Record<string, string> = {};
-      if (error.errors) {
-        error.errors.forEach((err: any) => {
-          newErrors[err.path[0]] = err.message;
-        });
+      if (error instanceof Error && "issues" in error) {
+        const zodError = error as ZodError;
+        if (zodError.issues) {
+          zodError.issues.forEach((err) => {
+            const fieldKey = String(err.path[0]);
+            newErrors[fieldKey] = err.message;
+          });
+        }
       }
       setErrors(newErrors);
       return false;
