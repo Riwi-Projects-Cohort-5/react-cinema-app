@@ -66,9 +66,13 @@ describe("HeroSlideContent", () => {
     expect(screen.getByText("Cine Flash — 20% OFF")).toBeInTheDocument();
   });
 
-  it('(g) renders "Dir. James Gunn" in director text', () => {
+  it('(g) renders "Dir. James Gunn" in director text with truncate constraints', () => {
     render(<HeroSlideContent {...defaultProps} />);
-    expect(screen.getByText(`Dir. ${mockMovie.director}`)).toBeInTheDocument();
+    const directorElement = screen.getByText(`Dir. ${mockMovie.director}`);
+    expect(directorElement).toBeInTheDocument();
+    expect(directorElement).toHaveClass("inline-block");
+    expect(directorElement).toHaveClass("max-w-[140px]");
+    expect(directorElement).toHaveClass("truncate");
   });
 
   it('(h) renders discount note "Descuento disponible hoy"', () => {
@@ -76,7 +80,14 @@ describe("HeroSlideContent", () => {
     expect(screen.getByText("Descuento disponible hoy")).toBeInTheDocument();
   });
 
-  it("handles long synopsis with max-w-[460px] container constraint", () => {
+  it("applies mobile pb-6 bottom padding to content container", () => {
+    const { container } = render(<HeroSlideContent {...defaultProps} />);
+    const root = container.firstElementChild;
+    expect(root).toHaveClass("pb-6");
+    expect(root).toHaveClass("md:p-10");
+  });
+
+  it("handles long synopsis with max-w-[460px] and line clamp constraints", () => {
     const longMovie: Movie = {
       ...mockMovie,
       synopsis:
@@ -86,6 +97,8 @@ describe("HeroSlideContent", () => {
     const synopsisElement = screen.getByText(longMovie.synopsis);
     expect(synopsisElement).toBeInTheDocument();
     expect(synopsisElement).toHaveClass("max-w-[460px]");
+    expect(synopsisElement).toHaveClass("line-clamp-3");
+    expect(synopsisElement).toHaveClass("sm:line-clamp-4");
   });
 
   it("handles long title with max-w-[600px] container constraint", () => {

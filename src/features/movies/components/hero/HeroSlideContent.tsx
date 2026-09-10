@@ -14,7 +14,7 @@ export function HeroSlideContent({
   onShowtimes,
 }: HeroSlideContentProps) {
   return (
-    <div className="absolute bottom-0 left-0 w-full p-6 pb-16 md:p-10 z-10 flex flex-col items-start gap-2">
+    <div className="absolute bottom-0 left-0 w-full p-6 pb-6 md:p-10 z-10 flex flex-col items-start gap-2">
       {/* Overline pill */}
       <div className="inline-flex items-center gap-2 mb-2">
         <span className="w-1.5 h-1.5 rounded-sm bg-accent opacity-75" />
@@ -29,7 +29,7 @@ export function HeroSlideContent({
       </h1>
 
       {/* Synopsis */}
-      <p className="font-secondary text-sm md:text-base leading-relaxed text-text-secondary/85 max-w-[460px] mt-1">
+      <p className="font-secondary text-sm md:text-base leading-relaxed text-text-secondary/85 max-w-[460px] mt-1 line-clamp-3 sm:line-clamp-4">
         {movie.synopsis}
       </p>
 
@@ -50,7 +50,7 @@ export function HeroSlideContent({
           </span>
         </span>
         <span className="text-white/18 text-xs select-none">·</span>
-        <span className="font-secondary text-xs text-text-disabled">
+        <span className="font-secondary text-xs text-text-disabled inline-block max-w-[140px] truncate align-bottom">
           Dir. {movie.director}
         </span>
       </div>
