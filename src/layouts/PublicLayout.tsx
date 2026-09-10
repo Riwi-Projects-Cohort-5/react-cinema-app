@@ -1,10 +1,13 @@
-import { Link, Outlet } from "react-router";
+import { Link, Outlet, useLocation } from "react-router";
 
 import { PATHS } from "@routes/paths";
 
 export function PublicLayout() {
+  const { pathname } = useLocation();
+  const isHome = pathname === PATHS.home;
+
   return (
-    <div className="flex min-h-screen flex-col ">
+    <div className="flex min-h-screen flex-col overflow-x-hidden">
       <header className="border-b border-gray-200">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
           <Link to={PATHS.home} className="text-lg font-bold text-gray-900">
@@ -27,7 +30,7 @@ export function PublicLayout() {
         </div>
       </header>
 
-      <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8">
+      <main className={isHome ? "w-full flex-1" : "mx-auto w-full max-w-6xl flex-1 px-4 py-8"}>
         <Outlet />
       </main>
 

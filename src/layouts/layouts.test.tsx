@@ -30,6 +30,14 @@ describe("layouts", () => {
     expect(screen.getByRole("link", { name: "Iniciar sesión" })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Registrarse" })).toBeInTheDocument();
     expect(screen.getByText("Outlet content")).toBeInTheDocument();
+    expect(screen.getByRole("main")).toHaveClass("w-full", "flex-1");
+    expect(screen.getByRole("main")).not.toHaveClass("max-w-6xl");
+  });
+
+  it("PublicLayout renders constrained main for non-home routes", () => {
+    renderLayout(PublicLayout, "/some-other-path");
+
+    expect(screen.getByRole("main")).toHaveClass("mx-auto", "w-full", "max-w-6xl", "flex-1", "px-4", "py-8");
   });
 
   it("AuthenticatedLayout renders the authenticated nav and the outlet", () => {
