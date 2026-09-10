@@ -2,35 +2,30 @@ import { createBrowserRouter, type RouteObject } from "react-router";
 
 import { LoginPage } from "@features/auth/pages/login/LoginPage";
 import { RegisterPage } from "@features/auth/pages/register/RegisterPage";
-import { AdminLayout, AuthenticatedLayout, PublicLayout } from "@layouts";
+import { MainLayout } from "@layouts";
 import { GeneralErrorPage, NotFoundPage } from "@pages";
-import { ProtectedRoute, PublicOnlyRoute } from "@routes/guards";
+import { PublicOnlyRoute, ProtectedRoute } from "@routes/guards";
 import { PlaceholderPage } from "@shared/components/PlaceholderPage";
 
 import { PATHS } from "@routes/paths";
 
 export const appRoutes: RouteObject[] = [
   {
-    element: <PublicLayout />,
+    element: <MainLayout />,
     children: [
       {
         path: PATHS.home,
         element: <PlaceholderPage title="Home" />,
       },
-    ],
-  },
-  {
-    element: <PublicOnlyRoute />,
-    children: [
-      { path: PATHS.auth.login, element: <LoginPage /> },
-      { path: PATHS.auth.register, element: <RegisterPage /> },
-    ],
-  },
-  {
-    element: <ProtectedRoute />,
-    children: [
       {
-        element: <AuthenticatedLayout />,
+        element: <PublicOnlyRoute />,
+        children: [
+          { path: PATHS.auth.login, element: <LoginPage /> },
+          { path: PATHS.auth.register, element: <RegisterPage /> },
+        ],
+      },
+      {
+        element: <ProtectedRoute />,
         children: [
           { path: PATHS.profile, element: <PlaceholderPage title="Profile" /> },
           {
@@ -40,13 +35,8 @@ export const appRoutes: RouteObject[] = [
           { path: PATHS.checkout, element: <PlaceholderPage title="Checkout" /> },
         ],
       },
-    ],
-  },
-  {
-    element: <ProtectedRoute />,
-    children: [
       {
-        element: <AdminLayout />,
+        element: <ProtectedRoute />,
         children: [
           {
             path: PATHS.admin.dashboard,

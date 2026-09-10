@@ -15,6 +15,7 @@ export function CineFlashBanner() {
 
   const handleCountdownExpire = (): void => {
     void queryClient.invalidateQueries({ queryKey: ["cineflash"] });
+    void queryClient.invalidateQueries({ queryKey: ["movies", "cineflash"] });
   };
 
   return (

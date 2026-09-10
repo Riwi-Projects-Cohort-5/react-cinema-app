@@ -23,9 +23,11 @@ export interface DropdownProps<V = string> {
   filter?: (option: DropdownOption<V>, query: string) => boolean;
   filterPlaceholder?: string;
   disabled?: boolean;
+  triggerIcon?: ReactNode;
   id?: string;
   className?: string;
   listClassName?: string;
+  triggerClassName?: string;
 }
 
 const defaultFilter = (option: DropdownOption<unknown>, query: string): boolean =>
@@ -48,6 +50,8 @@ export function Dropdown<V = string>({
   id,
   className = "",
   listClassName = "",
+  triggerIcon,
+  triggerClassName = "",
 }: DropdownProps<V>) {
   const [open, setOpen] = useState(false);
   const [internalValue, setInternalValue] = useState<V | null>(defaultValue);
@@ -256,16 +260,24 @@ export function Dropdown<V = string>({
         className={cn(
           "flex h-12 w-full items-center justify-between gap-3 rounded-md border bg-background px-4 text-body transition-colors duration-fast",
           open ? "border-primary" : "border-border",
-          disabled ? "cursor-not-allowed opacity-40" : "cursor-pointer"
+          disabled ? "cursor-not-allowed opacity-40" : "cursor-pointer",
+          triggerClassName
         )}
       >
         <span
           className={cn(
-            "truncate text-left",
+            "flex min-w-0 items-center gap-2",
             selectedOption ? "text-text-primary" : "text-text-secondary"
           )}
         >
-          {selectedOption ? selectedOption.label : (placeholder ?? "Seleccionar…")}
+          {triggerIcon && (
+            <span aria-hidden="true" className="shrink-0">
+              {triggerIcon}
+            </span>
+          )}
+          <span className="truncate text-left">
+            {selectedOption ? selectedOption.label : (placeholder ?? "Seleccionar…")}
+          </span>
         </span>
         <CaretDown
           size={16}
