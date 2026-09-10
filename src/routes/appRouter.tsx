@@ -5,6 +5,7 @@ import { RegisterPage } from "@features/auth/pages/register/RegisterPage";
 import { AdminLayout, AuthenticatedLayout, PublicLayout } from "@layouts";
 import { GeneralErrorPage, NotFoundPage } from "@pages";
 import { ProtectedRoute, PublicOnlyRoute } from "@routes/guards";
+import { HomePage } from "@features/movies/pages/HomePage";
 import { PlaceholderPage } from "@shared/components/PlaceholderPage";
 
 import { PATHS } from "@routes/paths";
@@ -15,7 +16,7 @@ export const appRoutes: RouteObject[] = [
     children: [
       {
         path: PATHS.home,
-        element: <PlaceholderPage title="Home" />,
+        element: <HomePage />,
       },
     ],
   },

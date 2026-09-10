@@ -24,7 +24,7 @@ export function HeroSlideContent({
       </div>
 
       {/* Title */}
-      <h1 className="font-primary text-[2.25rem] md:text-[3.625rem] font-bold leading-[36px] md:leading-[61px] tracking-tight text-text-primary max-w-[600px]">
+      <h1 className="font-primary text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight tracking-tight text-text-primary max-w-[600px]">
         {movie.title}
       </h1>
 
@@ -56,13 +56,13 @@ export function HeroSlideContent({
       </div>
 
       {/* CTA row */}
-      <div className="flex items-center gap-3 mt-4">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mt-4 w-full sm:w-auto">
         <button
           type="button"
           onClick={onShowtimes}
-          className="flex items-center gap-2 py-3 px-6 rounded-xl bg-accent transition-colors duration-fast hover:bg-accent/90"
+          className="flex items-center justify-center gap-2 py-3 px-6 rounded-xl bg-accent transition-colors duration-fast hover:bg-accent/90 focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
         >
-          <PlayCircle size={14} className="text-white" aria-hidden="true" />
+          <PlayCircle size={16} weight="regular" className="text-white" aria-hidden="true" />
           <span className="font-primary text-sm font-bold text-white">
             Ver horarios
           </span>
@@ -71,15 +71,15 @@ export function HeroSlideContent({
         <button
           type="button"
           onClick={onPlayTrailer}
-          className="flex items-center gap-2 py-3 px-5 rounded-xl border border-text-primary/15 bg-text-primary/[0.07] transition-colors duration-fast hover:bg-text-primary/[0.12]"
+          className="flex items-center justify-center gap-2 py-3 px-5 rounded-xl border border-text-primary/15 bg-text-primary/[0.07] transition-colors duration-fast hover:bg-text-primary/[0.12] focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
         >
-          <Play size={14} className="text-text-primary" aria-hidden="true" />
+          <Play size={14} weight="regular" className="text-text-primary" aria-hidden="true" />
           <span className="font-primary text-sm font-semibold text-text-primary">
             Ver tráiler
           </span>
         </button>
 
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-1.5 self-start sm:self-center">
           <span className="w-[5px] h-[5px] rounded-sm bg-warning" />
           <span className="font-secondary text-xs text-warning">
             Descuento disponible hoy

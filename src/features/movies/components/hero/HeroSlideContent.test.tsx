@@ -71,6 +71,11 @@ describe("HeroSlideContent", () => {
     expect(screen.getByText(`Dir. ${mockMovie.director}`)).toBeInTheDocument();
   });
 
+  it('(h) renders discount note "Descuento disponible hoy"', () => {
+    render(<HeroSlideContent {...defaultProps} />);
+    expect(screen.getByText("Descuento disponible hoy")).toBeInTheDocument();
+  });
+
   it("handles long synopsis with max-w-[460px] container constraint", () => {
     const longMovie: Movie = {
       ...mockMovie,
@@ -81,5 +86,16 @@ describe("HeroSlideContent", () => {
     const synopsisElement = screen.getByText(longMovie.synopsis);
     expect(synopsisElement).toBeInTheDocument();
     expect(synopsisElement).toHaveClass("max-w-[460px]");
+  });
+
+  it("handles long title with max-w-[600px] container constraint", () => {
+    const longMovie: Movie = {
+      ...mockMovie,
+      title: "Guardianes de la Galaxia Volumen Especial de Colección Definitiva Expandida",
+    };
+    render(<HeroSlideContent {...defaultProps} movie={longMovie} />);
+    const titleElement = screen.getByRole("heading", { level: 1 });
+    expect(titleElement).toBeInTheDocument();
+    expect(titleElement).toHaveClass("max-w-[600px]");
   });
 });

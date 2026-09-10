@@ -65,7 +65,7 @@ describe("Hero component", () => {
     vi.clearAllMocks();
   });
 
-  it("renders skeleton while isPending=true without rounded-[1.25rem]", () => {
+  it("renders skeleton while isPending=true without rounded-[1.25rem] and with section geometry", () => {
     vi.mocked(useMovies).mockReturnValue({
       data: undefined,
       isPending: true,
@@ -80,6 +80,13 @@ describe("Hero component", () => {
       container.querySelector('[data-testid="hero-skeleton"]');
 
     expect(skeleton).toBeInTheDocument();
+    expect(skeleton).toHaveAttribute("role", "status");
+    expect(skeleton).toHaveAttribute("aria-label", "Cargando películas");
+    expect(skeleton).toHaveClass("w-full");
+    expect(skeleton).toHaveClass("h-[520px]");
+    expect(skeleton).toHaveClass("md:h-[430px]");
+    expect(skeleton).toHaveClass("min-h-[600px]");
+    expect(skeleton).toHaveClass("md:min-h-0");
     expect(skeleton).not.toHaveClass("rounded-[1.25rem]");
   });
 
@@ -99,6 +106,12 @@ describe("Hero component", () => {
     expect(retryButton).toBeInTheDocument();
 
     const errorContainer = container.querySelector(".bg-surface-variant");
+    expect(errorContainer).toBeInTheDocument();
+    expect(errorContainer).toHaveClass("w-full");
+    expect(errorContainer).toHaveClass("h-[520px]");
+    expect(errorContainer).toHaveClass("md:h-[430px]");
+    expect(errorContainer).toHaveClass("min-h-[600px]");
+    expect(errorContainer).toHaveClass("md:min-h-0");
     expect(errorContainer).not.toHaveClass("rounded-[1.25rem]");
 
     fireEvent.click(retryButton);
@@ -118,6 +131,12 @@ describe("Hero component", () => {
 
     expect(screen.getByText(/No hay películas disponibles/i)).toBeInTheDocument();
     const emptyContainer = container.querySelector(".bg-surface-variant");
+    expect(emptyContainer).toBeInTheDocument();
+    expect(emptyContainer).toHaveClass("w-full");
+    expect(emptyContainer).toHaveClass("h-[520px]");
+    expect(emptyContainer).toHaveClass("md:h-[430px]");
+    expect(emptyContainer).toHaveClass("min-h-[600px]");
+    expect(emptyContainer).toHaveClass("md:min-h-0");
     expect(emptyContainer).not.toHaveClass("rounded-[1.25rem]");
   });
 

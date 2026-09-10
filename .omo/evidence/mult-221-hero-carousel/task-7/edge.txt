@@ -1,0 +1,16 @@
+# Hero Edge Cases: Rejected Request & Empty Array (Task 7)
+
+## Error State (Rejected Request):
+- `isError=true`
+- Geometry: `flex flex-col items-center justify-center gap-4 w-full h-[520px] md:h-[430px] min-h-[600px] md:min-h-0 bg-surface-variant p-6 text-center`
+- Radius: No `rounded-[1.25rem]`
+- Message: "No pudimos cargar las películas"
+- Retry: Accessible button triggering `void refetch()` on click.
+- Unit Test: Verified retry click triggers refetch and error container has exact section geometry classes.
+
+## Empty State (Empty Data Array):
+- `movies = []` or `!movies`
+- Geometry: `flex items-center justify-center w-full h-[520px] md:h-[430px] min-h-[600px] md:min-h-0 bg-surface-variant p-6 text-center`
+- Radius: No `rounded-[1.25rem]`
+- Message: "No hay películas disponibles"
+- Unit Test: Verified empty fallback renders expected text and container has exact section geometry classes.

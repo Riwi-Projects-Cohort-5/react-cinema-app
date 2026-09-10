@@ -57,7 +57,7 @@ const mockMovies: Movie[] = [
 ];
 
 describe("HeroProgress component", () => {
-  it("play/pause button renders with aria-label='Pausar autoplay' when isPaused=false and 'Reanudar autoplay' when isPaused=true", () => {
+  it("play/pause button renders with aria-label='Pausar reproducción automática' when isPaused=false and 'Reanudar reproducción automática' when isPaused=true", () => {
     const { rerender } = render(
       <HeroProgress
         movies={mockMovies}
@@ -69,7 +69,7 @@ describe("HeroProgress component", () => {
       />
     );
 
-    expect(screen.getByRole("button", { name: "Pausar autoplay" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Pausar reproducción automática" })).toBeInTheDocument();
 
     rerender(
       <HeroProgress
@@ -82,7 +82,7 @@ describe("HeroProgress component", () => {
       />
     );
 
-    expect(screen.getByRole("button", { name: "Reanudar autoplay" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Reanudar reproducción automática" })).toBeInTheDocument();
   });
 
   it("clicking play/pause calls onTogglePause", () => {
@@ -98,7 +98,7 @@ describe("HeroProgress component", () => {
       />
     );
 
-    const toggleButton = screen.getByRole("button", { name: "Pausar autoplay" });
+    const toggleButton = screen.getByRole("button", { name: "Pausar reproducción automática" });
     fireEvent.click(toggleButton);
 
     expect(handleTogglePause).toHaveBeenCalledTimes(1);
@@ -137,7 +137,7 @@ describe("HeroProgress component", () => {
       />
     );
 
-    const secondPill = screen.getByRole("button", { name: mockMovies[1]!.title });
+    const secondPill = screen.getByRole("tab", { name: mockMovies[1]!.title });
     fireEvent.click(secondPill);
 
     expect(handleGoTo).toHaveBeenCalledWith(1);
@@ -159,6 +159,8 @@ describe("HeroProgress component", () => {
     expect(activePill).toBeInTheDocument();
     expect(activePill?.className).toContain("border-accent");
     expect(activePill?.className).toContain("w-40");
+    expect(activePill).toHaveAttribute("aria-selected", "true");
+    expect(activePill).toHaveAttribute("role", "tab");
   });
 
   it("inactive pill does not have data-active attribute", () => {
@@ -173,13 +175,14 @@ describe("HeroProgress component", () => {
       />
     );
 
-    const buttons = screen.getAllByRole("button");
-    // Button 0: Play/pause, Button 1: Pill 0 (active), Button 2: Pill 1 (inactive), Button 3: Pill 2 (inactive)
-    const inactivePill1 = buttons[2];
-    const inactivePill2 = buttons[3];
+    const tabs = screen.getAllByRole("tab");
+    const inactivePill1 = tabs[1];
+    const inactivePill2 = tabs[2];
 
     expect(inactivePill1).not.toHaveAttribute("data-active");
     expect(inactivePill2).not.toHaveAttribute("data-active");
+    expect(inactivePill1).toHaveAttribute("aria-selected", "false");
+    expect(inactivePill2).toHaveAttribute("aria-selected", "false");
     expect(inactivePill1?.className).toContain("w-24");
     expect(inactivePill1?.className).toContain("border-transparent");
   });
@@ -212,6 +215,6 @@ describe("HeroProgress component", () => {
       />
     );
 
-    expect(screen.getByRole("button", { name: mockMovies[0]!.title })).toBeInTheDocument();
+    expect(screen.getByRole("tab", { name: mockMovies[0]!.title })).toBeInTheDocument();
   });
 });
