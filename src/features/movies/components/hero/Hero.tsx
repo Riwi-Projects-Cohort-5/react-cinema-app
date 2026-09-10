@@ -78,10 +78,12 @@ export function Hero() {
       >
         {/* Continuous track */}
         <div
-          className="flex gap-4 h-full transition-transform duration-500 ease-in-out motion-reduce:transition-none"
-          style={{
-            transform: `translateX(calc(16.1% - ${activeIndex} * (67.8% + 1rem)))`,
-          }}
+          className="flex gap-4 h-full transition-transform duration-500 ease-in-out motion-reduce:transition-none translate-x-[calc(-1*var(--hero-i)*(100%+1rem))] md:translate-x-[calc(16.1%-var(--hero-i)*(67.8%+1rem))]"
+          style={
+            {
+              "--hero-i": activeIndex,
+            } as React.CSSProperties
+          }
         >
           {movies.map((movie, index) => {
             const isActive = index === activeIndex;
@@ -106,7 +108,7 @@ export function Hero() {
                   }
                 }}
                 className={cn(
-                  "flex-shrink-0 w-[67.8%] h-full relative overflow-hidden rounded-2xl transition-all duration-300",
+                  "flex-shrink-0 w-full md:w-[67.8%] h-full relative overflow-hidden rounded-2xl transition-all duration-300",
                   isActive
                     ? "border border-accent/20 bg-background"
                     : "border border-transparent cursor-pointer"

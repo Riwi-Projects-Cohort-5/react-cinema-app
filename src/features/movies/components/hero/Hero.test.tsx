@@ -45,7 +45,7 @@ describe("Hero component", () => {
       isError: false,
       error: null,
       refetch: mockRefetch,
-    } as any);
+    } as unknown as ReturnType<typeof useMovies>);
 
     vi.mocked(useHeroCarousel).mockReturnValue({
       activeIndex: 0,
@@ -72,7 +72,7 @@ describe("Hero component", () => {
       isError: false,
       error: null,
       refetch: mockRefetch,
-    } as any);
+    } as unknown as ReturnType<typeof useMovies>);
 
     const { container } = render(<Hero />);
     const skeleton =
@@ -100,7 +100,7 @@ describe("Hero component", () => {
       isError: true,
       error: new Error("Network error"),
       refetch: mockRefetch,
-    } as any);
+    } as unknown as ReturnType<typeof useMovies>);
 
     const { container } = render(<Hero />);
 
@@ -131,7 +131,7 @@ describe("Hero component", () => {
       isError: false,
       error: null,
       refetch: mockRefetch,
-    } as any);
+    } as unknown as ReturnType<typeof useMovies>);
 
     const { container } = render(<Hero />);
 
@@ -278,5 +278,45 @@ describe("Hero component", () => {
       fireEvent.click(lateralSlide);
       expect(mockGoTo).toHaveBeenCalledWith(1);
     }
+  });
+
+  it("applies responsive single-card mobile layout and track transform classes", () => {
+    const { container } = render(<Hero />);
+
+    const slides = container.querySelectorAll("[data-state]");
+    slides.forEach((slide) => {
+      expect(slide).toHaveClass("w-full");
+      expect(slide).toHaveClass("md:w-[67.8%]");
+      expect(slide).toHaveClass("rounded-2xl");
+    });
+
+    const track = container.querySelector("#hero-carousel > div");
+    expect(track).toBeInTheDocument();
+    expect(track).toHaveClass("gap-4");
+    expect(track).toHaveClass("translate-x-[calc(-1*var(--hero-i)*(100%+1rem))]");
+    expect(track).toHaveClass("md:translate-x-[calc(16.1%-var(--hero-i)*(67.8%+1rem))]");
+    expect((track as HTMLElement).style.getPropertyValue("--hero-i")).toBe("0");
+  });
+
+  it("updates track --hero-i custom property when activeIndex changes", () => {
+    const { container, rerender } = render(<Hero />);
+    const track = container.querySelector("#hero-carousel > div") as HTMLElement;
+    expect(track.style.getPropertyValue("--hero-i")).toBe("0");
+
+    vi.mocked(useHeroCarousel).mockReturnValue({
+      activeIndex: 2,
+      activeItem: testMovies[2]!,
+      goTo: mockGoTo,
+      next: mockNext,
+      prev: mockPrev,
+      isPaused: false,
+      togglePause: mockTogglePause,
+      pause: mockPause,
+      resume: mockResume,
+      progress: 0.8,
+    });
+
+    rerender(<Hero />);
+    expect(track.style.getPropertyValue("--hero-i")).toBe("2");
   });
 });
