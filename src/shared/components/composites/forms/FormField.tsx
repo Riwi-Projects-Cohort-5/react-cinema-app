@@ -20,13 +20,20 @@ export const FormField: React.FC<FormFieldProps> = ({
   return (
     <div className={className}>
       {React.Children.map(children, (child) => {
-        if (React.isValidElement(child)) {
+        if (
+          React.isValidElement<{
+            label?: string;
+            error?: string;
+            helperText?: string;
+            required?: boolean;
+          }>(child)
+        ) {
           return React.cloneElement(child, {
-            label: label || (child.props as any).label,
-            error: error || (child.props as any).error,
-            helperText: helperText || (child.props as any).helperText,
-            required: required || (child.props as any).required,
-          } as any);
+            label: label || child.props.label,
+            error: error || child.props.error,
+            helperText: helperText || child.props.helperText,
+            required: required || child.props.required,
+          });
         }
         return child;
       })}

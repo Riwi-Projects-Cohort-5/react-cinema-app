@@ -3,7 +3,7 @@ import type { ZodType, ZodError } from "zod";
 
 interface UseFormValidationReturn<T> {
   errors: Record<string, string>;
-  isSubmitting: boolean;
+
   validateField: (
     fieldName: string,
     value: unknown,
@@ -16,7 +16,6 @@ interface UseFormValidationReturn<T> {
 
 export function useFormValidation<T>(schema: ZodType<unknown>): UseFormValidationReturn<T> {
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const validateField = async (
     fieldName: string,
@@ -74,7 +73,6 @@ export function useFormValidation<T>(schema: ZodType<unknown>): UseFormValidatio
 
   return {
     errors,
-    isSubmitting,
     validateField,
     validateForm,
     clearErrors,
