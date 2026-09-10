@@ -5,6 +5,62 @@
 Feature principal de la cartelera dinámica y carrusel de películas destacadas.
 Implementación bajo la historia MULT-221 HU-FE-003.2.
 
+## Modelo del Héroe
+
+El héroe es una sección a pantalla completa (full-bleed), no una tarjeta.
+- **Sin cartel**: Se usa `getBackdropUrl()` para renderizar el póster como fondo CSS. No hay ninguna etiqueta `<img>` adicional para pósteres.
+- **Estructura**: Un contendor base `<section>` con banda de controles inferior.
+
+## Contrato de Activos
+
+- **Producción**: `posterUrl` transformada mediante `getBackdropUrl()` directamente.
+- **QA (Fixture)**: Usar `src/assets/hero.png` para pruebas visuales en caso de fallo de datos.
+
+## Tabla de Geometría (SVG Referencia)
+
+| Elemento | Valor / Descripción |
+|---|---|
+| Frame Viewport | 1846×608 |
+| Viewport Visual | altura 520px |
+| Región controles | altura 88px |
+| Diapositiva Activa | 1251px ancho |
+| Flechas (hit) | 44×44px |
+
+## Procedimiento de QA Visual
+
+Para asegurar la fidelidad con Figma:
+1. Iniciar servidor: `npm run dev`
+2. Ir a `/`
+3. Click en pausa (verificar atributo `data-carousel-state="paused"`)
+4. Confirmar `data-active-index`
+5. Capturar pantalla en 375×812 (móvil), 768×1024 (tablet), 1440×900 (desktop)
+6. Guardar evidencia en `.omo/evidence/mult-221-hero-carousel/revised/`
+
+### Deterministic Browser QA Mechanism
+
+The hero exposes two test-only attributes for deterministic screenshot capture:
+
+- `data-carousel-state` on the `<section>` — `"playing"` while autoplay runs, `"paused"` after the pause button is clicked. Playwright waits for `[data-carousel-state="paused"]` before capturing so the slide cannot change mid-shot.
+- `data-active-index` on the `#hero-carousel` viewport — the zero-based index of the active slide. Tests select a known slide via this attribute and wait for its transition to finish before capture.
+
+Executed QA (recorded evidence):
+1. `npm run dev`
+2. Navigate to `/`
+3. Wait for `[role="region"][aria-roledescription="carrusel"]`
+4. Click `[aria-label="Siguiente"]`; assert `data-active-index` changes 0 -> 1
+5. Click pause; assert `data-carousel-state="paused"`
+6. Set viewport 1440×900 → screenshot `.omo/evidence/mult-221-hero-carousel/revised/desktop-1440x900.png`
+7. Set viewport 768×1024 → screenshot `.omo/evidence/mult-221-hero-carousel/revised/tablet-768x1024.png`
+8. Set viewport 375×812 → screenshot `.omo/evidence/mult-221-hero-carousel/revised/mobile-375x812.png`
+9. Assert `document.documentElement.scrollWidth === document.documentElement.clientWidth` at every viewport
+10. Navigate to `/auth/login`; assert main content remains `max-w-6xl` constrained
+
+## Gestión de fallos
+
+- **Sin arte**: Fallback visual estético, no dejar espacio vacío.
+- **Overflow**: Gestión via `overflow-hidden`.
+- **Preferencia movimiento**: `motion-reduce:transition-none` respetado.
+
 ## Módulos
 
 | Módulo | Ruta | Descripción |
@@ -47,7 +103,7 @@ import { ... } from "@features/movies/utils";
 | Arrow shadow | `shadow-xl` | `docs/design/07-elevacion.md` |
 | Arrow radius | `rounded-full` | `docs/design/08-bordes.md` |
 | Badge radius | `rounded-md` | `docs/design/08-bordes.md` |
-| Hero outer radius | NONE (no `rounded-[1.25rem]`) | `docs/design/08-bordes.md` |
+| Hero outer radius | NONE (no outer 20px card border radius) | `docs/design/08-bordes.md` |
 | Slide transition | `transition-transform duration-500 ease-in-out` | `docs/design/14-animaciones.md` |
 | Reduced motion | `motion-reduce:transition-none` | `docs/design/14-animaciones.md` |
 | Focus ring | `focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2` | `docs/design/15-accesibilidad.md` |
