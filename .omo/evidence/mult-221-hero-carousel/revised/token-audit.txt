@@ -1,0 +1,25 @@
+TOKEN AUDIT — HERO SECTION
+===========================
+
+Visual Element          | CSS Token/Class                                                       | Source Document
+------------------------|-----------------------------------------------------------------------|----------------------------------
+Section background      | bg-background                                                         | docs/design/03-colores.md
+Slide surface           | bg-surface, bg-surface-variant                                        | docs/design/03-colores.md
+Primary text            | text-text-primary                                                     | docs/design/03-colores.md
+Secondary text          | text-text-secondary                                                   | docs/design/03-colores.md
+Disabled text           | text-text-disabled                                                    | docs/design/03-colores.md
+Active/accent           | bg-accent, text-accent, border-accent                                 | docs/design/03-colores.md
+Warning                 | text-warning, bg-warning                                              | docs/design/03-colores.md
+Title font              | font-primary (Space Grotesk)                                          | docs/design/04-tipografia.md
+Body font               | font-secondary (General Sans/Inter)                                   | docs/design/04-tipografia.md
+Hero H1 size            | text-4xl lg:text-5xl font-bold                                        | docs/design/04-tipografia.md
+Overlay gradient        | bg-gradient-to-r from-background/88 via-background/52 to-transparent  | docs/design/09-opacidad.md
+Bottom fade             | bg-gradient-to-b from-transparent to-background/52                   | docs/design/09-opacidad.md
+Arrow shadow            | shadow-xl                                                             | docs/design/07-elevacion.md
+Arrow radius            | rounded-full                                                          | docs/design/08-bordes.md
+Badge radius            | rounded-md                                                            | docs/design/08-bordes.md
+Hero outer radius       | NONE (no rounded-[1.25rem])                                           | docs/design/08-bordes.md
+Slide transition        | transition-transform duration-500 ease-in-out                         | docs/design/14-animaciones.md
+Reduced motion          | motion-reduce:transition-none                                         | docs/design/14-animaciones.md
+Focus ring              | focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 | docs/design/15-accesibilidad.md
+Autoplay interval       | 5000ms                                                                | docs/design/14-animaciones.md

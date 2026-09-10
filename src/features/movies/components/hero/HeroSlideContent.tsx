@@ -44,7 +44,7 @@ export function HeroSlideContent({
         </span>
         <span className="text-white/18 text-xs select-none">·</span>
         <span className="inline-flex items-center gap-1">
-          <Clock size={11} weight="regular" className="text-text-disabled" />
+          <Clock size={11} weight="regular" className="text-text-disabled" aria-hidden="true" />
           <span className="font-secondary text-xs text-text-secondary">
             {formatDuration(movie.duration)}
           </span>
@@ -62,7 +62,7 @@ export function HeroSlideContent({
           onClick={onShowtimes}
           className="flex items-center gap-2 py-3 px-6 rounded-xl bg-accent transition-colors duration-fast hover:bg-accent/90"
         >
-          <PlayCircle size={14} className="text-white" />
+          <PlayCircle size={14} className="text-white" aria-hidden="true" />
           <span className="font-primary text-sm font-bold text-white">
             Ver horarios
           </span>
@@ -73,7 +73,7 @@ export function HeroSlideContent({
           onClick={onPlayTrailer}
           className="flex items-center gap-2 py-3 px-5 rounded-xl border border-text-primary/15 bg-text-primary/[0.07] transition-colors duration-fast hover:bg-text-primary/[0.12]"
         >
-          <Play size={14} className="text-text-primary" />
+          <Play size={14} className="text-text-primary" aria-hidden="true" />
           <span className="font-primary text-sm font-semibold text-text-primary">
             Ver tráiler
           </span>

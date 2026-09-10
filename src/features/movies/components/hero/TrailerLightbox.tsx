@@ -66,7 +66,7 @@ export function TrailerLightbox({
             aria-label="Cerrar tráiler"
             onClick={onClose}
           >
-            <X size={16} />
+            <X size={16} aria-hidden="true" />
           </button>
         </div>
         <div className="flex-1 relative">
