@@ -1,4 +1,5 @@
 import React from "react";
+import type { ZodType } from "zod";
 
 type InputType =
   "text" | "email" | "password" | "number" | "tel" | "url" | "search" | "textarea" | "select";
@@ -27,6 +28,12 @@ interface InputProps {
 
   // Para textarea
   rows?: number;
+
+  // Validación
+  fieldName?: string;
+  fieldSchema?: any;
+  error?: string;
+  onBlurValidation?: (fieldName: string, value: any, fieldSchema: any) => Promise<void>;
 
   // Para iconos
   icon?: {
@@ -156,6 +163,10 @@ const Input = React.forwardRef<
       id,
       required = false,
       rows = 4,
+      fieldName,
+      fieldSchema,
+      error,
+      onBlurValidation,
       icon,
     },
     ref
@@ -186,13 +197,17 @@ const Input = React.forwardRef<
             </span>
           )}
 
-          {/* El input/textarea/select va aquí */}
           {type === "textarea" ? (
             <TextArea
               ref={ref as React.Ref<HTMLTextAreaElement>}
               rows={rows}
               {...commonProps}
               className={`${finalInputClasses} ${icon?.left ? "pl-10" : ""} ${icon?.right ? "pr-10" : ""}`}
+              onBlur={(e) => {
+                if (onBlurValidation && fieldSchema && fieldName) {
+                  onBlurValidation(fieldName, e.target.value, fieldSchema);
+                }
+              }}
             />
           ) : type === "select" ? (
             <SelectInput
@@ -201,6 +216,11 @@ const Input = React.forwardRef<
               selectPlaceholder={selectPlaceholder}
               {...commonProps}
               className={`${finalInputClasses} ${icon?.left ? "pl-10" : ""} ${icon?.right ? "pr-10" : ""}`}
+              onBlur={(e) => {
+                if (onBlurValidation && fieldSchema && fieldName) {
+                  onBlurValidation(fieldName, e.target.value, fieldSchema);
+                }
+              }}
             />
           ) : (
             <TextInput
@@ -208,6 +228,11 @@ const Input = React.forwardRef<
               type={type}
               {...commonProps}
               className={`${finalInputClasses} ${icon?.left ? "pl-10" : ""} ${icon?.right ? "pr-10" : ""}`}
+              onBlur={(e) => {
+                if (onBlurValidation && fieldSchema && fieldName) {
+                  onBlurValidation(fieldName, e.target.value, fieldSchema);
+                }
+              }}
             />
           )}
 
@@ -227,7 +252,7 @@ const Input = React.forwardRef<
     };
     // Mostrar mensaje: error si hay estado error, sino helper text
     const showMessage = isError ? errorMessage : helperText;
-    const showMessageClass = getHelperClasses(state);
+    const showMessageClass = isError ? "text-error" : "text-text-secondary";
 
     return (
       <div className="w-full space-y-1">
@@ -240,7 +265,9 @@ const Input = React.forwardRef<
 
         <div className="relative"> {renderField()}</div>
 
-        {showMessage && <p className={showMessageClass}>{showMessage}</p>}
+        {(error || (isError && errorMessage) || helperText) && (
+          <p className={showMessageClass}>{error || errorMessage || helperText}</p>
+        )}
       </div>
     );
   }
