@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { ArrowRight, MapPin, Warning } from "@phosphor-icons/react";
+import { ArrowRight, Info, MapPin, Warning } from "@phosphor-icons/react";
 
+import cinemaHall from "@assets/cinema-hall.jpg";
 import logo from "@assets/logo.svg";
 import Modal from "@shared/components/composites/Modal";
 import Button from "@shared/components/primitives/Button";
@@ -10,6 +11,7 @@ import type { SavedLocation } from "@shared/interfaces";
 import { useCities } from "@features/location/hooks/useCities";
 import { useCountries } from "@features/location/hooks/useCountries";
 import { useDepartments } from "@features/location/hooks/useDepartments";
+import { useLocationSourceStore } from "@features/location/store/locationSourceStore";
 
 import { LocationSelect, type LocationSelectStatus } from "./LocationSelect";
 
@@ -52,7 +54,7 @@ export function LocationWizardModal({
   // (prop `key`), así cada apertura vuelve a partir de la preferencia vigente.
   const [countryId, setCountryId] = useState<number | null>(initialLocation?.country.id ?? null);
   const [departmentId, setDepartmentId] = useState<number | null>(
-    initialLocation?.department.id ?? null,
+    initialLocation?.department.id ?? null
   );
   const [cityId, setCityId] = useState<number | null>(initialLocation?.city.id ?? null);
 
@@ -60,17 +62,25 @@ export function LocationWizardModal({
   const departmentsQuery = useDepartments(countryId);
   const citiesQuery = useCities(departmentId);
 
-  const countries = countriesQuery.data ?? [];
-  const departments = departmentsQuery.data ?? [];
+  const isUsingFallback = useLocationSourceStore((state) => state.isUsingFallback);
+
+  // Países y departamentos inactivos no son elegibles y no aportan nada al visitante, así que se
+  // ocultan. Las ciudades inactivas sí se muestran: UBI-05 pide explicar por qué no se pueden usar.
+  const countries = (countriesQuery.data ?? []).filter((country) => country.isActive);
+  const departments = (departmentsQuery.data ?? []).filter((department) => department.isActive);
   const cities = citiesQuery.data ?? [];
 
   const selectedCountry = countries.find((country) => country.id === countryId) ?? null;
-  const selectedDepartment = departments.find((department) => department.id === departmentId) ?? null;
+  const selectedDepartment =
+    departments.find((department) => department.id === departmentId) ?? null;
   const selectedCity = cities.find((city) => city.id === cityId) ?? null;
 
   const hasInactiveCity = selectedCity != null && !selectedCity.isActive;
   const canConfirm =
-    selectedCountry != null && selectedDepartment != null && selectedCity != null && !hasInactiveCity;
+    selectedCountry != null &&
+    selectedDepartment != null &&
+    selectedCity != null &&
+    !hasInactiveCity;
 
   const completedSteps = [countryId, departmentId, cityId].filter((value) => value != null).length;
 
@@ -98,15 +108,30 @@ export function LocationWizardModal({
   return (
     <Modal isOpen={isOpen} onClose={onClose} className="!max-w-3xl">
       <div className="flex flex-col overflow-hidden rounded-xl md:flex-row">
-        <div className="hidden flex-col justify-end gap-6 bg-background p-8 md:flex md:w-[300px]">
-          <img src={logo} alt="AbsoluteCinema" className="h-5 w-auto" />
-
+        <div className="relative hidden flex-col justify-between overflow-hidden bg-background p-8 md:flex md:w-[300px]">
+          <img
+            src={cinemaHall}
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 h-full w-full object-cover opacity-65"
+          />
+          {/* Azul plano en la cabecera, como el diseño: la sala solo asoma en la mitad inferior. */}
           <div
             aria-hidden="true"
-            className="relative flex-1 rounded-lg bg-gradient-to-b from-primary/20 via-transparent to-background"
+            className="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-primary/45 via-primary/15 to-transparent"
+          />
+          <div
+            aria-hidden="true"
+            className="absolute -top-24 left-1/2 h-64 w-80 -translate-x-1/2 rounded-full bg-primary/40 blur-3xl"
+          />
+          <div
+            aria-hidden="true"
+            className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-background from-35% via-background/85 to-transparent"
           />
 
-          <div>
+          <img src={logo} alt="AbsoluteCinema" className="relative z-10 h-5 w-auto" />
+
+          <div className="relative z-10">
             <p className="text-overline font-semibold uppercase tracking-overline text-primary">
               La mejor experiencia
             </p>
@@ -123,13 +148,13 @@ export function LocationWizardModal({
                   <div
                     className={cn(
                       "h-[3px] rounded-full transition-colors duration-base",
-                      index < completedSteps ? "bg-primary" : "bg-border",
+                      index < completedSteps ? "bg-primary" : "bg-border"
                     )}
                   />
                   <span
                     className={cn(
                       "text-overline font-semibold uppercase tracking-overline",
-                      index < completedSteps ? "text-primary-hover" : "text-text-disabled",
+                      index < completedSteps ? "text-primary-hover" : "text-text-disabled"
                     )}
                   >
                     {step}
@@ -153,6 +178,16 @@ export function LocationWizardModal({
               Cuéntanos tu ciudad y te mostraremos la cartelera y los horarios más cercanos.
             </p>
           </div>
+
+          {isUsingFallback && (
+            <div
+              role="status"
+              className="mb-4 flex items-start gap-2 rounded-md border border-info/20 bg-info/10 px-3 py-2 text-caption text-info"
+            >
+              <Info size={14} weight="fill" aria-hidden="true" className="mt-0.5 shrink-0" />
+              <span>Estás viendo ubicaciones de ejemplo: no provienen del servidor.</span>
+            </div>
+          )}
 
           <div className="flex flex-col gap-3.5">
             <LocationSelect

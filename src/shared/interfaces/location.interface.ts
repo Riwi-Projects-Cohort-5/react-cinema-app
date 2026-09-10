@@ -4,12 +4,14 @@
 export interface Country {
   id: number;
   name: string;
+  isActive: boolean;
 }
 
 export interface Department {
   id: number;
   name: string;
   countryId: number;
+  isActive: boolean;
 }
 
 export interface City {

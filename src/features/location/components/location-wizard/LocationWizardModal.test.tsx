@@ -2,7 +2,11 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { configure, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { getCities, getCountries, getDepartments } from "@features/location/services/location.service";
+import {
+  getCities,
+  getCountries,
+  getDepartments,
+} from "@features/location/services/location.service";
 
 import { LocationWizardModal } from "./LocationWizardModal";
 
@@ -17,17 +21,19 @@ const getDepartmentsMock = vi.mocked(getDepartments);
 const getCitiesMock = vi.mocked(getCities);
 
 const COUNTRIES = [
-  { id: 1, name: "Colombia" },
-  { id: 2, name: "Perú" },
+  { id: 1, name: "Colombia", isActive: true },
+  { id: 2, name: "Perú", isActive: true },
+  { id: 3, name: "Uruguay", isActive: false },
 ];
 
 const DEPARTMENTS: Record<number, Awaited<ReturnType<typeof getDepartments>>> = {
   1: [
-    { id: 11, name: "Antioquia", countryId: 1 },
-    { id: 12, name: "Valle del Cauca", countryId: 1 },
-    { id: 13, name: "Amazonas", countryId: 1 },
+    { id: 11, name: "Antioquia", countryId: 1, isActive: true },
+    { id: 12, name: "Valle del Cauca", countryId: 1, isActive: true },
+    { id: 13, name: "Amazonas", countryId: 1, isActive: true },
+    { id: 14, name: "Vichada", countryId: 1, isActive: false },
   ],
-  2: [{ id: 21, name: "Lima", countryId: 2 }],
+  2: [{ id: 21, name: "Lima", countryId: 2, isActive: true }],
 };
 
 const CITIES: Record<number, Awaited<ReturnType<typeof getCities>>> = {
@@ -55,7 +61,7 @@ function renderModal(props: Partial<Parameters<typeof LocationWizardModal>[0]> =
   render(
     <QueryClientProvider client={queryClient}>
       <LocationWizardModal isOpen onClose={onClose} onConfirm={onConfirm} {...props} />
-    </QueryClientProvider>,
+    </QueryClientProvider>
   );
 
   return { onConfirm, onClose };
@@ -99,8 +105,8 @@ describe("LocationWizardModal", () => {
 
     await waitFor(() =>
       expect(screen.getByRole("combobox", { name: "Departamento / Estado" })).toHaveTextContent(
-        "Selecciona departamento",
-      ),
+        "Selecciona departamento"
+      )
     );
     expect(screen.getByRole("combobox", { name: "Ciudad" })).toHaveTextContent("Selecciona ciudad");
     expect(screen.getByRole("combobox", { name: "Ciudad" })).toBeDisabled();
@@ -116,8 +122,8 @@ describe("LocationWizardModal", () => {
 
     await waitFor(() =>
       expect(screen.getByRole("combobox", { name: "Ciudad" })).toHaveTextContent(
-        "Selecciona ciudad",
-      ),
+        "Selecciona ciudad"
+      )
     );
   });
 
@@ -154,6 +160,26 @@ describe("LocationWizardModal", () => {
     expect(onConfirm).not.toHaveBeenCalled();
   });
 
+  it("hides countries and departments that are not active", async () => {
+    renderModal();
+
+    const countryCombobox = screen.getByRole("combobox", { name: "País" });
+    await waitFor(() => expect(countryCombobox).not.toBeDisabled());
+    fireEvent.click(countryCombobox);
+
+    expect(await screen.findByRole("option", { name: "Colombia" })).toBeInTheDocument();
+    expect(screen.queryByRole("option", { name: "Uruguay" })).not.toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("option", { name: "Colombia" }));
+
+    const departmentCombobox = screen.getByRole("combobox", { name: "Departamento / Estado" });
+    await waitFor(() => expect(departmentCombobox).not.toBeDisabled());
+    fireEvent.click(departmentCombobox);
+
+    expect(await screen.findByRole("option", { name: "Antioquia" })).toBeInTheDocument();
+    expect(screen.queryByRole("option", { name: "Vichada" })).not.toBeInTheDocument();
+  });
+
   it("shows an empty state when the department has no cities", async () => {
     renderModal();
 
@@ -161,7 +187,7 @@ describe("LocationWizardModal", () => {
     await selectOption("Departamento / Estado", "Amazonas");
 
     expect(
-      await screen.findByText("No hay ciudades disponibles para este departamento."),
+      await screen.findByText("No hay ciudades disponibles para este departamento.")
     ).toBeInTheDocument();
     expect(screen.getByRole("combobox", { name: "Ciudad" })).toBeDisabled();
   });
@@ -189,11 +215,11 @@ describe("LocationWizardModal", () => {
     });
 
     await waitFor(() =>
-      expect(screen.getByRole("combobox", { name: "Ciudad" })).toHaveTextContent("Medellín"),
+      expect(screen.getByRole("combobox", { name: "Ciudad" })).toHaveTextContent("Medellín")
     );
     expect(screen.getByRole("combobox", { name: "País" })).toHaveTextContent("Colombia");
     expect(screen.getByRole("combobox", { name: "Departamento / Estado" })).toHaveTextContent(
-      "Antioquia",
+      "Antioquia"
     );
   });
 });

@@ -1,41 +1,44 @@
 import type { City, Country, Department } from "@shared/interfaces";
 
-// Datos simulados para desarrollo local (VITE_ENABLE_MOCKS=true) mientras la API real no esté
-// disponible. Incluye ciudades inactivas y un departamento sin ciudades para poder ver los
-// estados vacío / sin cines activos del asistente.
+// Datos de respaldo para desarrollo. Se usan cuando la API de ubicaciones no está disponible
+// (error de red o 5xx) y también cuando se fuerzan con VITE_ENABLE_MOCKS=true.
+//
+// Cubren a propósito casos que el mock server del backend no expone: ciudades sin cines activos,
+// un departamento sin ciudades y un departamento inactivo, para poder ejercitar los estados del
+// asistente. Este archivo NO debe llegar a producción — ver docs/api/endpoints/01-location/.
 
 const MOCK_DELAY_MS = 400;
 
 export const MOCK_COUNTRIES: Country[] = [
-  { id: 1, name: "Colombia" },
-  { id: 2, name: "México" },
-  { id: 3, name: "Argentina" },
-  { id: 4, name: "Perú" },
+  { id: 1, name: "Colombia", isActive: true },
+  { id: 2, name: "México", isActive: true },
+  { id: 3, name: "Argentina", isActive: true },
+  { id: 4, name: "Perú", isActive: true },
 ];
 
 export const MOCK_DEPARTMENTS: Record<number, Department[]> = {
   1: [
-    { id: 11, name: "Bogotá D.C.", countryId: 1 },
-    { id: 12, name: "Antioquia", countryId: 1 },
-    { id: 13, name: "Valle del Cauca", countryId: 1 },
-    { id: 14, name: "Atlántico", countryId: 1 },
-    { id: 15, name: "Santander", countryId: 1 },
+    { id: 11, name: "Bogotá D.C.", countryId: 1, isActive: true },
+    { id: 12, name: "Antioquia", countryId: 1, isActive: true },
+    { id: 13, name: "Valle del Cauca", countryId: 1, isActive: true },
+    { id: 14, name: "Atlántico", countryId: 1, isActive: true },
+    { id: 15, name: "Santander", countryId: 1, isActive: true },
   ],
   2: [
-    { id: 21, name: "Ciudad de México", countryId: 2 },
-    { id: 22, name: "Jalisco", countryId: 2 },
-    { id: 23, name: "Nuevo León", countryId: 2 },
-    { id: 24, name: "Puebla", countryId: 2 },
+    { id: 21, name: "Ciudad de México", countryId: 2, isActive: true },
+    { id: 22, name: "Jalisco", countryId: 2, isActive: true },
+    { id: 23, name: "Nuevo León", countryId: 2, isActive: true },
+    { id: 24, name: "Puebla", countryId: 2, isActive: true },
   ],
   3: [
-    { id: 31, name: "Buenos Aires", countryId: 3 },
-    { id: 32, name: "Córdoba", countryId: 3 },
-    { id: 33, name: "Santa Fe", countryId: 3 },
+    { id: 31, name: "Buenos Aires", countryId: 3, isActive: true },
+    { id: 32, name: "Córdoba", countryId: 3, isActive: true },
+    { id: 33, name: "Santa Fe", countryId: 3, isActive: false },
   ],
   4: [
-    { id: 41, name: "Lima", countryId: 4 },
-    { id: 42, name: "Arequipa", countryId: 4 },
-    { id: 43, name: "La Libertad", countryId: 4 },
+    { id: 41, name: "Lima", countryId: 4, isActive: true },
+    { id: 42, name: "Arequipa", countryId: 4, isActive: true },
+    { id: 43, name: "La Libertad", countryId: 4, isActive: true },
   ],
 };
 

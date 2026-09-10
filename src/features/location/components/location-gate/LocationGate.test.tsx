@@ -13,8 +13,8 @@ import { useLocationStore } from "@features/location/store";
 import { LocationGate } from "./LocationGate";
 
 vi.mock("@features/location/services/location.service", () => ({
-  getCountries: vi.fn(async () => [{ id: 1, name: "Colombia" }]),
-  getDepartments: vi.fn(async () => [{ id: 11, name: "Antioquia", countryId: 1 }]),
+  getCountries: vi.fn(async () => [{ id: 1, name: "Colombia", isActive: true }]),
+  getDepartments: vi.fn(async () => [{ id: 11, name: "Antioquia", countryId: 1, isActive: true }]),
   getCities: vi.fn(async () => [{ id: 111, name: "Medellín", departmentId: 11, isActive: true }]),
 }));
 
@@ -41,7 +41,7 @@ function renderGate() {
   render(
     <QueryClientProvider client={queryClient}>
       <LocationGate />
-    </QueryClientProvider>,
+    </QueryClientProvider>
   );
 }
 
@@ -67,7 +67,7 @@ describe("LocationGate", () => {
     fireEvent.keyDown(document, { key: "Escape" });
 
     await waitFor(() =>
-      expect(screen.queryByText("¿Desde dónde nos visitas?")).not.toBeInTheDocument(),
+      expect(screen.queryByText("¿Desde dónde nos visitas?")).not.toBeInTheDocument()
     );
   });
 
