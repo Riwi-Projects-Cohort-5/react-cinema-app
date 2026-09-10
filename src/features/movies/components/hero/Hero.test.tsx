@@ -85,8 +85,10 @@ describe("Hero component", () => {
     expect(skeleton).toHaveClass("w-full");
     expect(skeleton).toHaveClass("h-[520px]");
     expect(skeleton).toHaveClass("md:h-[430px]");
+    expect(skeleton).toHaveClass("lg:h-[520px]");
     expect(skeleton).toHaveClass("min-h-[600px]");
     expect(skeleton).toHaveClass("md:min-h-0");
+    expect(skeleton).toHaveClass("lg:min-h-0");
     expect(window.getComputedStyle(skeleton!).borderRadius).not.toMatch(/1\.25rem/);
   });
 
@@ -110,8 +112,10 @@ describe("Hero component", () => {
     expect(errorContainer).toHaveClass("w-full");
     expect(errorContainer).toHaveClass("h-[520px]");
     expect(errorContainer).toHaveClass("md:h-[430px]");
+    expect(errorContainer).toHaveClass("lg:h-[520px]");
     expect(errorContainer).toHaveClass("min-h-[600px]");
     expect(errorContainer).toHaveClass("md:min-h-0");
+    expect(errorContainer).toHaveClass("lg:min-h-0");
     expect(window.getComputedStyle(errorContainer!).borderRadius).not.toMatch(/1\.25rem/);
 
     fireEvent.click(retryButton);
@@ -135,8 +139,10 @@ describe("Hero component", () => {
     expect(emptyContainer).toHaveClass("w-full");
     expect(emptyContainer).toHaveClass("h-[520px]");
     expect(emptyContainer).toHaveClass("md:h-[430px]");
+    expect(emptyContainer).toHaveClass("lg:h-[520px]");
     expect(emptyContainer).toHaveClass("min-h-[600px]");
     expect(emptyContainer).toHaveClass("md:min-h-0");
+    expect(emptyContainer).toHaveClass("lg:min-h-0");
     expect(window.getComputedStyle(emptyContainer!).borderRadius).not.toMatch(/1\.25rem/);
   });
 
@@ -210,6 +216,12 @@ describe("Hero component", () => {
     expect(viewport).toBeInTheDocument();
     expect(viewport).toHaveClass("overflow-hidden");
     expect(viewport).toHaveClass("w-full");
+    expect(viewport).toHaveClass("h-[520px]");
+    expect(viewport).toHaveClass("md:h-[430px]");
+    expect(viewport).toHaveClass("lg:h-[520px]");
+    expect(viewport).toHaveClass("min-h-[600px]");
+    expect(viewport).toHaveClass("md:min-h-0");
+    expect(viewport).toHaveClass("lg:min-h-0");
     expect(viewport).toHaveAttribute("data-active-index", "0");
   });
 
@@ -237,12 +249,18 @@ describe("Hero component", () => {
     expect(viewport).toHaveAttribute("data-active-index", "1");
   });
 
-  it("marks active slide with data-state='active' and aria-current='true'", () => {
+  it("marks active slide with data-state='active' and aria-current='true' with rounded-2xl corners", () => {
     const { container } = render(<Hero />);
 
     const activeSlide = container.querySelector('[data-state="active"]');
     expect(activeSlide).toBeInTheDocument();
     expect(activeSlide).toHaveAttribute("aria-current", "true");
+    expect(activeSlide).toHaveClass("rounded-2xl");
+
+    const slides = container.querySelectorAll("[data-state]");
+    slides.forEach((slide) => {
+      expect(slide).toHaveClass("rounded-2xl");
+    });
   });
 
   it("clicking a lateral slide calls goTo with the slide index", () => {

@@ -22,14 +22,14 @@ export function Hero() {
         data-testid="hero-skeleton"
         aria-label="Cargando películas"
         role="status"
-        className="w-full h-[520px] md:h-[430px] min-h-[600px] md:min-h-0 bg-surface-variant animate-[shimmer_1.5s_linear_infinite] bg-[linear-gradient(90deg,var(--color-surface-variant)_25%,var(--color-surface)_50%,var(--color-surface-variant)_75%)] bg-[length:200%_100%]"
+        className="w-full h-[520px] md:h-[430px] lg:h-[520px] min-h-[600px] md:min-h-0 lg:min-h-0 bg-surface-variant animate-[shimmer_1.5s_linear_infinite] bg-[linear-gradient(90deg,var(--color-surface-variant)_25%,var(--color-surface)_50%,var(--color-surface-variant)_75%)] bg-[length:200%_100%]"
       />
     );
   }
 
   if (isError) {
     return (
-      <div className="flex flex-col items-center justify-center gap-4 w-full h-[520px] md:h-[430px] min-h-[600px] md:min-h-0 bg-surface-variant p-6 text-center">
+      <div className="flex flex-col items-center justify-center gap-4 w-full h-[520px] md:h-[430px] lg:h-[520px] min-h-[600px] md:min-h-0 lg:min-h-0 bg-surface-variant p-6 text-center">
         <p className="text-text-secondary">No pudimos cargar las películas</p>
         <button
           type="button"
@@ -46,7 +46,7 @@ export function Hero() {
 
   if (!movies || movies.length === 0) {
     return (
-      <div className="flex items-center justify-center w-full h-[520px] md:h-[430px] min-h-[600px] md:min-h-0 bg-surface-variant p-6 text-center">
+      <div className="flex items-center justify-center w-full h-[520px] md:h-[430px] lg:h-[520px] min-h-[600px] md:min-h-0 lg:min-h-0 bg-surface-variant p-6 text-center">
         <p className="text-text-secondary">No hay películas disponibles</p>
       </div>
     );
@@ -76,7 +76,7 @@ export function Hero() {
       <div
         id="hero-carousel"
         data-active-index={activeIndex}
-        className="relative w-full overflow-hidden h-[520px] md:h-[430px] min-h-[600px] md:min-h-0"
+        className="relative w-full overflow-hidden h-[520px] md:h-[430px] lg:h-[520px] min-h-[600px] md:min-h-0 lg:min-h-0"
       >
         {/* Continuous track */}
         <div
@@ -108,7 +108,7 @@ export function Hero() {
                   }
                 }}
                 className={cn(
-                  "flex-shrink-0 w-[67.8%] h-full relative overflow-hidden transition-all duration-300",
+                  "flex-shrink-0 w-[67.8%] h-full relative overflow-hidden rounded-2xl transition-all duration-300",
                   isActive
                     ? "border border-accent/20 bg-background"
                     : "border border-transparent cursor-pointer"
