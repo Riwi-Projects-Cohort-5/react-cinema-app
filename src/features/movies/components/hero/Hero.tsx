@@ -6,9 +6,7 @@ import { getBackdropUrl } from "@features/movies/utils";
 import { notifyInfo } from "@services/notify";
 import { cn } from "@shared/utils/cn";
 
-import { HeroProgress } from "./HeroProgress";
-import { HeroSlideContent } from "./HeroSlideContent";
-import { TrailerLightbox } from "./TrailerLightbox";
+import { HeroProgress, HeroSlideContent, TrailerLightbox } from "@features/movies/components";
 
 export function Hero() {
   const { data: movies, isPending, isError, refetch } = useMovies();
@@ -22,14 +20,14 @@ export function Hero() {
         data-testid="hero-skeleton"
         aria-label="Cargando películas"
         role="status"
-        className="w-full h-[520px] md:h-[430px] lg:h-[520px] min-h-[600px] md:min-h-0 lg:min-h-0 bg-surface-variant animate-[shimmer_1.5s_linear_infinite] bg-[linear-gradient(90deg,var(--color-surface-variant)_25%,var(--color-surface)_50%,var(--color-surface-variant)_75%)] bg-[length:200%_100%]"
+        className="w-full h-[520px] md:h-[430px] lg:h-[520px] min-h-[600px] md:min-h-0 lg:min-h-0 pt-8 bg-surface-variant animate-[shimmer_1.5s_linear_infinite] bg-[linear-gradient(90deg,var(--color-surface-variant)_25%,var(--color-surface)_50%,var(--color-surface-variant)_75%)] bg-[length:200%_100%]"
       />
     );
   }
 
   if (isError) {
     return (
-      <div className="flex flex-col items-center justify-center gap-4 w-full h-[520px] md:h-[430px] lg:h-[520px] min-h-[600px] md:min-h-0 lg:min-h-0 bg-surface-variant p-6 text-center">
+      <div className="flex flex-col items-center justify-center gap-4 w-full h-[520px] md:h-[430px] lg:h-[520px] min-h-[600px] md:min-h-0 lg:min-h-0 pt-8 bg-surface-variant p-6 text-center">
         <p className="text-text-secondary">No pudimos cargar las películas</p>
         <button
           type="button"
@@ -46,7 +44,7 @@ export function Hero() {
 
   if (!movies || movies.length === 0) {
     return (
-      <div className="flex items-center justify-center w-full h-[520px] md:h-[430px] lg:h-[520px] min-h-[600px] md:min-h-0 lg:min-h-0 bg-surface-variant p-6 text-center">
+      <div className="flex items-center justify-center w-full h-[520px] md:h-[430px] lg:h-[520px] min-h-[600px] md:min-h-0 lg:min-h-0 pt-8 bg-surface-variant p-6 text-center">
         <p className="text-text-secondary">No hay películas disponibles</p>
       </div>
     );
@@ -70,7 +68,7 @@ export function Hero() {
       aria-label="Carrusel de películas destacadas"
       aria-roledescription="carrusel"
       data-carousel-state={isPaused ? "paused" : "playing"}
-      className="relative w-full overflow-hidden bg-background"
+      className="relative w-full overflow-hidden bg-background pt-8"
     >
       {/* Visual viewport */}
       <div

@@ -83,6 +83,7 @@ describe("Hero component", () => {
     expect(skeleton).toHaveAttribute("role", "status");
     expect(skeleton).toHaveAttribute("aria-label", "Cargando películas");
     expect(skeleton).toHaveClass("w-full");
+    expect(skeleton).toHaveClass("pt-8");
     expect(skeleton).toHaveClass("h-[520px]");
     expect(skeleton).toHaveClass("md:h-[430px]");
     expect(skeleton).toHaveClass("lg:h-[520px]");
@@ -110,6 +111,7 @@ describe("Hero component", () => {
     const errorContainer = container.querySelector(".bg-surface-variant");
     expect(errorContainer).toBeInTheDocument();
     expect(errorContainer).toHaveClass("w-full");
+    expect(errorContainer).toHaveClass("pt-8");
     expect(errorContainer).toHaveClass("h-[520px]");
     expect(errorContainer).toHaveClass("md:h-[430px]");
     expect(errorContainer).toHaveClass("lg:h-[520px]");
@@ -137,6 +139,7 @@ describe("Hero component", () => {
     const emptyContainer = container.querySelector(".bg-surface-variant");
     expect(emptyContainer).toBeInTheDocument();
     expect(emptyContainer).toHaveClass("w-full");
+    expect(emptyContainer).toHaveClass("pt-8");
     expect(emptyContainer).toHaveClass("h-[520px]");
     expect(emptyContainer).toHaveClass("md:h-[430px]");
     expect(emptyContainer).toHaveClass("lg:h-[520px]");
@@ -210,6 +213,7 @@ describe("Hero component", () => {
     expect(section).toBeInTheDocument();
     expect(section).toHaveClass("overflow-hidden");
     expect(section).toHaveClass("w-full");
+    expect(section).toHaveClass("pt-8");
     expect(window.getComputedStyle(section!).borderRadius).not.toMatch(/1\.25rem/);
 
     const viewport = container.querySelector("#hero-carousel");
