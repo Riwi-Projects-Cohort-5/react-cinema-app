@@ -31,7 +31,7 @@ import {
 
 ## Composición de clases (`cn`)
 
-Las primitivas componen sus `className` condicionales con el util compartido **`cn`** (`@shared/utils/cn`), un joiner de clases tipo `clsx` que filtra valores falsy:
+Las primitivas componen sus `className` condicionales con el util compartido **`cn`** (`@shared/utils/cn`), un joiner de clases que filtra valores falsy **y resuelve conflictos con `tailwind-merge`** (`twMerge`). Esto permite que el `className` del consumidor sobreescriba el estilo base del componente sin recurrir a `!important`:
 
 ```tsx
 import { cn } from "@shared/utils/cn";
@@ -39,11 +39,11 @@ import { cn } from "@shared/utils/cn";
 className={cn(
   "flex items-center gap-2",
   disabled && "cursor-not-allowed opacity-40",
-  className,
+  className, // gana las últimas clases en conflicto (ej. bg-*)
 )}
 ```
 
-**Regla del sistema:** no se usan clases con `!important` (`!border-0`, etc.). Cuando una primitiva necesita anular estilos de otra, el override se resuelve por **especificidad** (p. ej. variantes `[&_input:]` sobre el wrapper) en lugar de `!`.
+> **Regla del sistema:** no se usan clases con `!important` (`!border-0`, etc.). El override se resuelve por `tailwind-merge` (última clase gana) o por **especificidad** (variantes `[&_input:]` sobre el wrapper) según el caso.
 
 ## Cómo agregar una primitiva
 

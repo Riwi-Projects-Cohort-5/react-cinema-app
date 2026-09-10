@@ -15,6 +15,9 @@ import { AppToaster } from "@shared/components/composites";
 | Composite                                  | Descripción                                                                                                                       |
 | ------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------- |
 | [AppToaster](./app-toaster/app-toaster.md) | Contenedor de toasts (wrapper de `sonner`) con el theme del design system; lo consumen todas las features vía `@services/notify`. |
+| [Header](./header/header.md)               | Barra superior con botones Register/Login, redes sociales y logo.                                                                 |
+| [CentralNav](./header/navar.md)            | Barra de navegación central con links, pill de ubicación (`Dropdown`) y botón de búsqueda.                                        |
+| [Footer](./footer/footer.md)               | Pie de página: logo, navegación, cuenta, cines, newsletter y barra legal.                                                         |
 
 ## Cómo agregar un composite
 
