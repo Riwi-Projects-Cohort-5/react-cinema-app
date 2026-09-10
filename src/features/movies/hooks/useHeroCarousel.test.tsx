@@ -156,4 +156,16 @@ describe("useHeroCarousel", () => {
 
     setIntervalSpy.mockRestore();
   });
+
+  it("continues autoplay in reduced-motion preference (CSS handles the visual, not the hook)", () => {
+    const { result } = renderHook(() => useHeroCarousel(sampleItems));
+
+    expect(result.current.activeIndex).toBe(0);
+
+    act(() => {
+      vi.advanceTimersByTime(5000);
+    });
+
+    expect(result.current.activeIndex).toBe(1);
+  });
 });

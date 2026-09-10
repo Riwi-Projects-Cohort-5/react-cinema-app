@@ -69,11 +69,13 @@ export function Hero() {
       role="region"
       aria-label="Carrusel de películas destacadas"
       aria-roledescription="carrusel"
+      data-carousel-state={isPaused ? "paused" : "playing"}
       className="relative w-full overflow-hidden bg-background"
     >
       {/* Visual viewport */}
       <div
         id="hero-carousel"
+        data-active-index={activeIndex}
         className="relative w-full overflow-hidden h-[520px] md:h-[430px] min-h-[600px] md:min-h-0"
       >
         {/* Continuous track */}

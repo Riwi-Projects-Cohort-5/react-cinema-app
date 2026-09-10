@@ -191,6 +191,31 @@ describe("Hero component", () => {
     expect(viewport).toBeInTheDocument();
     expect(viewport).toHaveClass("overflow-hidden");
     expect(viewport).toHaveClass("w-full");
+    expect(viewport).toHaveAttribute("data-active-index", "0");
+  });
+
+  it("exposes data-carousel-state and updates when isPaused changes", () => {
+    const { container, rerender } = render(<Hero />);
+    const section = container.querySelector("section");
+    expect(section).toHaveAttribute("data-carousel-state", "playing");
+
+    vi.mocked(useHeroCarousel).mockReturnValue({
+      activeIndex: 1,
+      activeItem: testMovies[1]!,
+      goTo: mockGoTo,
+      next: mockNext,
+      prev: mockPrev,
+      isPaused: true,
+      togglePause: mockTogglePause,
+      pause: mockPause,
+      resume: mockResume,
+      progress: 0.5,
+    });
+
+    rerender(<Hero />);
+    expect(section).toHaveAttribute("data-carousel-state", "paused");
+    const viewport = container.querySelector("#hero-carousel");
+    expect(viewport).toHaveAttribute("data-active-index", "1");
   });
 
   it("marks active slide with data-state='active' and aria-current='true'", () => {

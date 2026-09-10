@@ -1,0 +1,9 @@
+=== Hero Carousel Edge Case & Reduced-Motion Notes ===
+- Reduced Motion:
+  * In prefers-reduced-motion: reduce, autoplay continues advancing state intervals normally in JS.
+  * CSS transitions on the track element are disabled via motion-reduce:transition-none in Hero.tsx (line 81).
+  * Unit test verifies that the hook rotation timer remains deterministic regardless of client motion preference.
+- Interval Cleanup & Single-Item List:
+  * Single-item lists (length <= 1) do not initiate any intervals, avoiding unnecessary timer ticks.
+  * Rapid unmounting / hook re-renders clean up active setInterval IDs immediately, preventing memory leaks and orphaned timer callbacks.
+  * pause() preserves current progress float value without resetting until next transition or explicit goTo/next/prev.
