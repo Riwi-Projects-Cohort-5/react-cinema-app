@@ -10,7 +10,7 @@ describe("appRouter", () => {
     renderRouter(PATHS.home);
 
     expect(screen.getByRole("heading", { name: "Home" })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Inicio" })).toBeInTheDocument();
+    expect(screen.getAllByRole("link", { name: "Cartelera" })).toHaveLength(2);
   });
 
   it("renders the login page when unauthenticated", () => {
@@ -37,22 +37,23 @@ describe("appRouter", () => {
     expect(screen.getByRole("heading", { name: "Purchase History" })).toBeInTheDocument();
   });
 
-  it("renders the authenticated layout for private routes", () => {
+  it("renders the main layout for private routes", () => {
     useSessionStore.setState({ accessToken: "valid-token" });
 
     renderRouter(PATHS.profile);
 
-    expect(screen.getByRole("link", { name: "Perfil" })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Historial de compras" })).toBeInTheDocument();
+    expect(useSessionStore.getState().accessToken).toBe("valid-token");
+    expect(screen.getAllByRole("link", { name: "Cartelera" })).toHaveLength(2);
+    expect(screen.getByRole("heading", { name: "Profile" })).toBeInTheDocument();
   });
 
-  it("renders the admin layout when the user is authenticated", () => {
+  it("renders the admin route within the main layout when authenticated", () => {
     useSessionStore.setState({ accessToken: "valid-token" });
 
     const router = renderRouter(PATHS.admin.dashboard);
 
     expect(router.state.location.pathname).toBe(PATHS.admin.dashboard);
-    expect(screen.getByRole("link", { name: "Multicine Admin" })).toBeInTheDocument();
+    expect(screen.getAllByRole("link", { name: "Cartelera" })).toHaveLength(2);
     expect(screen.getByRole("heading", { name: "Admin Dashboard" })).toBeInTheDocument();
   });
 
