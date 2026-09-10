@@ -1,0 +1,18 @@
+# Task 3: Rebuild carousel viewport and slides around Figma section geometry - Happy Path Evidence
+
+## Implemented Changes in Hero.tsx
+1. Rebuilt section to use `<section role="region" aria-label="Carrusel de películas destacadas" aria-roledescription="carrusel" className="relative w-full overflow-hidden bg-background">`.
+2. Removed all instances of `rounded-[1.25rem]` and old height rules `h-[480px] md:h-[560px] lg:h-[640px]`.
+3. Applied Figma viewport geometry: `h-[520px] md:h-[430px] min-h-[600px] md:min-h-0`.
+4. Configured continuous track translation with centered active slide: `transform: translateX(calc(16.1% - ${activeIndex} * (67.8% + 1rem)))` and slide width `w-[67.8%] flex-shrink-0`.
+5. Applied single clean gradient overlays per Contract Section E:
+   - `bg-gradient-to-r from-background/88 via-background/52 to-transparent`
+   - `bg-gradient-to-b from-transparent to-background/52`
+   - Removed old 3-sibling background opacity stack (`bg-background/52`, `/75`, `/88`).
+6. Removed floating corner poster `<img>` element.
+7. Aligned navigation arrows to 44×44px (`w-11 h-11`), centered at `top-1/2 -translate-y-1/2`, with accessible labels `Anterior` and `Siguiente`, and `aria-controls="hero-carousel"`.
+
+## Verification Results
+- `npm run test`: 27 test files passed, 143 tests passed.
+- `Hero.test.tsx`: 9 unit tests passed covering 3-slide order, wraparound, backdrop URL, no corner poster, and no overflow.
+- `npm run build`: TypeScript compilation (`tsc -b`) and Vite production bundle succeeded cleanly.
