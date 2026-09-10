@@ -31,12 +31,12 @@ Se re-exporta desde el barrel de primitivas: `@shared/components/primitives` (ve
 
 ### `DropdownOption<V>`
 
-| Campo | Tipo | Descripción |
-| ----- | ---- | ----------- |
-| `value` | `V` | Valor de la opción (idealmente primitivo: string/number). |
-| `label` | `string` | Texto visible. |
-| `disabled` | `boolean` | Opción no seleccionable (se salta con teclado). |
-| `icon` | `ReactNode` | Ícono lead opcional (ej. bandera, globo). |
+| Campo      | Tipo        | Descripción                                               |
+| ---------- | ----------- | --------------------------------------------------------- |
+| `value`    | `V`         | Valor de la opción (idealmente primitivo: string/number). |
+| `label`    | `string`    | Texto visible.                                            |
+| `disabled` | `boolean`   | Opción no seleccionable (se salta con teclado).           |
+| `icon`     | `ReactNode` | Ícono lead opcional (ej. bandera, globo).                 |
 
 ## Uso
 
@@ -83,12 +83,7 @@ const SelectorCiudad = () => {
 ### Con filtrado de opciones
 
 ```tsx
-<Dropdown
-  options={ciudades}
-  label="Ciudad"
-  filterable
-  placeholder="Selecciona tu ciudad"
-/>
+<Dropdown options={ciudades} label="Ciudad" filterable placeholder="Selecciona tu ciudad" />
 ```
 
 Al abrir, el foco va al campo de búsqueda; escribir filtra la lista y `Enter` selecciona el resultado resaltado.
@@ -99,9 +94,7 @@ Al abrir, el foco va al campo de búsqueda; escribir filtra la lista y `Enter` s
 
 ```tsx
 <Dropdown
-  options={[
-    { value: "c1", label: "Complejo Central", icon: <Building size={16} /> },
-  ]}
+  options={[{ value: "c1", label: "Complejo Central", icon: <Building size={16} /> }]}
   label="Complejo / Teatro"
   optionalHint="opcional"
   placeholder="Selecciona un complejo"
@@ -132,15 +125,15 @@ import { cn } from "@shared/utils/cn";
 
 ## Teclado
 
-| Tecla | Acción |
-| ----- | ------ |
-| `Enter` / `Space` / `ArrowDown` | Abre el listado (si está cerrado). |
-| `ArrowDown` / `ArrowUp` | Mueve el resaltado (cicla, salta opciones `disabled`). |
-| `Home` / `End` | Salta a la primera / última opción. |
-| `Enter` | Selecciona la opción resaltada. |
-| `Escape` | Cierra (y limpia el filtro). |
-| `Tab` | Cierra y sigue la navegación. |
-| Escribir en el campo de búsqueda | Filtra opciones (`filterable`). |
+| Tecla                            | Acción                                                 |
+| -------------------------------- | ------------------------------------------------------ |
+| `Enter` / `Space` / `ArrowDown`  | Abre el listado (si está cerrado).                     |
+| `ArrowDown` / `ArrowUp`          | Mueve el resaltado (cicla, salta opciones `disabled`). |
+| `Home` / `End`                   | Salta a la primera / última opción.                    |
+| `Enter`                          | Selecciona la opción resaltada.                        |
+| `Escape`                         | Cierra (y limpia el filtro).                           |
+| `Tab`                            | Cierra y sigue la navegación.                          |
+| Escribir en el campo de búsqueda | Filtra opciones (`filterable`).                        |
 
 ## Accesibilidad
 
@@ -157,19 +150,19 @@ La primitiva implementa el patrón **combobox + listbox** de WAI-ARIA APG:
 
 ## Diseño
 
-| Elemento | Token |
-| -------- | ----- |
-| Alto del campo | `h-12` (48px, grid 4px) |
-| Radio | `rounded-md` (`--radius-md`) |
-| Fondo campo | `bg-background` (`--color-background`) |
-| Borde | `border-border` (1px); `border-primary` al abrir |
-| Texto valor | `text-body` + `text-text-primary` |
-| Placeholder | `text-text-secondary` |
-| Etiqueta | `text-overline` + `uppercase` + `tracking-overline` + `text-text-secondary` |
-| Popover | `bg-surface` + `border-border` + `shadow-md` |
-| Opción resaltada | `bg-surface-variant` |
-| Seleccionada | `Check` Phosphor `weight="bold"` `text-primary` |
-| Íconos | Phosphor: `CaretDown`, `MagnifyingGlass`, `Check` |
+| Elemento         | Token                                                                       |
+| ---------------- | --------------------------------------------------------------------------- |
+| Alto del campo   | `h-12` (48px, grid 4px)                                                     |
+| Radio            | `rounded-md` (`--radius-md`)                                                |
+| Fondo campo      | `bg-background` (`--color-background`)                                      |
+| Borde            | `border-border` (1px); `border-primary` al abrir                            |
+| Texto valor      | `text-body` + `text-text-primary`                                           |
+| Placeholder      | `text-text-secondary`                                                       |
+| Etiqueta         | `text-overline` + `uppercase` + `tracking-overline` + `text-text-secondary` |
+| Popover          | `bg-surface` + `border-border` + `shadow-md`                                |
+| Opción resaltada | `bg-surface-variant`                                                        |
+| Seleccionada     | `Check` Phosphor `weight="bold"` `text-primary`                             |
+| Íconos           | Phosphor: `CaretDown`, `MagnifyingGlass`, `Check`                           |
 
 - Íconos según convención de [Iconografía](../../../../../docs/design/10-iconografia.md): variante **Bold** para estados activos/seleccionados, tamaño base `icon-sm` (16px).
 - Transición de color con `duration-fast` (150ms).
