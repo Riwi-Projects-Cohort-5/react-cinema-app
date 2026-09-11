@@ -72,6 +72,8 @@ export async function getHealth(signal?: AbortSignal) {
 }
 ```
 
+> **Nota:** los servicios de feature que consumen endpoints de listado reciben el envelope `{ success, data }` y lo desempaquetan dentro de la feature (ver [Patrón de servicios con fallback](../patterns/api-fallback.md)). El desempaquetado de este envelope podría centralizarse en un interceptor de `httpClient` en el futuro (decisión pendiente registrada en [convenciones de API](../../api/00-conventions.md#5-paginación)).
+
 ## Convenciones de API relacionadas
 
 La configuración e interceptores del cliente HTTP implementan las secciones del contrato de API:

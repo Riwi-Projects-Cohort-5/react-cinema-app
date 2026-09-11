@@ -61,6 +61,19 @@ Executed QA (recorded evidence):
 - **Overflow**: Gestión via `overflow-hidden`.
 - **Preferencia movimiento**: `motion-reduce:transition-none` respetado.
 
+## Consumo de API
+
+Esta feature implementa el [patrón de servicios con fallback](../../docs/frontend-architecture/patterns/api-fallback.md) para garantizar la disponibilidad de datos en desarrollo:
+
+- **Servicios**: Los endpoints `getMovies`, `getMovieFunctions(movieId, cityId?)` y `getMovieRecommendations(movieId)` consumen el contrato de API, desempaquetan el envelope `{ success, data }` y, ante fallo de red/5xx o si `VITE_ENABLE_MOCKS=true`, recurren a los mocks `getMockMovies`, `getMockMovieFunctions` y `getMockMovieRecommendations` (con ~400ms de retardo).
+- **Notificaciones**: Se emite una única alerta vía `notifyWarning` al activar el fallback.
+- **Estado**: Se registra el origen de los datos en `useMoviesSourceStore`.
+- **Hooks**: Los hooks `useMovieFunctions` (queryKey `["movieFunctions", movieId, cityId]`) y `useMovieRecommendations` (queryKey `["movieRecommendations", movieId]`) gestionan la caché (`staleTime` 60s y 10min respectivamente).
+
+Para detalles de los payloads, ver:
+- [GET /movies/{movieId}/functions](../../docs/api/endpoints/02-movies/10-GET-movies-movieId-functions.md)
+- [GET /movies/{movieId}/recommendations](../../docs/api/endpoints/02-movies/11-GET-movies-movieId-recommendations.md)
+
 ## Módulos
 
 | Módulo | Ruta | Descripción |
