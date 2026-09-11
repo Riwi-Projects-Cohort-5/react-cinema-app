@@ -20,14 +20,14 @@ export function Hero() {
         data-testid="hero-skeleton"
         aria-label="Cargando películas"
         role="status"
-        className="w-full h-[520px] md:h-[430px] lg:h-[520px] min-h-[600px] md:min-h-0 lg:min-h-0 pt-6 bg-surface-variant animate-[shimmer_1.5s_linear_infinite] bg-[linear-gradient(90deg,var(--color-surface-variant)_25%,var(--color-surface)_50%,var(--color-surface-variant)_75%)] bg-[length:200%_100%]"
+        className="w-full px-4 md:px-0 h-[520px] md:h-[430px] lg:h-[520px] min-h-[600px] md:min-h-0 lg:min-h-0 pt-6 bg-surface-variant animate-[shimmer_1.5s_linear_infinite] bg-[linear-gradient(90deg,var(--color-surface-variant)_25%,var(--color-surface)_50%,var(--color-surface-variant)_75%)] bg-[length:200%_100%]"
       />
     );
   }
 
   if (isError) {
     return (
-      <div className="flex flex-col items-center justify-center gap-4 w-full h-[520px] md:h-[430px] lg:h-[520px] min-h-[600px] md:min-h-0 lg:min-h-0 pt-6 bg-surface-variant p-6 text-center">
+      <div className="flex flex-col items-center justify-center gap-4 w-full px-4 md:px-0 h-[520px] md:h-[430px] lg:h-[520px] min-h-[600px] md:min-h-0 lg:min-h-0 pt-6 bg-surface-variant p-6 text-center">
         <p className="text-text-secondary">No pudimos cargar las películas</p>
         <button
           type="button"
@@ -44,7 +44,7 @@ export function Hero() {
 
   if (!movies || movies.length === 0) {
     return (
-      <div className="flex items-center justify-center w-full h-[520px] md:h-[430px] lg:h-[520px] min-h-[600px] md:min-h-0 lg:min-h-0 pt-6 bg-surface-variant p-6 text-center">
+      <div className="flex items-center justify-center w-full px-4 md:px-0 h-[520px] md:h-[430px] lg:h-[520px] min-h-[600px] md:min-h-0 lg:min-h-0 pt-6 bg-surface-variant p-6 text-center">
         <p className="text-text-secondary">No hay películas disponibles</p>
       </div>
     );
@@ -68,17 +68,17 @@ export function Hero() {
       aria-label="Carrusel de películas destacadas"
       aria-roledescription="carrusel"
       data-carousel-state={isPaused ? "paused" : "playing"}
-      className="relative w-full overflow-hidden bg-background pt-6"
+      className="relative w-full overflow-hidden bg-background pt-6 px-4 md:px-0"
     >
       {/* Visual viewport */}
       <div
         id="hero-carousel"
         data-active-index={activeIndex}
-        className="relative w-full overflow-hidden h-[520px] md:h-[430px] lg:h-[520px] min-h-[600px] md:min-h-0 lg:min-h-0"
+        className="relative w-full overflow-hidden h-[476px] md:h-[430px] lg:h-[520px] min-h-[600px] md:min-h-0 lg:min-h-0"
       >
         {/* Continuous track */}
         <div
-          className="flex gap-4 h-full transition-transform duration-500 ease-in-out motion-reduce:transition-none translate-x-[calc(-1*var(--hero-i)*(100%+1rem))] md:translate-x-[calc(16.1%-var(--hero-i)*(67.8%+1rem))]"
+          className="flex gap-4 h-full transition-transform duration-500 ease-in-out motion-reduce:transition-none translate-x-[calc(-1*var(--hero-i)*(100%+1rem))] md:translate-x-[calc(7.5%-var(--hero-i)*(85%+1rem))]"
           style={
             {
               "--hero-i": activeIndex,
@@ -108,7 +108,7 @@ export function Hero() {
                   }
                 }}
                 className={cn(
-                  "flex-shrink-0 w-full md:w-[67.8%] h-full relative overflow-hidden rounded-2xl transition-all duration-300",
+                  "flex-shrink-0 w-full md:w-[85%] h-full relative overflow-hidden rounded-2xl transition-all duration-300",
                   isActive
                     ? "border border-accent/20 bg-background"
                     : "border border-transparent cursor-pointer"

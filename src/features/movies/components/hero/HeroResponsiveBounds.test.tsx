@@ -131,13 +131,13 @@ describe("Hero Responsive Bounds & Content Visibility Integration", () => {
       const track = container.querySelector("#hero-carousel > div") as HTMLElement;
       expect(track).toBeInTheDocument();
       expect(track).toHaveClass("translate-x-[calc(-1*var(--hero-i)*(100%+1rem))]");
-      expect(track).toHaveClass("md:translate-x-[calc(16.1%-var(--hero-i)*(67.8%+1rem))]");
+      expect(track).toHaveClass("md:translate-x-[calc(7.5%-var(--hero-i)*(85%+1rem))]");
       expect(track.style.getPropertyValue("--hero-i")).toBe("0");
 
       const slides = container.querySelectorAll("[data-state]");
       slides.forEach((slide) => {
         expect(slide).toHaveClass("w-full");
-        expect(slide).toHaveClass("md:w-[67.8%]");
+        expect(slide).toHaveClass("md:w-[85%]");
         expect(slide).toHaveClass("rounded-2xl");
       });
     });

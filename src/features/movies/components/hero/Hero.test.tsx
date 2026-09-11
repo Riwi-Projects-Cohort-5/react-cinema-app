@@ -220,7 +220,7 @@ describe("Hero component", () => {
     expect(viewport).toBeInTheDocument();
     expect(viewport).toHaveClass("overflow-hidden");
     expect(viewport).toHaveClass("w-full");
-    expect(viewport).toHaveClass("h-[520px]");
+    expect(viewport).toHaveClass("h-[476px]");
     expect(viewport).toHaveClass("md:h-[430px]");
     expect(viewport).toHaveClass("lg:h-[520px]");
     expect(viewport).toHaveClass("min-h-[600px]");
@@ -286,7 +286,7 @@ describe("Hero component", () => {
     const slides = container.querySelectorAll("[data-state]");
     slides.forEach((slide) => {
       expect(slide).toHaveClass("w-full");
-      expect(slide).toHaveClass("md:w-[67.8%]");
+      expect(slide).toHaveClass("md:w-[85%]");
       expect(slide).toHaveClass("rounded-2xl");
     });
 
@@ -294,7 +294,7 @@ describe("Hero component", () => {
     expect(track).toBeInTheDocument();
     expect(track).toHaveClass("gap-4");
     expect(track).toHaveClass("translate-x-[calc(-1*var(--hero-i)*(100%+1rem))]");
-    expect(track).toHaveClass("md:translate-x-[calc(16.1%-var(--hero-i)*(67.8%+1rem))]");
+    expect(track).toHaveClass("md:translate-x-[calc(7.5%-var(--hero-i)*(85%+1rem))]");
     expect((track as HTMLElement).style.getPropertyValue("--hero-i")).toBe("0");
   });
 
@@ -356,7 +356,7 @@ describe("Hero component", () => {
         expect(viewport).toHaveAttribute("data-active-index", String(activeIndex));
         expect(viewport).toHaveClass("w-full");
         expect(viewport).toHaveClass("overflow-hidden");
-        expect(viewport).toHaveClass("h-[520px]");
+        expect(viewport).toHaveClass("h-[476px]");
         expect(viewport).toHaveClass("md:h-[430px]");
         expect(viewport).toHaveClass("lg:h-[520px]");
         expect(viewport).toHaveClass("min-h-[600px]");
@@ -366,7 +366,7 @@ describe("Hero component", () => {
         const track = container.querySelector("#hero-carousel > div") as HTMLElement;
         expect(track).toHaveClass("gap-4");
         expect(track).toHaveClass("translate-x-[calc(-1*var(--hero-i)*(100%+1rem))]");
-        expect(track).toHaveClass("md:translate-x-[calc(16.1%-var(--hero-i)*(67.8%+1rem))]");
+        expect(track).toHaveClass("md:translate-x-[calc(7.5%-var(--hero-i)*(85%+1rem))]");
         expect(track.style.getPropertyValue("--hero-i")).toBe(String(activeIndex));
 
         const slides = container.querySelectorAll("[data-state]");
@@ -374,7 +374,7 @@ describe("Hero component", () => {
 
         slides.forEach((slide, idx) => {
           expect(slide).toHaveClass("w-full");
-          expect(slide).toHaveClass("md:w-[67.8%]");
+          expect(slide).toHaveClass("md:w-[85%]");
           expect(slide).toHaveClass("rounded-2xl");
           expect(slide).toHaveClass("overflow-hidden");
 

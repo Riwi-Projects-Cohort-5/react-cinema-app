@@ -16,7 +16,7 @@ export const MOCK_MOVIES: Movie[] = [
     director: "Denis Villeneuve",
     language: "Inglés",
     isSubtitled: true,
-    posterUrl: "https://image.tmdb.org/t/p/w500/czembW0Rk1Ke7raVUvvFP9qT5xV.jpg",
+    posterUrl: "https://image.tmdb.org/t/p/w500/6izwz7rsy95ARzTR3poZ8H6c5pp.jpg",
     trailerUrl: "https://www.youtube.com/watch?v=Way9Dexny3w",
     releaseDate: "2024-03-01",
     rating: 8.5,
