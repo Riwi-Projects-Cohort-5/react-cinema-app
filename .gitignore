@@ -30,3 +30,8 @@ pr-body.md
 
 .env
 .env.local
+
+# Workspace artifacts (agent evidence, plans, notepads)
+.omo/
+.playwright-mcp/
+.debug-journal.md
