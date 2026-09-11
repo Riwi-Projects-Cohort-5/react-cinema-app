@@ -3,7 +3,7 @@ import type { ZodType, ZodError } from "zod";
 
 interface UseFormValidationReturn<T> {
   errors: Record<string, string>;
-  isSubmitting: boolean;
+
   validateField: (
     fieldName: string,
     value: unknown,
@@ -11,12 +11,11 @@ interface UseFormValidationReturn<T> {
   ) => Promise<boolean>;
   validateForm: (data: T) => Promise<boolean>;
   clearErrors: () => void;
-  setErrors: (errors: Record<string, string>) => void;
+  setErrors: React.Dispatch<React.SetStateAction<Record<string, string>>>;
 }
 
 export function useFormValidation<T>(schema: ZodType<unknown>): UseFormValidationReturn<T> {
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const validateField = async (
     fieldName: string,
@@ -50,7 +49,6 @@ export function useFormValidation<T>(schema: ZodType<unknown>): UseFormValidatio
   };
 
   const validateForm = async (data: T): Promise<boolean> => {
-    setIsSubmitting(true);
     try {
       await schema.parseAsync(data);
       setErrors({});
@@ -68,8 +66,6 @@ export function useFormValidation<T>(schema: ZodType<unknown>): UseFormValidatio
       }
       setErrors(newErrors);
       return false;
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
@@ -77,7 +73,6 @@ export function useFormValidation<T>(schema: ZodType<unknown>): UseFormValidatio
 
   return {
     errors,
-    isSubmitting,
     validateField,
     validateForm,
     clearErrors,

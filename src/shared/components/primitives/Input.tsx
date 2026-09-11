@@ -1,5 +1,6 @@
 import React from "react";
 import type { ZodType } from "zod";
+import { useFormField } from "../composites/forms/useFormField";
 
 type InputType =
   "text" | "email" | "password" | "number" | "tel" | "url" | "search" | "textarea" | "select";
@@ -49,6 +50,9 @@ interface InputProps {
   value?: string | number;
   onChange?: (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => void;
+  onBlur?: (
+    e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => void;
 
   // HTML nativo
@@ -166,6 +170,7 @@ const Input = React.forwardRef<
       fieldSchema,
       error,
       onBlurValidation,
+      onBlur,
       icon,
     },
     ref
@@ -173,6 +178,11 @@ const Input = React.forwardRef<
     const isError = state === "error";
     const isDisabled = state === "disabled";
     const inputId = id || name;
+    const field = useFormField();
+    const resolvedLabel = label ?? field.label;
+    const resolvedError = error ?? field.error;
+    const resolvedHelperText = helperText ?? field.helperText;
+    const resolvedRequired = required || field.required; // ← AGREGAR ;
     const baseInputClasses = getBaseInputClasses(state);
     const finalInputClasses = `${baseInputClasses} ${className}`.trim();
 
@@ -206,6 +216,9 @@ const Input = React.forwardRef<
                 icon?.right ? "pr-10" : ""
               }`}
               onBlur={(e) => {
+                if (onBlur) {
+                  onBlur(e);
+                }
                 if (onBlurValidation && fieldSchema && fieldName) {
                   onBlurValidation(fieldName, e.currentTarget.value, fieldSchema);
                 }
@@ -221,6 +234,9 @@ const Input = React.forwardRef<
                 icon?.right ? "pr-10" : ""
               }`}
               onBlur={(e) => {
+                if (onBlur) {
+                  onBlur(e);
+                }
                 if (onBlurValidation && fieldSchema && fieldName) {
                   onBlurValidation(fieldName, e.currentTarget.value, fieldSchema);
                 }
@@ -235,6 +251,9 @@ const Input = React.forwardRef<
                 icon?.right ? "pr-10" : ""
               }`}
               onBlur={(e) => {
+                if (onBlur) {
+                  onBlur(e);
+                }
                 if (onBlurValidation && fieldSchema && fieldName) {
                   onBlurValidation(fieldName, e.currentTarget.value, fieldSchema);
                 }
@@ -258,15 +277,15 @@ const Input = React.forwardRef<
     };
 
     // Determinar qué mensaje mostrar
-    const displayMessage = error || (isError ? errorMessage : helperText);
-    const messageClassName = error || isError ? "text-error" : "text-text-secondary";
+    const displayMessage = resolvedError || (isError ? errorMessage : resolvedHelperText);
+    const messageClassName = resolvedError || isError ? "text-error" : "text-text-secondary";
 
     return (
       <div className="w-full space-y-1">
-        {label && (
+        {resolvedLabel && (
           <label htmlFor={inputId} className={getLabelClasses(state)}>
-            {label}
-            {required && <span className="text-error ml-1">*</span>}
+            {resolvedLabel}
+            {resolvedRequired && <span className="text-error ml-1">*</span>}
           </label>
         )}
 
