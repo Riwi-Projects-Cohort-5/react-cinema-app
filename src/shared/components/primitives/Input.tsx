@@ -278,7 +278,7 @@ const Input = React.forwardRef<
 
     // Determinar qué mensaje mostrar
     const displayMessage = resolvedError || (isError ? errorMessage : resolvedHelperText);
-    const messageClassName = error || isError ? "text-error" : "text-text-secondary";
+    const messageClassName = resolvedError || isError ? "text-error" : "text-text-secondary";
 
     return (
       <div className="w-full space-y-1">
