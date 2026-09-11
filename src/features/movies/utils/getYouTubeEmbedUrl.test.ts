@@ -4,25 +4,19 @@ import { getYouTubeEmbedUrl } from "./index";
 
 describe("getYouTubeEmbedUrl", () => {
   it("converts standard watch URL to embed URL", () => {
-    expect(
-      getYouTubeEmbedUrl("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
-    ).toBe(
+    expect(getYouTubeEmbedUrl("https://www.youtube.com/watch?v=dQw4w9WgXcQ")).toBe(
       "https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?autoplay=0&rel=0"
     );
   });
 
   it("converts short youtu.be URL to embed URL", () => {
-    expect(
-      getYouTubeEmbedUrl("https://youtu.be/dQw4w9WgXcQ")
-    ).toBe(
+    expect(getYouTubeEmbedUrl("https://youtu.be/dQw4w9WgXcQ")).toBe(
       "https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?autoplay=0&rel=0"
     );
   });
 
   it("converts embed URL to privacy-enhanced embed URL", () => {
-    expect(
-      getYouTubeEmbedUrl("https://www.youtube.com/embed/dQw4w9WgXcQ")
-    ).toBe(
+    expect(getYouTubeEmbedUrl("https://www.youtube.com/embed/dQw4w9WgXcQ")).toBe(
       "https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?autoplay=0&rel=0"
     );
   });

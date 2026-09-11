@@ -20,7 +20,8 @@ const mockMovies: Movie[] = [
   {
     id: 1,
     title: "Spider-Man: No Way Home",
-    synopsis: "Peter Parker enfrenta las consecuencias de su identidad revelada y solicita ayuda al Doctor Strange.",
+    synopsis:
+      "Peter Parker enfrenta las consecuencias de su identidad revelada y solicita ayuda al Doctor Strange.",
     genre: "Accion",
     rating: "PG-13",
     duration: 148,

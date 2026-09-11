@@ -50,15 +50,7 @@ export function Hero() {
     );
   }
 
-  const {
-    activeIndex,
-    goTo,
-    next,
-    prev,
-    isPaused,
-    togglePause,
-    progress,
-  } = carousel;
+  const { activeIndex, goTo, next, prev, isPaused, togglePause, progress } = carousel;
 
   const activeMovie = movies[activeIndex] ?? movies[0]!;
 
@@ -89,13 +81,7 @@ export function Hero() {
             const isActive = index === activeIndex;
             const isPrev = index === (activeIndex - 1 + movies.length) % movies.length;
             const isNext = index === (activeIndex + 1) % movies.length;
-            const slideState = isActive
-              ? "active"
-              : isPrev
-                ? "prev"
-                : isNext
-                  ? "next"
-                  : "other";
+            const slideState = isActive ? "active" : isPrev ? "prev" : isNext ? "next" : "other";
 
             return (
               <div

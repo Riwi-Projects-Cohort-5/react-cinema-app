@@ -27,9 +27,7 @@ export function HeroProgress({
         type="button"
         onClick={onTogglePause}
         aria-label={
-          isPaused
-            ? "Reanudar reproducción automática"
-            : "Pausar reproducción automática"
+          isPaused ? "Reanudar reproducción automática" : "Pausar reproducción automática"
         }
         className="flex-shrink-0 w-7 h-7 rounded-full border border-text-primary/15 bg-surface/80 flex items-center justify-center hover:bg-surface transition-colors duration-fast focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
       >

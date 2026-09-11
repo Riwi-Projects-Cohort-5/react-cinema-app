@@ -25,5 +25,6 @@ No expone props públicas. Utiliza `useMovies` y `useHeroCarousel` internamente.
 Logra estados de carga (skeleton), error (con reintento), vacío y poblado.
 
 ## Referencias de diseño
+
 - Implementación RON-05 basada en `MULT-157.xml`.
 - Alturas gestionadas según `docs/design/12-grid.md`.

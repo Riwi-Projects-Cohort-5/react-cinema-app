@@ -37,7 +37,7 @@ export function useHeroCarousel<T>(
     }
 
     const autoplayId = setInterval(() => {
-      setActiveIndex(prev => (prev + 1) % items.length);
+      setActiveIndex((prev) => (prev + 1) % items.length);
     }, intervalMs);
 
     return () => clearInterval(autoplayId);
@@ -52,7 +52,7 @@ export function useHeroCarousel<T>(
     const increment = tickMs / intervalMs;
 
     const progressId = setInterval(() => {
-      setProgress(prev => Math.min(prev + increment, 1));
+      setProgress((prev) => Math.min(prev + increment, 1));
     }, tickMs);
 
     return () => clearInterval(progressId);
@@ -74,7 +74,7 @@ export function useHeroCarousel<T>(
     if (items.length <= 1) {
       return;
     }
-    setActiveIndex(prev => (prev + 1) % items.length);
+    setActiveIndex((prev) => (prev + 1) % items.length);
     setProgress(0);
   }, [items.length]);
 
@@ -82,12 +82,12 @@ export function useHeroCarousel<T>(
     if (items.length <= 1) {
       return;
     }
-    setActiveIndex(prev => (prev - 1 + items.length) % items.length);
+    setActiveIndex((prev) => (prev - 1 + items.length) % items.length);
     setProgress(0);
   }, [items.length]);
 
   const togglePause = useCallback(() => {
-    setIsPaused(prev => !prev);
+    setIsPaused((prev) => !prev);
   }, []);
 
   const pause = useCallback(() => {

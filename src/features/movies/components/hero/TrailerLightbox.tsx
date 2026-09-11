@@ -9,12 +9,7 @@ export interface TrailerLightboxProps {
   movieTitle: string;
 }
 
-export function TrailerLightbox({
-  isOpen,
-  trailerUrl,
-  onClose,
-  movieTitle,
-}: TrailerLightboxProps) {
+export function TrailerLightbox({ isOpen, trailerUrl, onClose, movieTitle }: TrailerLightboxProps) {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {

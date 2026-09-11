@@ -63,7 +63,9 @@ describe("HeroProgress component", () => {
       />
     );
 
-    expect(screen.getByRole("button", { name: "Pausar reproducción automática" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Pausar reproducción automática" })
+    ).toBeInTheDocument();
 
     rerender(
       <HeroProgress
@@ -76,7 +78,9 @@ describe("HeroProgress component", () => {
       />
     );
 
-    expect(screen.getByRole("button", { name: "Reanudar reproducción automática" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Reanudar reproducción automática" })
+    ).toBeInTheDocument();
   });
 
   it("clicking play/pause calls onTogglePause", () => {

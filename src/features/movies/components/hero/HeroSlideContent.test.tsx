@@ -133,23 +133,19 @@ describe("HeroSlideContent", () => {
         const onShowtimes = vi.fn();
         const onPlayTrailer = vi.fn();
         render(
-          <HeroSlideContent
-            movie={movie}
-            onPlayTrailer={onPlayTrailer}
-            onShowtimes={onShowtimes}
-          />
+          <HeroSlideContent movie={movie} onPlayTrailer={onPlayTrailer} onShowtimes={onShowtimes} />
         );
-        
+
         expect(screen.getByText("Cine Flash — 20% OFF")).toBeInTheDocument();
-        
+
         const titleEl = screen.getByRole("heading", { level: 1, name: movie.title });
         expect(titleEl).toBeInTheDocument();
-        
+
         expect(screen.getByText(movie.synopsis)).toBeInTheDocument();
         expect(screen.getByText(movie.rating)).toBeInTheDocument();
         expect(screen.getByText(movie.genre)).toBeInTheDocument();
         expect(screen.getByText(`Dir. ${movie.director}`)).toBeInTheDocument();
-        
+
         const showtimesBtn = screen.getByRole("button", { name: /Ver horarios/i });
         const trailerBtn = screen.getByRole("button", { name: /Ver tráiler/i });
         expect(showtimesBtn).toBeInTheDocument();
@@ -196,7 +192,7 @@ describe("HeroSlideContent", () => {
     it("constrained tablet failure-path: pins vertical & horizontal budget constraints to prevent 430px height blowout", () => {
       const { container } = render(<HeroSlideContent {...defaultProps} />);
       const root = container.firstElementChild;
-      
+
       expect(root).toHaveClass("md:p-6");
       expect(root).not.toHaveClass("md:p-10");
       expect(root).not.toHaveClass("md:p-8");

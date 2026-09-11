@@ -36,9 +36,7 @@ describe("layouts", () => {
     expect(screen.getByText("Outlet content")).toBeInTheDocument();
 
     // Footer — "Navegación" heading is unique to the Footer
-    expect(
-      screen.getByRole("heading", { name: "Navegación" })
-    ).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Navegación" })).toBeInTheDocument();
   });
 
   it("AuthenticatedLayout renders the authenticated nav and the outlet", () => {

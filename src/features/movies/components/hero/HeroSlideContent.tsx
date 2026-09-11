@@ -8,11 +8,7 @@ export interface HeroSlideContentProps {
   onShowtimes: () => void;
 }
 
-export function HeroSlideContent({
-  movie,
-  onPlayTrailer,
-  onShowtimes,
-}: HeroSlideContentProps) {
+export function HeroSlideContent({ movie, onPlayTrailer, onShowtimes }: HeroSlideContentProps) {
   return (
     <div className="absolute bottom-0 left-0 w-full p-6 pb-6 md:p-6 lg:p-8 z-10 flex flex-col items-start gap-1.5 sm:gap-2">
       {/* Overline pill */}
@@ -39,9 +35,7 @@ export function HeroSlideContent({
           {movie.rating}
         </span>
         <span className="text-text-disabled/40 text-xs select-none">·</span>
-        <span className="font-secondary text-xs text-text-secondary">
-          {movie.genre}
-        </span>
+        <span className="font-secondary text-xs text-text-secondary">{movie.genre}</span>
         <span className="text-text-disabled/40 text-xs select-none">·</span>
         <span className="inline-flex items-center gap-1">
           <Clock size={11} weight="regular" className="text-text-disabled" aria-hidden="true" />
@@ -67,9 +61,7 @@ export function HeroSlideContent({
           className="flex items-center justify-center gap-2 py-2.5 px-5 sm:py-3 sm:px-6 rounded-xl bg-accent transition-colors duration-fast hover:bg-accent/90 focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 whitespace-nowrap"
         >
           <PlayCircle size={16} weight="regular" className="text-white" aria-hidden="true" />
-          <span className="font-primary text-sm font-bold text-white">
-            Ver horarios
-          </span>
+          <span className="font-primary text-sm font-bold text-white">Ver horarios</span>
         </button>
 
         <button
@@ -78,9 +70,7 @@ export function HeroSlideContent({
           className="flex items-center justify-center gap-2 py-2.5 px-4 sm:py-3 sm:px-5 rounded-xl border border-text-primary/15 bg-text-primary/[0.07] transition-colors duration-fast hover:bg-text-primary/[0.12] focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 whitespace-nowrap"
         >
           <Play size={14} weight="regular" className="text-text-primary" aria-hidden="true" />
-          <span className="font-primary text-sm font-semibold text-text-primary">
-            Ver tráiler
-          </span>
+          <span className="font-primary text-sm font-semibold text-text-primary">Ver tráiler</span>
         </button>
 
         <div className="flex items-center gap-1.5 self-start sm:self-center">

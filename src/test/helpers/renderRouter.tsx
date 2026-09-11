@@ -22,4 +22,3 @@ export function renderRouter(initialPath: string): DataRouter {
   );
   return router;
 }
-

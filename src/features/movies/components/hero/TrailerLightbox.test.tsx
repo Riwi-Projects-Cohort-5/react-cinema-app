@@ -11,15 +11,13 @@ describe("TrailerLightbox", () => {
   };
 
   it("renders nothing when isOpen=false", () => {
-    const { container } = render(
-      <TrailerLightbox {...defaultProps} isOpen={false} />,
-    );
+    const { container } = render(<TrailerLightbox {...defaultProps} isOpen={false} />);
     expect(container.firstChild).toBeNull();
   });
 
   it("renders nothing when trailerUrl=null even if isOpen=true", () => {
     const { container } = render(
-      <TrailerLightbox {...defaultProps} isOpen={true} trailerUrl={null} />,
+      <TrailerLightbox {...defaultProps} isOpen={true} trailerUrl={null} />
     );
     expect(container.firstChild).toBeNull();
   });
@@ -28,10 +26,7 @@ describe("TrailerLightbox", () => {
     render(<TrailerLightbox {...defaultProps} />);
     const iframe = screen.getByTitle("Inception");
     expect(iframe).toBeInTheDocument();
-    expect(iframe).toHaveAttribute(
-      "src",
-      expect.stringContaining("youtube-nocookie.com/embed/"),
-    );
+    expect(iframe).toHaveAttribute("src", expect.stringContaining("youtube-nocookie.com/embed/"));
   });
 
   it("pressing Escape calls onClose", () => {
@@ -51,9 +46,7 @@ describe("TrailerLightbox", () => {
 
   it("clicking the backdrop calls onClose", () => {
     const onClose = vi.fn();
-    const { container } = render(
-      <TrailerLightbox {...defaultProps} onClose={onClose} />,
-    );
+    const { container } = render(<TrailerLightbox {...defaultProps} onClose={onClose} />);
     // Backdrop is the element with absolute inset-0 bg-background/64
     const backdrop = container.querySelector(".bg-background\\/64");
     expect(backdrop).toBeInTheDocument();

@@ -183,7 +183,9 @@ describe("Hero Responsive Bounds & Content Visibility Integration", () => {
     it("clicking next updates track transform property and renders newly active movie content", () => {
       const { rerender } = render(<Hero />);
 
-      expect(screen.getByRole("heading", { level: 1, name: MOCK_MOVIES[0]!.title })).toBeInTheDocument();
+      expect(
+        screen.getByRole("heading", { level: 1, name: MOCK_MOVIES[0]!.title })
+      ).toBeInTheDocument();
 
       const nextButton = screen.getByRole("button", { name: "Siguiente" });
       fireEvent.click(nextButton);
@@ -204,7 +206,9 @@ describe("Hero Responsive Bounds & Content Visibility Integration", () => {
 
       rerender(<Hero />);
 
-      expect(screen.getByRole("heading", { level: 1, name: MOCK_MOVIES[1]!.title })).toBeInTheDocument();
+      expect(
+        screen.getByRole("heading", { level: 1, name: MOCK_MOVIES[1]!.title })
+      ).toBeInTheDocument();
       const track = document.querySelector("#hero-carousel > div") as HTMLElement;
       expect(track.style.getPropertyValue("--hero-i")).toBe("1");
     });
