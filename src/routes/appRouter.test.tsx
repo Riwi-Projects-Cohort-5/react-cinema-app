@@ -47,7 +47,7 @@ describe("appRouter", () => {
     expect(
       screen.getByRole("region", { name: /carrusel de películas destacadas/i })
     ).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Inicio" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Salas y Cines" })).toBeInTheDocument();
   });
 
   it("renders the login page when unauthenticated", () => {

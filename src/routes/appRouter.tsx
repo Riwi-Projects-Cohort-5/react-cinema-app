@@ -2,7 +2,7 @@ import { createBrowserRouter, type RouteObject } from "react-router";
 
 import { LoginPage } from "@features/auth/pages/login/LoginPage";
 import { RegisterPage } from "@features/auth/pages/register/RegisterPage";
-import { AdminLayout, AuthenticatedLayout, PublicLayout } from "@layouts";
+import { AdminLayout, AuthenticatedLayout, MainLayout } from "@layouts";
 import { GeneralErrorPage, NotFoundPage } from "@pages";
 import { ProtectedRoute, PublicOnlyRoute } from "@routes/guards";
 import { HomePage } from "@features/movies/pages/HomePage";
@@ -12,7 +12,7 @@ import { PATHS } from "@routes/paths";
 
 export const appRoutes: RouteObject[] = [
   {
-    element: <PublicLayout />,
+    element: <MainLayout />,
     children: [
       {
         path: PATHS.home,

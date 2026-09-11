@@ -10,7 +10,7 @@ El código se organiza en dos capas: un **app-shell global** bajo `src/` (recurs
 src/
 ├── assets/      # Recursos estáticos (imágenes, estilos)
 ├── config/      # Variables de entorno y configuración validada
-├── layouts/     # App-shells globales: PublicLayout, AuthenticatedLayout, AdminLayout
+├── layouts/     # App-shells globales: MainLayout, AuthenticatedLayout, AdminLayout
 ├── pages/       # Páginas de aplicación: NotFoundPage (404), GeneralErrorPage
 ├── routes/      # PATHS, appRouter y guardas
 ├── services/    # Cliente HTTP, errores, sesión, notificaciones, query client
@@ -24,7 +24,7 @@ src/
 | ----------- | ------------------------------------------------------------------------- |
 | `assets/`   | Recursos estáticos compartidos por toda la aplicación.                    |
 | `config/`   | Variables de entorno (`env.ts`) y configuración validada en runtime.      |
-| `layouts/`  | Layouts globales (`PublicLayout`, `AuthenticatedLayout`, `AdminLayout`).  |
+| `layouts/`  | Layouts globales (`MainLayout`, `AuthenticatedLayout`, `AdminLayout`).  |
 | `pages/`    | Páginas de nivel de aplicación (`NotFoundPage` 404, `GeneralErrorPage`).  |
 | `routes/`   | Constantes de paths (`PATHS`), configuración del router y guardas.        |
 | `services/` | Capa transversal de datos y errores: cliente HTTP, `ApiError`, sesión, notificaciones, query client. Implementa las [convenciones de capa de datos](../../api/00-conventions.md#12-capa-de-datos-en-frontend-axios--tanstack-query) del contrato de API. |
