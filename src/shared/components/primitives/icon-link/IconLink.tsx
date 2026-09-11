@@ -29,7 +29,7 @@ export function IconLink(props: IconLinkProps) {
     </>
   );
 
-  if ("to" in props) {
+if ("to" in props) {
     return (
       <Link to={props.to} className={classes}>
         {content}

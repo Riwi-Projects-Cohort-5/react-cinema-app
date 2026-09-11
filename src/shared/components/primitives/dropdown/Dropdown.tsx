@@ -23,9 +23,11 @@ export interface DropdownProps<V = string> {
   filter?: (option: DropdownOption<V>, query: string) => boolean;
   filterPlaceholder?: string;
   disabled?: boolean;
+  triggerIcon?: ReactNode;
   id?: string;
   className?: string;
   listClassName?: string;
+  triggerClassName?: string;
 }
 
 const defaultFilter = (option: DropdownOption<unknown>, query: string): boolean =>
@@ -48,6 +50,8 @@ export function Dropdown<V = string>({
   id,
   className = "",
   listClassName = "",
+  triggerIcon,
+  triggerClassName = "",
 }: DropdownProps<V>) {
   const [open, setOpen] = useState(false);
   const [internalValue, setInternalValue] = useState<V | null>(defaultValue);
@@ -66,13 +70,13 @@ export function Dropdown<V = string>({
   const selectedOption =
     selectedValue == null
       ? null
-      : options.find((option) => valuesEqual(option.value, selectedValue)) ?? null;
+      : (options.find((option) => valuesEqual(option.value, selectedValue)) ?? null);
 
   const filterFn = filter ?? defaultFilter;
 
   const filteredOptions = useMemo(
     () => (query ? options.filter((option) => filterFn(option, query)) : options),
-    [options, query, filterFn],
+    [options, query, filterFn]
   );
 
   const highlightedOption = filteredOptions[highlightedIndex] ?? null;
@@ -85,7 +89,7 @@ export function Dropdown<V = string>({
   const openList = () => {
     if (disabled) return;
     const selectedIndex = filteredOptions.findIndex(
-      (option) => selectedValue != null && valuesEqual(option.value, selectedValue),
+      (option) => selectedValue != null && valuesEqual(option.value, selectedValue)
     );
     setHighlightedIndex(selectedIndex >= 0 ? selectedIndex : 0);
     setOpen(true);
@@ -229,7 +233,10 @@ export function Dropdown<V = string>({
     <div ref={containerRef} id={id} className={cn("relative", className)}>
       {label && (
         <div className="mb-2 flex items-baseline gap-1">
-          <span id={labelId} className="text-overline font-semibold uppercase tracking-overline text-text-secondary">
+          <span
+            id={labelId}
+            className="text-overline font-semibold uppercase tracking-overline text-text-secondary"
+          >
             {label}
           </span>
           {optionalHint && (
@@ -246,7 +253,7 @@ export function Dropdown<V = string>({
         aria-haspopup="listbox"
         aria-controls={listboxId}
         aria-labelledby={label ? labelId : undefined}
-        aria-label={label ? undefined : placeholder ?? undefined}
+        aria-label={label ? undefined : (placeholder ?? undefined)}
         aria-activedescendant={inputIsCombobox ? undefined : activeDescendant}
         onClick={() => (open ? closeList() : openList())}
         onKeyDown={handleKeyDown}
@@ -254,15 +261,31 @@ export function Dropdown<V = string>({
           "flex h-12 w-full items-center justify-between gap-3 rounded-md border bg-background px-4 text-body transition-colors duration-fast",
           open ? "border-primary" : "border-border",
           disabled ? "cursor-not-allowed opacity-40" : "cursor-pointer",
+          triggerClassName
         )}
       >
-        <span className={cn("truncate text-left", selectedOption ? "text-text-primary" : "text-text-secondary")}>
-          {selectedOption ? selectedOption.label : placeholder ?? "Seleccionar…"}
+        <span
+          className={cn(
+            "flex min-w-0 items-center gap-2",
+            selectedOption ? "text-text-primary" : "text-text-secondary"
+          )}
+        >
+          {triggerIcon && (
+            <span aria-hidden="true" className="shrink-0">
+              {triggerIcon}
+            </span>
+          )}
+          <span className="truncate text-left">
+            {selectedOption ? selectedOption.label : (placeholder ?? "Seleccionar…")}
+          </span>
         </span>
         <CaretDown
           size={16}
           aria-hidden="true"
-          className={cn("shrink-0 text-text-secondary transition-transform duration-fast", open && "rotate-180")}
+          className={cn(
+            "shrink-0 text-text-secondary transition-transform duration-fast",
+            open && "rotate-180"
+          )}
         />
       </button>
 
@@ -277,10 +300,14 @@ export function Dropdown<V = string>({
                 "[&_input]:outline-none",
                 "[&_input]:focus:outline-hidden",
                 "[&_input]:focus:ring-0",
-                "[&_input]:placeholder:text-text-secondary",
+                "[&_input]:placeholder:text-text-secondary"
               )}
             >
-              <MagnifyingGlass size={16} aria-hidden="true" className="shrink-0 text-text-secondary" />
+              <MagnifyingGlass
+                size={16}
+                aria-hidden="true"
+                className="shrink-0 text-text-secondary"
+              />
               <Input
                 ref={searchInputRef}
                 type="search"
@@ -323,7 +350,7 @@ export function Dropdown<V = string>({
                   className={cn(
                     "flex cursor-pointer items-center justify-between gap-2 rounded-xs px-3 py-2 text-body transition-colors duration-fast",
                     isHighlighted && "bg-surface-variant",
-                    option.disabled && "cursor-not-allowed opacity-40",
+                    option.disabled && "cursor-not-allowed opacity-40"
                   )}
                 >
                   <span className="flex min-w-0 items-center gap-2">
@@ -335,7 +362,12 @@ export function Dropdown<V = string>({
                     <span className="truncate text-text-primary">{option.label}</span>
                   </span>
                   {isSelected && (
-                    <Check size={16} weight="bold" aria-hidden="true" className="shrink-0 text-primary" />
+                    <Check
+                      size={16}
+                      weight="bold"
+                      aria-hidden="true"
+                      className="shrink-0 text-primary"
+                    />
                   )}
                 </li>
               );

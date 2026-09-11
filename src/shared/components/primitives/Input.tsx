@@ -1,4 +1,6 @@
 import React from "react";
+import type { ZodType } from "zod";
+import { useFormField } from "../composites/forms/useFormField";
 
 type InputType =
   "text" | "email" | "password" | "number" | "tel" | "url" | "search" | "textarea" | "select";
@@ -28,6 +30,16 @@ interface InputProps {
   // Para textarea
   rows?: number;
 
+  // Validación
+  fieldName?: string;
+  fieldSchema?: ZodType<unknown>;
+  error?: string;
+  onBlurValidation?: (
+    fieldName: string,
+    value: unknown,
+    fieldSchema: ZodType<unknown>
+  ) => Promise<void>;
+
   // Para iconos
   icon?: {
     left?: React.ReactNode;
@@ -38,6 +50,9 @@ interface InputProps {
   value?: string | number;
   onChange?: (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => void;
+  onBlur?: (
+    e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => void;
 
   // HTML nativo
@@ -56,7 +71,7 @@ interface InputProps {
 const getStateClasses = (state: InputState): string => {
   const baseTransition = "transition-colors duration-base";
 
-  const stateMap = {
+  const stateMap: Record<InputState, string> = {
     idle: `border-border text-text-primary focus:border-primary focus:ring-primary/50 ${baseTransition}`,
     error: `border-error text-error focus:border-error focus:ring-error/50 ${baseTransition}`,
     disabled: `opacity-40 cursor-not-allowed ${baseTransition}`,
@@ -68,11 +83,6 @@ const getStateClasses = (state: InputState): string => {
 const getLabelClasses = (state: InputState): string => {
   const isError = state === "error";
   return `block text-sm font-medium mb-2 ${isError ? "text-error" : "text-text-secondary"}`;
-};
-
-const getHelperClasses = (state: InputState): string => {
-  const isError = state === "error";
-  return `text-sm mt-1 ${isError ? "text-error" : "text-text-secondary"}`;
 };
 
 const getBaseInputClasses = (state: InputState): string => {
@@ -156,6 +166,11 @@ const Input = React.forwardRef<
       id,
       required = false,
       rows = 4,
+      fieldName,
+      fieldSchema,
+      error,
+      onBlurValidation,
+      onBlur,
       icon,
     },
     ref
@@ -163,6 +178,11 @@ const Input = React.forwardRef<
     const isError = state === "error";
     const isDisabled = state === "disabled";
     const inputId = id || name;
+    const field = useFormField();
+    const resolvedLabel = label ?? field.label;
+    const resolvedError = error ?? field.error;
+    const resolvedHelperText = helperText ?? field.helperText;
+    const resolvedRequired = required || field.required; // ← AGREGAR ;
     const baseInputClasses = getBaseInputClasses(state);
     const finalInputClasses = `${baseInputClasses} ${className}`.trim();
 
@@ -176,6 +196,7 @@ const Input = React.forwardRef<
       placeholder,
       className: finalInputClasses,
     };
+
     // Renderizar el elemento correcto según el tipo
     const renderField = () => {
       const fieldContent = (
@@ -186,13 +207,22 @@ const Input = React.forwardRef<
             </span>
           )}
 
-          {/* El input/textarea/select va aquí */}
           {type === "textarea" ? (
             <TextArea
               ref={ref as React.Ref<HTMLTextAreaElement>}
               rows={rows}
               {...commonProps}
-              className={`${finalInputClasses} ${icon?.left ? "pl-10" : ""} ${icon?.right ? "pr-10" : ""}`}
+              className={`${finalInputClasses} ${icon?.left ? "pl-10" : ""} ${
+                icon?.right ? "pr-10" : ""
+              }`}
+              onBlur={(e) => {
+                if (onBlur) {
+                  onBlur(e);
+                }
+                if (onBlurValidation && fieldSchema && fieldName) {
+                  onBlurValidation(fieldName, e.currentTarget.value, fieldSchema);
+                }
+              }}
             />
           ) : type === "select" ? (
             <SelectInput
@@ -200,14 +230,34 @@ const Input = React.forwardRef<
               options={options}
               selectPlaceholder={selectPlaceholder}
               {...commonProps}
-              className={`${finalInputClasses} ${icon?.left ? "pl-10" : ""} ${icon?.right ? "pr-10" : ""}`}
+              className={`${finalInputClasses} ${icon?.left ? "pl-10" : ""} ${
+                icon?.right ? "pr-10" : ""
+              }`}
+              onBlur={(e) => {
+                if (onBlur) {
+                  onBlur(e);
+                }
+                if (onBlurValidation && fieldSchema && fieldName) {
+                  onBlurValidation(fieldName, e.currentTarget.value, fieldSchema);
+                }
+              }}
             />
           ) : (
             <TextInput
               ref={ref as React.Ref<HTMLInputElement>}
               type={type}
               {...commonProps}
-              className={`${finalInputClasses} ${icon?.left ? "pl-10" : ""} ${icon?.right ? "pr-10" : ""}`}
+              className={`${finalInputClasses} ${icon?.left ? "pl-10" : ""} ${
+                icon?.right ? "pr-10" : ""
+              }`}
+              onBlur={(e) => {
+                if (onBlur) {
+                  onBlur(e);
+                }
+                if (onBlurValidation && fieldSchema && fieldName) {
+                  onBlurValidation(fieldName, e.currentTarget.value, fieldSchema);
+                }
+              }}
             />
           )}
 
@@ -225,22 +275,23 @@ const Input = React.forwardRef<
         </div>
       );
     };
-    // Mostrar mensaje: error si hay estado error, sino helper text
-    const showMessage = isError ? errorMessage : helperText;
-    const showMessageClass = getHelperClasses(state);
+
+    // Determinar qué mensaje mostrar
+    const displayMessage = resolvedError || (isError ? errorMessage : resolvedHelperText);
+    const messageClassName = resolvedError || isError ? "text-error" : "text-text-secondary";
 
     return (
       <div className="w-full space-y-1">
-        {label && (
+        {resolvedLabel && (
           <label htmlFor={inputId} className={getLabelClasses(state)}>
-            {label}
-            {required && <span className="text-error ml-1">*</span>}
+            {resolvedLabel}
+            {resolvedRequired && <span className="text-error ml-1">*</span>}
           </label>
         )}
 
-        <div className="relative"> {renderField()}</div>
+        <div className="relative">{renderField()}</div>
 
-        {showMessage && <p className={showMessageClass}>{showMessage}</p>}
+        {displayMessage && <p className={messageClassName}>{displayMessage}</p>}
       </div>
     );
   }

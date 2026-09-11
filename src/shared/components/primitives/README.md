@@ -20,18 +20,18 @@ import {
 
 ## Catálogo
 
-| Primitiva | Descripción |
-| --------- | ----------- |
-| [Checkbox](./checkbox/checkbox.md) | Check interactivo. Variante estándar (token `primary`) y "no soy un robot" (token `success`). |
-| [Countdown](./countdown/countdown.md) | Cuenta regresiva viva `HH:MM:SS` con reloj y `tabular-nums`; clampa en cero y dispara `onExpire`. Respaldada por `useCountdown` (`src/shared/hooks`). |
-| [Dropdown](./dropdown/dropdown.md) | Select (combobox) con navegación por teclado y filtrado de opciones opcional. |
-| [IconBadge](./icon-badge/icon-badge.md) | Contenedor cuadrado para íconos decorativos, borde/fondo al 20/12 % del tono. |
-| [IconLink](./icon-link/icon-link.md) | Acción inline (link o botón) con flecha al final y hover. |
-| [Input](./Input.tsx) | Campo de texto, textarea y select con variantes, estados, iconos y soporte para helper/error messages. |
+| Primitiva                               | Descripción                                                                                                                                           |
+| --------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Checkbox](./checkbox/checkbox.md)      | Check interactivo. Variante estándar (token `primary`) y "no soy un robot" (token `success`).                                                         |
+| [Countdown](./countdown/countdown.md)   | Cuenta regresiva viva `HH:MM:SS` con reloj y `tabular-nums`; clampa en cero y dispara `onExpire`. Respaldada por `useCountdown` (`src/shared/hooks`). |
+| [Dropdown](./dropdown/dropdown.md)      | Select (combobox) con navegación por teclado y filtrado de opciones opcional.                                                                         |
+| [IconBadge](./icon-badge/icon-badge.md) | Contenedor cuadrado para íconos decorativos, borde/fondo al 20/12 % del tono.                                                                         |
+| [IconLink](./icon-link/icon-link.md)    | Acción inline (link o botón) con flecha al final y hover.                                                                                             |
+| [Input](./Input.tsx)                    | Campo de texto, textarea y select con variantes, estados, iconos y soporte para helper/error messages.                                                |
 
 ## Composición de clases (`cn`)
 
-Las primitivas componen sus `className` condicionales con el util compartido **`cn`** (`@shared/utils/cn`), un joiner de clases tipo `clsx` que filtra valores falsy:
+Las primitivas componen sus `className` condicionales con el util compartido **`cn`** (`@shared/utils/cn`), un joiner de clases que filtra valores falsy **y resuelve conflictos con `tailwind-merge`** (`twMerge`). Esto permite que el `className` del consumidor sobreescriba el estilo base del componente sin recurrir a `!important`:
 
 ```tsx
 import { cn } from "@shared/utils/cn";
@@ -39,11 +39,11 @@ import { cn } from "@shared/utils/cn";
 className={cn(
   "flex items-center gap-2",
   disabled && "cursor-not-allowed opacity-40",
-  className,
+  className, // gana las últimas clases en conflicto (ej. bg-*)
 )}
 ```
 
-**Regla del sistema:** no se usan clases con `!important` (`!border-0`, etc.). Cuando una primitiva necesita anular estilos de otra, el override se resuelve por **especificidad** (p. ej. variantes `[&_input:]` sobre el wrapper) en lugar de `!`.
+> **Regla del sistema:** no se usan clases con `!important` (`!border-0`, etc.). El override se resuelve por `tailwind-merge` (última clase gana) o por **especificidad** (variantes `[&_input:]` sobre el wrapper) según el caso.
 
 ## Cómo agregar una primitiva
 

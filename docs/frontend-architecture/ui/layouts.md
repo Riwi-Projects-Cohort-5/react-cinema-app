@@ -2,15 +2,17 @@
 
 ## Descripción
 
-Los app-shells globales envuelven los grupos de rutas de la aplicación. Viven en `src/layouts/`, se re-exportan desde `src/layouts/index.ts` y son rutas layout sin path que renderizan sus hijos con `<Outlet />`.
+Los app-shells globales envuelven los grupos de rutas de la aplicación. Viven en `src/layouts/` (y el app-shell público en `src/shared/layouts/`), se re-exportan desde `src/layouts/index.ts` y son rutas layout sin path que renderizan sus hijos con `<Outlet />`.
 
 ## Layouts disponibles
 
-| Layout               | Archivo                          | Nav                                        |
-| -------------------- | -------------------------------- | ------------------------------------------ |
-| **Público**          | `src/layouts/PublicLayout.tsx`   | Inicio, Iniciar sesión, Registrarse        |
-| **Autenticado**      | `src/layouts/AuthenticatedLayout.tsx` | Perfil, Historial de compras, Checkout |
-| **Admin**            | `src/layouts/AdminLayout.tsx`    | Sidebar: Dashboard                         |
+| Layout               | Archivo                                    | Nav / estructura                                              |
+| -------------------- | ------------------------------------------ | ------------------------------------------------------------- |
+| **Main (público)**   | `src/shared/layouts/MainLayout.tsx`        | Header + CentralNav + `<Outlet />` + Footer; envuelve casa y auth |
+| **Autenticado**      | `src/layouts/AuthenticatedLayout.tsx`      | Perfil, Historial de compras, Checkout                         |
+| **Admin**            | `src/layouts/AdminLayout.tsx`              | Sidebar: Dashboard                                             |
+
+> **MainLayout** es el app-shell raíz del proyecto: monta composite `Header`, `CentralNav` y `Footer` de `@shared/components/composites`, y renderiza las sub-rutas con `<Outlet />`. Las rutas bajo él se asignan en [Routing](../navigation/routing.md).
 
 > Las rutas que envuelve cada layout se asignan en [Routing](../navigation/routing.md).
 
@@ -22,8 +24,11 @@ Los layouts se asignan en `src/routes/appRouter.tsx`:
 
 ```tsx
 {
-  element: <PublicLayout />,
-  children: [{ path: PATHS.home, element: <PlaceholderPage title="Home" /> }],
+  element: <MainLayout />,
+  children: [
+    { path: PATHS.home, element: <PlaceholderPage title="Home" /> },
+    // auth, rutas protegidas y admin anidadas bajo MainLayout
+  ],
 },
 ```
 

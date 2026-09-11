@@ -53,7 +53,7 @@ export const Checkbox = ({
       className={cn(
         "flex cursor-pointer select-none items-start p-px",
         disabled && "cursor-not-allowed opacity-40",
-        className,
+        className
       )}
     >
       <div
@@ -62,7 +62,7 @@ export const Checkbox = ({
           "flex justify-center items-center w-[1.125rem] h-[1.125rem] rounded-xs border transition-colors duration-fast",
           checked
             ? "border-primary bg-primary text-white"
-            : "border-border bg-transparent text-text-disabled",
+            : "border-border bg-transparent text-text-disabled"
         )}
       >
         {checked && <CheckIcon size={16} weight="bold" aria-hidden="true" />}
@@ -121,7 +121,7 @@ export const CheckboxRobot = ({
       className={cn(
         "flex cursor-pointer select-none items-center justify-center",
         disabled && "cursor-not-allowed opacity-40",
-        className,
+        className
       )}
     >
       <div
@@ -130,7 +130,7 @@ export const CheckboxRobot = ({
           "flex justify-center items-center w-[1.375rem] h-[1.375rem] rounded-xs border-2 transition-colors duration-fast",
           checked
             ? "border-success bg-success text-white"
-            : "border-border bg-background text-text-disabled",
+            : "border-border bg-background text-text-disabled"
         )}
       >
         {checked && <CheckIcon size={16} weight="bold" aria-hidden="true" />}
