@@ -1,14 +1,8 @@
 import { NavLink } from 'react-router';
-import { MagnifyingGlassIcon, MapPinIcon } from "@phosphor-icons/react";
-import { Button, Dropdown } from "@shared/components/";
+import { MagnifyingGlassIcon } from "@phosphor-icons/react";
+import { Button } from "@shared/components/";
+import { LocationIndicator } from "@features/location/components/location-indicator/LocationIndicator";
 import { cn } from "@shared/utils/cn";
-
-const locationOptions = [
-  { value: "Barranquilla", label: "Barranquilla" },
-  { value: "Bogota", label: "Bogotá" },
-  { value: "Medellin", label: "Medellín" },
-  { value: "Cali", label: "Cali" },
-];
 
 export default function CentralNav() {
   return (
@@ -43,15 +37,7 @@ export default function CentralNav() {
       <div className="flex items-center gap-2">
         
 
-        <Dropdown
-          options={locationOptions}
-          defaultValue="Barranquilla"
-          triggerIcon={<MapPinIcon size={18} weight="fill" className="text-primary" />}
-          triggerClassName={cn(
-            "h-auto w-auto gap-2 rounded-full bg-surface-variant px-4 py-2 text-sm",
-            "border-transparent outline outline-1 outline-offset-[-1px] outline-border",
-          )}
-        />
+        <LocationIndicator />
         <Button
           variant="secondary"
           size="sm"

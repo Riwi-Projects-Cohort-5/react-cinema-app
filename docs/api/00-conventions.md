@@ -90,9 +90,19 @@ Toda respuesta no-2xx usa esta forma (mensaje legible, en español):
 
 ## 5. Paginación
 
-- **Estado actual:** los endpoints de listado confirmados por el backend (`/countries`,
-  `/departments/{id}`, `/cities/{id}`, `/movies`, `/movies/{id}/functions`, …) devuelven un
-  **arreglo plano** JSON — **sin** envelope de paginación.
+> ⚠️ **Desactualizado — verificado el 2026-09-10 contra el Mock Server de backend.** La API **sí**
+> usa una envoltura: toda respuesta llega como `{ "success": true, "data": ... }`, y la colección
+> publicada afirma que aplica a los 57 endpoints. Se comprobó llamando `/countries`,
+> `/departments/{id}` y `/cities/{id}`.
+>
+> Impacto: cualquier servicio que lea la respuesta de axios directamente recibirá un objeto, no un
+> arreglo. Hoy `features/location/services/location.service.ts` desenvuelve la envoltura dentro de
+> la feature; **falta decidir en equipo** si se mueve a un interceptor de `httpClient` para no
+> repetirlo en cada feature. Esta sección debe reescribirse cuando se tome esa decisión.
+
+- **Estado actual (obsoleto, ver aviso de arriba):** se documentó que los endpoints de listado
+  (`/countries`, `/departments/{id}`, `/cities/{id}`, `/movies`, `/movies/{id}/functions`, …)
+  devolvían un **arreglo plano** JSON — **sin** envelope.
 - El frontend no debe asumir paginación del lado del servidor ni paginar con `page`/`pageSize` hasta
   que el backend la exponga.
 - **Prevista (a confirmar):** si el backend la implementa, usaría este envelope:
