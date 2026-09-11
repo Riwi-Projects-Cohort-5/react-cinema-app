@@ -85,7 +85,7 @@ export function HeroProgress({
                   {/* Progress track & fill */}
                   <div className="absolute bottom-0.5 left-0.5 w-[calc(100%-4px)] h-[3px] bg-text-primary/15 rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-accent rounded-full"
+                      className="h-full bg-accent rounded-full transition-[width] duration-instant ease-linear motion-reduce:transition-none"
                       style={{ width: `${fillPercent}%` }}
                     />
                   </div>
