@@ -152,7 +152,7 @@ export function Hero() {
           onClick={prev}
           aria-label="Anterior"
           aria-controls="hero-carousel"
-          className="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center bg-background/65 border border-white/10 rounded-full backdrop-blur-sm z-20 text-text-primary shadow-xl hover:bg-background/80 transition-colors focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+          className="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center bg-background/65 border border-text-primary/15 rounded-full backdrop-blur-sm z-20 text-text-primary shadow-xl hover:bg-background/80 transition-colors focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
         >
           <CaretLeft size={20} aria-hidden="true" />
         </button>
@@ -161,7 +161,7 @@ export function Hero() {
           onClick={next}
           aria-label="Siguiente"
           aria-controls="hero-carousel"
-          className="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center bg-background/65 border border-white/10 rounded-full backdrop-blur-sm z-20 text-text-primary shadow-xl hover:bg-background/80 transition-colors focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+          className="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center bg-background/65 border border-text-primary/15 rounded-full backdrop-blur-sm z-20 text-text-primary shadow-xl hover:bg-background/80 transition-colors focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
         >
           <CaretRight size={20} aria-hidden="true" />
         </button>

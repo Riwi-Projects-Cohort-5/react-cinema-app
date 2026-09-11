@@ -38,18 +38,18 @@ export function HeroSlideContent({
         <span className="rounded-md border border-text-primary/20 bg-text-primary/10 px-2.5 py-0.5 font-primary text-[11px] font-bold text-text-primary">
           {movie.classification}
         </span>
-        <span className="text-white/18 text-xs select-none">·</span>
+        <span className="text-text-disabled/40 text-xs select-none">·</span>
         <span className="font-secondary text-xs text-text-secondary">
           {movie.genre}
         </span>
-        <span className="text-white/18 text-xs select-none">·</span>
+        <span className="text-text-disabled/40 text-xs select-none">·</span>
         <span className="inline-flex items-center gap-1">
           <Clock size={11} weight="regular" className="text-text-disabled" aria-hidden="true" />
           <span className="font-secondary text-xs text-text-secondary">
             {formatDuration(movie.duration)}
           </span>
         </span>
-        <span className="text-white/18 text-xs select-none">·</span>
+        <span className="text-text-disabled/40 text-xs select-none">·</span>
         <span className="font-secondary text-xs text-text-disabled inline-block max-w-[140px] truncate align-bottom">
           Dir. {movie.director}
         </span>

@@ -7,22 +7,22 @@ export function PublicLayout() {
   const isHome = pathname === PATHS.home;
 
   return (
-    <div className="flex min-h-screen flex-col overflow-x-hidden">
-      <header className="border-b border-gray-200">
+    <div className="flex min-h-screen flex-col overflow-x-hidden bg-background text-text-primary">
+      <header className="border-b border-border bg-surface">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
-          <Link to={PATHS.home} className="text-lg font-bold text-gray-900">
+          <Link to={PATHS.home} className="text-lg font-bold text-text-primary">
             Multicine
           </Link>
           <nav className="flex items-center gap-4">
-            <Link to={PATHS.home} className="text-sm text-gray-700 hover:text-gray-900">
+            <Link to={PATHS.home} className="text-sm text-text-secondary transition-colors hover:text-text-primary">
               Inicio
             </Link>
-            <Link to={PATHS.auth.login} className="text-sm text-gray-700 hover:text-gray-900">
+            <Link to={PATHS.auth.login} className="text-sm text-text-secondary transition-colors hover:text-text-primary">
               Iniciar sesión
             </Link>
             <Link
               to={PATHS.auth.register}
-              className="rounded-md bg-gray-800 px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-gray-700"
+              className="rounded-md bg-primary px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-primary-hover"
             >
               Registrarse
             </Link>
@@ -34,8 +34,8 @@ export function PublicLayout() {
         <Outlet />
       </main>
 
-      <footer className="border-t border-gray-200">
-        <div className="mx-auto max-w-6xl px-4 py-4 text-center text-sm text-gray-500">
+      <footer className="border-t border-border bg-surface">
+        <div className="mx-auto max-w-6xl px-4 py-4 text-center text-sm text-text-secondary">
           © {new Date().getFullYear()} Multicine
         </div>
       </footer>
