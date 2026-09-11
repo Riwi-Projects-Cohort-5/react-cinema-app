@@ -319,4 +319,80 @@ describe("Hero component", () => {
     rerender(<Hero />);
     expect(track.style.getPropertyValue("--hero-i")).toBe("2");
   });
+
+  describe("Regression coverage across all 4 MOCK_MOVIES fixtures", () => {
+    MOCK_MOVIES.forEach((movie, activeIndex) => {
+      it(`preserves geometry and active state when active movie is index ${activeIndex}: "${movie.title}"`, () => {
+        vi.mocked(useMovies).mockReturnValue({
+          data: MOCK_MOVIES,
+          isPending: false,
+          isError: false,
+          error: null,
+          refetch: mockRefetch,
+        } as unknown as ReturnType<typeof useMovies>);
+
+        vi.mocked(useHeroCarousel).mockReturnValue({
+          activeIndex,
+          activeItem: movie,
+          goTo: mockGoTo,
+          next: mockNext,
+          prev: mockPrev,
+          isPaused: false,
+          togglePause: mockTogglePause,
+          pause: mockPause,
+          resume: mockResume,
+          progress: 0.1,
+        });
+
+        const { container } = render(<Hero />);
+
+        const section = container.querySelector("section");
+        expect(section).toHaveClass("w-full");
+        expect(section).toHaveClass("overflow-hidden");
+        expect(section).toHaveClass("pt-6");
+        expect(section).not.toHaveClass("rounded-[1.25rem]");
+
+        const viewport = container.querySelector("#hero-carousel");
+        expect(viewport).toHaveAttribute("data-active-index", String(activeIndex));
+        expect(viewport).toHaveClass("w-full");
+        expect(viewport).toHaveClass("overflow-hidden");
+        expect(viewport).toHaveClass("h-[520px]");
+        expect(viewport).toHaveClass("md:h-[430px]");
+        expect(viewport).toHaveClass("lg:h-[520px]");
+        expect(viewport).toHaveClass("min-h-[600px]");
+        expect(viewport).toHaveClass("md:min-h-0");
+        expect(viewport).toHaveClass("lg:min-h-0");
+
+        const track = container.querySelector("#hero-carousel > div") as HTMLElement;
+        expect(track).toHaveClass("gap-4");
+        expect(track).toHaveClass("translate-x-[calc(-1*var(--hero-i)*(100%+1rem))]");
+        expect(track).toHaveClass("md:translate-x-[calc(16.1%-var(--hero-i)*(67.8%+1rem))]");
+        expect(track.style.getPropertyValue("--hero-i")).toBe(String(activeIndex));
+
+        const slides = container.querySelectorAll("[data-state]");
+        expect(slides.length).toBe(MOCK_MOVIES.length);
+
+        slides.forEach((slide, idx) => {
+          expect(slide).toHaveClass("w-full");
+          expect(slide).toHaveClass("md:w-[67.8%]");
+          expect(slide).toHaveClass("rounded-2xl");
+          expect(slide).toHaveClass("overflow-hidden");
+
+          if (idx === activeIndex) {
+            expect(slide).toHaveAttribute("data-state", "active");
+            expect(slide).toHaveAttribute("aria-current", "true");
+            expect(slide).toHaveClass("border-accent/20");
+            expect(slide).toHaveClass("bg-background");
+          } else {
+            expect(slide).not.toHaveAttribute("aria-current");
+            expect(slide).toHaveClass("border-transparent");
+            expect(slide).toHaveClass("cursor-pointer");
+          }
+        });
+
+        const activeContent = screen.getByTestId("hero-slide-content");
+        expect(activeContent).toHaveTextContent(movie.title);
+      });
+    });
+  });
 });

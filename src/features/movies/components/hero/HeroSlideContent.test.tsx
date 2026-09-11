@@ -132,7 +132,15 @@ describe("HeroSlideContent", () => {
   describe("Content contract across all mock fixture movies", () => {
     MOCK_MOVIES.forEach((movie) => {
       it(`renders full content contract for fixture movie: "${movie.title}"`, () => {
-        render(<HeroSlideContent {...defaultProps} movie={movie} />);
+        const onShowtimes = vi.fn();
+        const onPlayTrailer = vi.fn();
+        render(
+          <HeroSlideContent
+            movie={movie}
+            onPlayTrailer={onPlayTrailer}
+            onShowtimes={onShowtimes}
+          />
+        );
         
         expect(screen.getByText("Cine Flash — 20% OFF")).toBeInTheDocument();
         
@@ -144,10 +152,86 @@ describe("HeroSlideContent", () => {
         expect(screen.getByText(movie.genre)).toBeInTheDocument();
         expect(screen.getByText(`Dir. ${movie.director}`)).toBeInTheDocument();
         
-        expect(screen.getByRole("button", { name: /Ver horarios/i })).toBeInTheDocument();
-        expect(screen.getByRole("button", { name: /Ver tráiler/i })).toBeInTheDocument();
+        const showtimesBtn = screen.getByRole("button", { name: /Ver horarios/i });
+        const trailerBtn = screen.getByRole("button", { name: /Ver tráiler/i });
+        expect(showtimesBtn).toBeInTheDocument();
+        expect(trailerBtn).toBeInTheDocument();
+        expect(showtimesBtn).toHaveClass("whitespace-nowrap");
+        expect(trailerBtn).toHaveClass("whitespace-nowrap");
+
+        fireEvent.click(showtimesBtn);
+        expect(onShowtimes).toHaveBeenCalledTimes(1);
+
+        fireEvent.click(trailerBtn);
+        expect(onPlayTrailer).toHaveBeenCalledTimes(1);
+
         expect(screen.getByText("Descuento disponible hoy")).toBeInTheDocument();
       });
+    });
+  });
+
+  describe("Responsive geometry bounds & failure-path assertions", () => {
+    it("mobile happy path: enforces mobile padding, font scales, clamp, and full-width CTA layout", () => {
+      const { container } = render(<HeroSlideContent {...defaultProps} />);
+      const root = container.firstElementChild;
+      expect(root).toHaveClass("p-6");
+      expect(root).toHaveClass("pb-6");
+
+      const titleEl = screen.getByRole("heading", { level: 1 });
+      expect(titleEl).toHaveClass("text-2xl");
+      expect(titleEl).toHaveClass("sm:text-3xl");
+
+      const synopsisEl = screen.getByText(mockMovie.synopsis);
+      expect(synopsisEl).toHaveClass("text-xs");
+      expect(synopsisEl).toHaveClass("sm:text-sm");
+      expect(synopsisEl).toHaveClass("line-clamp-2");
+      expect(synopsisEl).toHaveClass("sm:line-clamp-3");
+
+      const ctaRow = container.querySelector(".flex-col.sm\\:flex-row");
+      expect(ctaRow).toBeInTheDocument();
+      expect(ctaRow).toHaveClass("w-full");
+      expect(ctaRow).toHaveClass("sm:w-auto");
+      expect(ctaRow).toHaveClass("items-stretch");
+      expect(ctaRow).toHaveClass("sm:items-center");
+    });
+
+    it("constrained tablet failure-path: pins vertical & horizontal budget constraints to prevent 430px height blowout", () => {
+      const { container } = render(<HeroSlideContent {...defaultProps} />);
+      const root = container.firstElementChild;
+      
+      expect(root).toHaveClass("md:p-6");
+      expect(root).not.toHaveClass("md:p-10");
+      expect(root).not.toHaveClass("md:p-8");
+
+      const titleEl = screen.getByRole("heading", { level: 1 });
+      expect(titleEl).toHaveClass("md:text-2xl");
+      expect(titleEl).not.toHaveClass("md:text-5xl");
+
+      const synopsisEl = screen.getByText(mockMovie.synopsis);
+      expect(synopsisEl).toHaveClass("md:line-clamp-2");
+      expect(synopsisEl).toHaveClass("md:text-xs");
+
+      const showtimesBtn = screen.getByRole("button", { name: /Ver horarios/i });
+      const trailerBtn = screen.getByRole("button", { name: /Ver tráiler/i });
+      expect(showtimesBtn).toHaveClass("whitespace-nowrap");
+      expect(trailerBtn).toHaveClass("whitespace-nowrap");
+
+      const directorEl = screen.getByText(`Dir. ${mockMovie.director}`);
+      expect(directorEl).toHaveClass("max-w-[140px]");
+      expect(directorEl).toHaveClass("truncate");
+    });
+
+    it("desktop expansion bounds: verifies lg padding and typography scale", () => {
+      const { container } = render(<HeroSlideContent {...defaultProps} />);
+      const root = container.firstElementChild;
+      expect(root).toHaveClass("lg:p-8");
+
+      const titleEl = screen.getByRole("heading", { level: 1 });
+      expect(titleEl).toHaveClass("lg:text-4xl");
+
+      const synopsisEl = screen.getByText(mockMovie.synopsis);
+      expect(synopsisEl).toHaveClass("lg:line-clamp-3");
+      expect(synopsisEl).toHaveClass("lg:text-sm");
     });
   });
 });
