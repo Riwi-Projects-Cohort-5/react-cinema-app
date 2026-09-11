@@ -191,7 +191,7 @@ describe("Hero component", () => {
     const activeBackdrop = container.querySelector('[data-testid="hero-backdrop-0"]');
     expect(activeBackdrop).toBeInTheDocument();
 
-    const expectedBackdropUrl = getBackdropUrl(testMovies[0]!.posterUrl);
+    const expectedBackdropUrl = getBackdropUrl(testMovies[0]!.bannerUrl);
     expect(activeBackdrop?.getAttribute("style")).toContain(expectedBackdropUrl);
   });
 

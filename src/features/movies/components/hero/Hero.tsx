@@ -119,7 +119,7 @@ export function Hero() {
                   data-testid={`hero-backdrop-${index}`}
                   className="absolute inset-0 bg-cover bg-center"
                   style={{
-                    backgroundImage: `url(${getBackdropUrl(movie.posterUrl)})`,
+                    backgroundImage: `url(${getBackdropUrl(movie.bannerUrl)})`,
                   }}
                 />
 

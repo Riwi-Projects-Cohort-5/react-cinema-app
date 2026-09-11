@@ -7,8 +7,9 @@ export function formatDuration(minutes: number): string {
   return `${hours}h ${remMinutes}min`;
 }
 
-export function getBackdropUrl(posterUrl: string): string {
-  return posterUrl.replace(/\/t\/p\/w\d{2,4}\//, "/t/p/w1280/");
+export function getBackdropUrl(imageUrl: string | null | undefined): string {
+  if (!imageUrl) return "";
+  return imageUrl.replace(/\/t\/p\/w\d{2,4}\//, "/t/p/w1280/");
 }
 
 export function getYouTubeEmbedUrl(url: string | null): string | null {

@@ -79,7 +79,7 @@ describe("Hero Responsive Bounds & Content Visibility Integration", () => {
         expect(activeHeading).toHaveClass("font-primary");
 
         expect(screen.getByText(movie.synopsis)).toBeInTheDocument();
-        expect(screen.getByText(movie.classification)).toBeInTheDocument();
+        expect(screen.getByText(movie.rating)).toBeInTheDocument();
         expect(screen.getByText(movie.genre)).toBeInTheDocument();
         expect(screen.getByText(formatDuration(movie.duration))).toBeInTheDocument();
         expect(screen.getByText(`Dir. ${movie.director}`)).toBeInTheDocument();

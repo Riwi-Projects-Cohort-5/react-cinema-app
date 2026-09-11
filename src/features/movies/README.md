@@ -13,7 +13,7 @@ El héroe es una sección a pantalla completa (full-bleed), no una tarjeta.
 
 ## Contrato de Activos
 
-- **Producción**: `posterUrl` transformada mediante `getBackdropUrl()` directamente.
+- **Producción**: `bannerUrl` usada como backdrop del héroe (w=1200); `imageUrl` para miniaturas (w=800).
 - **QA (Fixture)**: Usar `src/assets/hero.png` para pruebas visuales en caso de fallo de datos.
 
 ## Tabla de Geometría (SVG Referencia)

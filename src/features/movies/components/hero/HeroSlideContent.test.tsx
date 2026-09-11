@@ -9,15 +9,13 @@ const mockMovie: Movie = {
   title: "Guardianes de la Galaxia",
   synopsis: "La aventura más divertida del universo cinematográfico.",
   genre: "Acción",
-  classification: "+7",
+  rating: "+7",
   duration: 148,
   director: "James Gunn",
-  language: "Español Latino",
-  isSubtitled: false,
-  posterUrl: "https://image.tmdb.org/t/p/w500/test.jpg",
+  imageUrl: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=800",
+  bannerUrl: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=1200",
   trailerUrl: "https://www.youtube.com/watch?v=test",
   releaseDate: "2023-05-05",
-  rating: 8.5,
   isActive: true,
 };
 
@@ -40,9 +38,9 @@ describe("HeroSlideContent", () => {
     expect(screen.getByText(mockMovie.synopsis)).toBeInTheDocument();
   });
 
-  it("(c) renders classification badge containing movie.classification", () => {
+  it("(c) renders classification badge containing movie.rating", () => {
     render(<HeroSlideContent {...defaultProps} />);
-    const badge = screen.getByText(mockMovie.classification);
+    const badge = screen.getByText(mockMovie.rating);
     expect(badge).toBeInTheDocument();
   });
 
@@ -148,7 +146,7 @@ describe("HeroSlideContent", () => {
         expect(titleEl).toBeInTheDocument();
         
         expect(screen.getByText(movie.synopsis)).toBeInTheDocument();
-        expect(screen.getByText(movie.classification)).toBeInTheDocument();
+        expect(screen.getByText(movie.rating)).toBeInTheDocument();
         expect(screen.getByText(movie.genre)).toBeInTheDocument();
         expect(screen.getByText(`Dir. ${movie.director}`)).toBeInTheDocument();
         

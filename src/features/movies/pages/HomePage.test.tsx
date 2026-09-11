@@ -18,15 +18,13 @@ const mockMovie: Movie = {
   title: "Guardianes de la Galaxia",
   synopsis: "Un grupo de héroes intergalácticos debe unirse para salvar el universo.",
   genre: "Acción",
-  classification: "PG-13",
+  rating: "PG-13",
   duration: 121,
   director: "James Gunn",
-  language: "Español",
-  isSubtitled: false,
-  posterUrl: "https://image.tmdb.org/t/p/w500/poster1.jpg",
+  imageUrl: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=800",
+  bannerUrl: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=1200",
   trailerUrl: "https://www.youtube.com/watch?v=d96cjJhvlMA",
   releaseDate: "2014-08-01",
-  rating: 8.0,
   isActive: true,
 };
 

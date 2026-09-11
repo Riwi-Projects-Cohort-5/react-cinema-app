@@ -3,14 +3,12 @@ export interface Movie {
   title: string;
   synopsis: string;
   genre: string;
-  classification: string;
+  rating: string;
   duration: number;
-  director: string;
-  language: string;
-  isSubtitled: boolean;
-  posterUrl: string;
+  director?: string;
+  imageUrl: string;
+  bannerUrl: string;
   trailerUrl: string | null;
-  releaseDate: string;
-  rating: number;
+  releaseDate?: string;
   isActive: boolean;
 }
