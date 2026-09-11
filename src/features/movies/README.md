@@ -66,8 +66,14 @@ Executed QA (recorded evidence):
 | Módulo | Ruta | Descripción |
 | :--- | :--- | :--- |
 | [Interfaces](./interfaces/movie.ts) | `interfaces/movie.ts` | Contrato de datos `Movie`. |
+| [Interfaces](./interfaces/movieFunction.ts) | `interfaces/movieFunction.ts` | Contrato de datos `MovieFunction`. |
+| [Interfaces](./interfaces/movieRecommendation.ts) | `interfaces/movieRecommendation.ts` | Contrato de datos `MovieRecommendation`. |
 | [Servicio](./services/movies.service.ts) | `services/movies.service.ts` | Consumo de datos de películas. |
+| [Servicio](./services/movies.mock.ts) | `services/movies.mock.ts` | Mock de datos para desarrollo. |
+| [Store](./store/moviesSourceStore.ts) | `store/moviesSourceStore.ts` | Store de estado de origen. |
 | [Hook `useMovies`](./hooks/useMovies.ts) | `hooks/useMovies.ts` | Hook de acceso a los datos de películas (TanStack Query). |
+| [Hook `useMovieFunctions`](./hooks/useMovieFunctions.ts) | `hooks/useMovieFunctions.ts` | Hook de acceso a funciones. |
+| [Hook `useMovieRecommendations`](./hooks/useMovieRecommendations.ts) | `hooks/useMovieRecommendations.ts` | Hook de acceso a recomendaciones. |
 | [Hook `useHeroCarousel`](./hooks/useHeroCarousel.ts) | `hooks/useHeroCarousel.ts` | Lógica de control del carrusel (autoplay, navegación, progreso). |
 | [Hero](./components/hero/Hero.tsx) | `components/hero/Hero.tsx` | Contenedor principal del carrusel de héroe. |
 | [HeroSlideContent](./components/hero/HeroSlideContent.tsx) | `components/hero/HeroSlideContent.tsx` | Contenido de una diapositiva activa. |

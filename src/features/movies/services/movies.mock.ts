@@ -1,4 +1,12 @@
-import type { Movie } from "@features/movies/interfaces/movie";
+import type { Movie, MovieFunction, MovieRecommendation } from "@features/movies/interfaces";
+
+const MOCK_DELAY_MS = 400;
+
+function withDelay<T>(value: T): Promise<T> {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(value), MOCK_DELAY_MS);
+  });
+}
 
 /**
  * Mock movies fixture for local development and preview purposes.
@@ -74,3 +82,64 @@ export const MOCK_MOVIES: Movie[] = [
     isActive: true,
   },
 ];
+
+export function getMockMovies(): Promise<Movie[]> {
+  return withDelay(MOCK_MOVIES);
+}
+
+export function getMockMovieFunctions(movieId: number): Promise<MovieFunction[]> {
+  const mockFunctions: MovieFunction[] = [
+    {
+      id: 1,
+      movieId,
+      cinemaId: 1,
+      room: "Sala 1",
+      format: "2D",
+      startTime: "2026-09-10T14:30:00.000Z",
+      price: 18000,
+    },
+    {
+      id: 2,
+      movieId,
+      cinemaId: 1,
+      room: "Sala 2",
+      format: "3D",
+      startTime: "2026-09-10T17:00:00.000Z",
+      price: 22000,
+    },
+    {
+      id: 3,
+      movieId,
+      cinemaId: 1,
+      room: "Sala IMAX",
+      format: "IMAX",
+      startTime: "2026-09-10T19:45:00.000Z",
+      price: 28000,
+    },
+    {
+      id: 4,
+      movieId,
+      cinemaId: 1,
+      room: "Sala VIP",
+      format: "VIP",
+      startTime: "2026-09-10T22:15:00.000Z",
+      price: 35000,
+    },
+  ];
+
+  return withDelay(mockFunctions);
+}
+
+export function getMockMovieRecommendations(movieId: number): Promise<MovieRecommendation[]> {
+  const recommendations: MovieRecommendation[] = MOCK_MOVIES.filter(
+    (movie) => movie.id !== movieId
+  ).map((movie) => ({
+    id: movie.id,
+    title: movie.title,
+    genre: movie.genre,
+    imageUrl: movie.posterUrl,
+  }));
+
+  return withDelay(recommendations);
+}
+
