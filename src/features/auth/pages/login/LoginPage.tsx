@@ -70,7 +70,7 @@ export const LoginPage = () => {
       // Imagen desde `public/images` (coloca tu archivo en `public/images/tu-imagen.png`)
       rightImageSrc="/images/tu-imagen.png"
       formEyebrow="Bienvenido de vuelta"
-      formTitle="Inicia sesión"
+      formTitle="Iniciar sesión"
       formSubtitle="Accede a tus entradas, membresía y beneficios."
       footer={
         <>

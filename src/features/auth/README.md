@@ -1,6 +1,17 @@
 # Auth (colocado)
 
-Esta documentación está colocada en `src/features/auth` y describe la implementación actual del módulo de autenticación: páginas, componentes, layouts, rutas y prácticas comunes para extender o mantener la funcionalidad.
+Esta documentación está colocada en `src/features/auth` y describe la implementación actual del módulo de autenticación. Cada carpeta tiene una guía local con su responsabilidad, flujo y forma de extensión.
+
+## Documentación por carpeta
+
+- [components](./components/README.md): componentes visuales reutilizables, incluido `LoginForm`.
+- [interfaces](./interfaces/README.md): contratos tipados de requests, responses y usuario.
+- [layouts](./layouts/README.md): composición compartida mediante `AuthLayout`.
+- [pages](./pages/README.md): coordinación de las pantallas de autenticación.
+- [pages/login](./pages/login/README.md): flujo de inicio de sesión.
+- [pages/forgot-password](./pages/forgot-password/README.md): estado actual y pasos para completar recuperación.
+- [services](./services/README.md): integración HTTP del feature.
+- [store](./store/README.md): estado de usuario, bloqueo y errores de login.
 
 Propósito
 - Proveer páginas y componentes para login, registro y recuperación de contraseña.
@@ -28,12 +39,10 @@ Archivos clave
 - `AuthLayout.tsx`
   - Props principales:
     - `imageSrc?: string` — URL opcional para la imagen de fondo principal.
-    - `rightImageSrc?: string` — imagen flotante a la derecha (pasar `"/login.png"` si está en `public/`).
     - `eyebrow`, `heading`, `description`, `stats` — contenido del panel izquierdo.
     - `formEyebrow`, `formTitle`, `formSubtitle`, `children`, `footer` — contenido del panel del formulario.
   - Características:
     - Soporta `backgroundImage` usando `imageSrc` o un gradiente por defecto.
-    - Renderiza `rightImageSrc` como imagen flotante (si se pasa).
     - El panel derecho está centrado y se puede ajustar mediante clases `p-*`, `max-w-*`, etc.
 
 - `LoginForm.tsx`
@@ -57,7 +66,7 @@ Rutas
 - `MainLayout` detecta rutas `auth` y oculta `Header`, `CentralNav` y `Footer` en esas rutas.
 
 Agregar / usar imágenes de fondo
-- Opción `public/`: colocar imagen en `public/login.png` y pasar `rightImageSrc="/login.png"` o dejar que `AuthLayout` use `backgroundImage`.
+- Opción `public/`: colocar una imagen en `public/` y pasar su URL mediante `imageSrc`.
 - Opción `src/assets/`: importar con alias `@assets` y pasar la variable importada a `AuthLayout`.
 
 Ejemplos
@@ -68,7 +77,7 @@ Ejemplos
   heading="Tu próxima función te está esperando."
   description="Entradas, membresía y beneficios..."
   stats={[{value:'12+',label:'Salas'}, ...]}
-  rightImageSrc="/login.png"
+  imageSrc="/login.png"
   formEyebrow="Bienvenido de vuelta"
   formTitle="Inicia sesión"
 >
@@ -86,16 +95,4 @@ npm i
 npm run dev
 # Open http://localhost:5174/auth/login
 ```
-
-Buenas prácticas y notas
-- Mantén la lógica de negocio (llamadas a APIs) en `services/` y deja los componentes UI en `components/`.
-- Para diseños y tokens, revisa `docs/design` y las variables CSS en el `theme`.
-- Si la página de auth debe esconder el header/footer, `MainLayout` ya lo hace automáticamente.
-
-Tareas recomendadas / TODOs
-- Añadir tests para `LoginForm` (render, validación y comportamiento cuando `isSubmitting`).
-- Implementar llamadas reales en `ForgotPasswordPage` usando `services/auth`.
-- Exportar tipos y prop docs si se desea generar documentación automática (Storybook o TypeDoc).
-
-Contacto
-- Si necesitás que centralice más documentación (ej.: explotar props con ejemplos visuales), decímelo y la incluyo.
+ 

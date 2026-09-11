@@ -18,9 +18,9 @@ export const ForgotPasswordPage = () => {
 
   return (
     <AuthLayout
-      eyebrow="Recuperar acceso"
-      heading="¿Olvidaste tu contraseña?"
-      description="Ingresa tu correo y te enviaremos un enlace para restablecerla."
+      eyebrow="SIN COMPLICACIONES"
+      heading="Volver siempre es fácil"
+      description="En unos pasos recuperarás el acceso completo a tus entradas, membresía y beneficios."
       formEyebrow="Recuperar acceso"
       formTitle="¿Olvidaste tu contraseña?"
       formSubtitle="Ingresa tu correo y te enviaremos un enlace para restablecerla."

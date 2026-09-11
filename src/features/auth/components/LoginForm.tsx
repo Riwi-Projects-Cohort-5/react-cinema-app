@@ -35,8 +35,7 @@ export function LoginForm({
 }: LoginFormProps) {
   const [formData, setFormData] = useState<LoginFormData>(EMPTY_FORM);
   const [showPassword, setShowPassword] = useState(false);
-  // Solo UI por ahora: el backend de login no soporta "remember me" todavía
-  // (ver docs/api/endpoints/05-auth/20-POST-auth-login.md, sección "Confirmación y pendientes").
+ 
   const [rememberMe, setRememberMe] = useState(false);
   const { errors, validateField, validateForm } = useFormValidation<LoginFormData>(loginSchema);
 

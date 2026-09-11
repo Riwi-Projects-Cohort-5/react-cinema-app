@@ -28,7 +28,7 @@ interface AuthLayoutProps {
 function BrandMark() {
   return (
     <Link to={PATHS.home} className="relative z-10 flex items-center gap-2">
-      <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-white">
+      <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-white shadow-md">
         <FilmSlate size={18} weight="bold" />
       </span>
       <span className="text-lg font-bold text-text-primary">AbsoluteCinema</span>
@@ -38,7 +38,6 @@ function BrandMark() {
 
 export function AuthLayout({
   imageSrc,
-  rightImageSrc,
   eyebrow,
   heading,
   description,
@@ -81,17 +80,19 @@ export function AuthLayout({
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-background/30 to-background/85" />
         <div
           className="absolute inset-0 bg-center bg-no-repeat"
-          style={{ backgroundImage: "url('/login.png')", backgroundSize: 'cover', backgroundPosition: 'center' }}
+          style={{
+            backgroundImage: "url('/login.png')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
 
-
-
-        <div className="relative z-10 ml-10 mt-10 w-fit">
+        <div className="relative z-10 ml-6 mt-5 w-fit">
           <BrandMark />
         </div>
 
-        <div className="absolute inset-x-0 bottom-0 z-10 max-w-lg p-10">
+        <div className="absolute inset-x-0 bottom-0 z-10 max-w-lg p-6">
           <span className="text-overline font-semibold uppercase tracking-overline text-accent">
             {eyebrow}
           </span>
@@ -116,11 +117,8 @@ export function AuthLayout({
             </div>
           )}
         </div>
-
-
-
         <div className="absolute inset-y-0 right-0 z-20 flex items-stretch p-4 lg:p-6">
-          <div className="h-full w-full max-w-sm rounded-2xl border border-border bg-surface/95 p-6 shadow-xl backdrop-blur flex items-center justify-center">
+          <div className="flex h-full w-full max-w-sm items-center justify-center rounded-2xl border border-border bg-surface/95 p-6 shadow-xl backdrop-blur">
             <div className="w-full">{formPanel}</div>
           </div>
         </div>
