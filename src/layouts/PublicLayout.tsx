@@ -1,6 +1,5 @@
 import { Link, Outlet } from "react-router";
 
-import { LocationIndicator } from "@features/location/components/location-indicator/LocationIndicator";
 import { PATHS } from "@routes/paths";
 
 export function PublicLayout() {
@@ -12,7 +11,6 @@ export function PublicLayout() {
             Multicine
           </Link>
           <nav className="flex items-center gap-4">
-            <LocationIndicator />
             <Link to={PATHS.home} className="text-sm text-gray-700 hover:text-gray-900">
               Inicio
             </Link>

@@ -14,9 +14,9 @@ export function LocationIndicator() {
       aria-label={
         location ? `Ubicación actual: ${location.city.name}. Cambiar ubicación` : "Elegir ubicación"
       }
-      className="flex items-center gap-1.5 rounded-full border border-border px-3 py-1.5 text-caption text-text-secondary transition-colors duration-fast hover:border-primary hover:text-text-primary"
+      className="flex items-center gap-2 rounded-full bg-surface-variant px-4 py-2 text-caption text-text-primary outline outline-offset-[-1px] outline-border transition-colors duration-fast hover:bg-surface-variant/80"
     >
-      <MapPin size={14} weight="fill" aria-hidden="true" className="shrink-0 text-primary" />
+      <MapPin size={18} weight="fill" aria-hidden="true" className="shrink-0 text-primary" />
       {location ? location.city.name : "Elegir ubicación"}
       <CaretDown size={12} aria-hidden="true" className="shrink-0" />
     </button>
