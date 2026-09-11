@@ -109,14 +109,15 @@ describe("Hero Responsive Bounds & Content Visibility Integration", () => {
   });
 
   describe("Mobile Happy Path Layout & Geometry Invariants", () => {
-    it("preserves single-card mobile layout, pt-6 section, and min-h-[600px] viewport", () => {
+    it("preserves single-card mobile layout, mt-5 section, and min-h-[600px] viewport", () => {
       const { container } = render(<Hero />);
 
       const section = container.querySelector("section");
       expect(section).toBeInTheDocument();
       expect(section).toHaveClass("w-full");
       expect(section).toHaveClass("overflow-hidden");
-      expect(section).toHaveClass("pt-6");
+      expect(section).toHaveClass("mt-5");
+      expect(section).toHaveClass("mt-5");
       expect(section).toHaveClass("bg-background");
       expect(section).not.toHaveClass("rounded-[1.25rem]");
 

@@ -25,3 +25,8 @@ dist-ssr
 
 # Local PR description drafts (not part of the repo)
 pr-body.md
+
+
+
+.env
+.env.local
