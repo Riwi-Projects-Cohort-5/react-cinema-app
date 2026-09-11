@@ -25,7 +25,10 @@ export function useHeroCarousel<T>(
   const activeItem = (items[activeIndex] ?? items[0]) as T;
 
   useEffect(() => {
-    setProgress(0);
+    const timer = setTimeout(() => {
+      setProgress(0);
+    }, 0);
+    return () => clearTimeout(timer);
   }, [activeIndex]);
 
   useEffect(() => {
