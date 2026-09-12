@@ -1,6 +1,7 @@
 import { Clock, Play, PlayCircle } from "@phosphor-icons/react";
 import type { Movie } from "@features/movies/interfaces/movie";
 import { formatDuration } from "@features/movies/utils";
+import { Button, GreenIndicator } from "@shared/components/primitives";
 
 export interface HeroSlideContentProps {
   movie: Movie;
@@ -12,12 +13,7 @@ export function HeroSlideContent({ movie, onPlayTrailer, onShowtimes }: HeroSlid
   return (
     <div className="absolute bottom-0 left-0 w-full p-6 pb-6 md:p-6 lg:p-8 z-10 flex flex-col items-start gap-1.5 sm:gap-2">
       {/* Overline pill */}
-      <div className="inline-flex items-center gap-2 mb-1 sm:mb-1.5">
-        <span className="w-1.5 h-1.5 rounded-sm bg-accent opacity-75" />
-        <span className="font-secondary text-[11px] font-bold uppercase tracking-[0.08em] text-accent">
-          Cine Flash — 20% OFF
-        </span>
-      </div>
+      <GreenIndicator text="Cine Flash — 20% OFF" className="inline-flex mb-1 sm:mb-1.5" />
 
       {/* Title */}
       <h1 className="font-primary text-2xl sm:text-3xl md:text-2xl lg:text-4xl font-bold leading-tight tracking-tight text-text-primary max-w-[600px]">
@@ -55,30 +51,30 @@ export function HeroSlideContent({ movie, onPlayTrailer, onShowtimes }: HeroSlid
 
       {/* CTA row */}
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3 mt-2.5 sm:mt-4 w-full sm:w-auto">
-        <button
+        <Button
           type="button"
           onClick={onShowtimes}
-          className="flex items-center justify-center gap-2 py-2.5 px-5 sm:py-3 sm:px-6 rounded-xl bg-accent transition-colors duration-fast hover:bg-accent/90 focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 whitespace-nowrap"
+          className="bg-accent hover:bg-accent/90 rounded-xl py-2.5 px-5 sm:py-3 sm:px-6 text-sm whitespace-nowrap duration-fast focus:ring-0 focus:ring-offset-0 focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
         >
           <PlayCircle size={16} weight="regular" className="text-white" aria-hidden="true" />
           <span className="font-primary text-sm font-bold text-white">Ver horarios</span>
-        </button>
+        </Button>
 
-        <button
+        <Button
           type="button"
+          variant="outline"
           onClick={onPlayTrailer}
-          className="flex items-center justify-center gap-2 py-2.5 px-4 sm:py-3 sm:px-5 rounded-xl border border-text-primary/15 bg-text-primary/[0.07] transition-colors duration-fast hover:bg-text-primary/[0.12] focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 whitespace-nowrap"
+          className="border border-text-primary/15 bg-text-primary/[0.07] hover:bg-text-primary/[0.12] rounded-xl py-2.5 px-4 sm:py-3 sm:px-5 text-sm text-text-primary whitespace-nowrap duration-fast focus:ring-0 focus:ring-offset-0 focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
         >
           <Play size={14} weight="regular" className="text-text-primary" aria-hidden="true" />
           <span className="font-primary text-sm font-semibold text-text-primary">Ver tráiler</span>
-        </button>
+        </Button>
 
-        <div className="flex items-center gap-1.5 self-start sm:self-center">
-          <span className="w-[5px] h-[5px] rounded-sm bg-warning" />
-          <span className="font-secondary text-xs text-warning whitespace-nowrap">
-            Descuento disponible hoy
-          </span>
-        </div>
+        <GreenIndicator
+          text="Descuento disponible hoy"
+          tone="warning"
+          className="whitespace-nowrap self-start sm:self-center"
+        />
       </div>
     </div>
   );

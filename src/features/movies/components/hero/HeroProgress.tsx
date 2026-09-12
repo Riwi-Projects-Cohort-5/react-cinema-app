@@ -1,6 +1,7 @@
 import { Pause, Play } from "@phosphor-icons/react";
 
 import type { Movie } from "@features/movies/interfaces/movie";
+import { Button } from "@shared/components/primitives";
 import { cn } from "@shared/utils/cn";
 
 export interface HeroProgressProps {
@@ -23,20 +24,22 @@ export function HeroProgress({
   return (
     <div className="w-full overflow-x-auto py-4 px-4 md:px-8 flex items-center justify-start md:justify-center gap-3">
       {/* Play/pause toggle button */}
-      <button
+      <Button
         type="button"
+        size="icon"
+        radius="full"
         onClick={onTogglePause}
         aria-label={
           isPaused ? "Reanudar reproducción automática" : "Pausar reproducción automática"
         }
-        className="flex-shrink-0 w-7 h-7 rounded-full border border-text-primary/15 bg-surface/80 flex items-center justify-center hover:bg-surface transition-colors duration-fast focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+        className="flex-shrink-0 w-7 h-7 rounded-full border border-text-primary/15 bg-surface/80 hover:bg-surface duration-fast focus:ring-0 focus:ring-offset-0 focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
       >
         {isPaused ? (
           <Play size={14} weight="regular" className="text-text-secondary" aria-hidden="true" />
         ) : (
           <Pause size={9} weight="regular" className="text-text-secondary" aria-hidden="true" />
         )}
-      </button>
+      </Button>
 
       {/* Per-slide thumbnail pills */}
       <div className="flex items-center gap-3 flex-nowrap">
@@ -45,7 +48,7 @@ export function HeroProgress({
           const fillPercent = Math.round(progress * 100);
 
           return (
-            <button
+            <Button
               key={movie.id}
               type="button"
               role="tab"
@@ -54,7 +57,7 @@ export function HeroProgress({
               aria-label={movie.title}
               data-active={isActive ? "true" : undefined}
               className={cn(
-                "relative flex-shrink-0 rounded-[0.625rem] overflow-hidden transition-all duration-fast focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2",
+                "relative flex-shrink-0 px-0 py-0 rounded-[0.625rem] overflow-hidden transition-all duration-fast hover:bg-surface-variant focus:ring-0 focus:ring-offset-0 focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2",
                 isActive
                   ? "w-40 h-[3.25rem] border-2 border-accent bg-surface-variant"
                   : "w-24 h-[3.25rem] border-2 border-transparent bg-surface-variant hover:border-text-primary/15"
@@ -89,7 +92,7 @@ export function HeroProgress({
                   </div>
                 </>
               )}
-            </button>
+            </Button>
           );
         })}
       </div>
