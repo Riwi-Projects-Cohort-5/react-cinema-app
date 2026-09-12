@@ -156,21 +156,29 @@ describe("movies service", () => {
     expect(useMoviesSourceStore.getState().isUsingFallback).toBe(true);
   });
 
-  it("does not fall back on a client error: it stays a retryable failure", async () => {
+  it("falls back on a client error: any failure loads local data", async () => {
     const notFound = new ApiError("no existe", { status: 404 });
     get.mockRejectedValue(notFound);
 
-    await expect(getMovies()).rejects.toBe(notFound);
-    expect(useMoviesSourceStore.getState().isUsingFallback).toBe(false);
-    expect(notifyWarningMock).not.toHaveBeenCalled();
+    await expect(getMovies()).resolves.toEqual(MOCK_MOVIES);
+    expect(useMoviesSourceStore.getState().isUsingFallback).toBe(true);
+    expect(notifyWarningMock).toHaveBeenCalledTimes(1);
   });
 
-  it("does not fall back when the request was canceled", async () => {
+  it("falls back on any unexpected error, not only ApiError instances", async () => {
+    get.mockRejectedValue(new Error("boom desconocido"));
+
+    await expect(getMovies()).resolves.toEqual(MOCK_MOVIES);
+    expect(useMoviesSourceStore.getState().isUsingFallback).toBe(true);
+    expect(notifyWarningMock).toHaveBeenCalledTimes(1);
+  });
+
+  it("falls back when the request was canceled", async () => {
     const canceled = new ApiError("cancelada", { isCanceled: true });
     get.mockRejectedValue(canceled);
 
-    await expect(getMovies()).rejects.toBe(canceled);
-    expect(useMoviesSourceStore.getState().isUsingFallback).toBe(false);
+    await expect(getMovies()).resolves.toEqual(MOCK_MOVIES);
+    expect(useMoviesSourceStore.getState().isUsingFallback).toBe(true);
   });
 });
 

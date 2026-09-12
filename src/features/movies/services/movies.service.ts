@@ -28,14 +28,6 @@ function unwrapList<T>(envelope: ApiEnvelope<T[]> | undefined): T[] {
   return envelope.data;
 }
 
-function isApiUnavailable(error: unknown): boolean {
-  if (!(error instanceof ApiError) || error.isCanceled) {
-    return false;
-  }
-
-  return error.isNetwork || error.code === MALFORMED_RESPONSE || (error.status ?? 0) >= 500;
-}
-
 function reportFallback(): void {
   const { isUsingFallback, markFallback } = useMoviesSourceStore.getState();
   markFallback();
@@ -60,7 +52,7 @@ async function withFallback<T>(
   try {
     return await request();
   } catch (error) {
-    if (!isApiUnavailable(error)) throw error;
+    console.error("Error cargando películas:", error);
 
     reportFallback();
     return fallback();

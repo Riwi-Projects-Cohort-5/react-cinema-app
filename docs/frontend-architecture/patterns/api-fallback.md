@@ -7,8 +7,10 @@ El backend envuelve todas las respuestas en una estructura tipo envelope `{ succ
 ## Componentes del patrón
 
 1. **`ApiEnvelope<T>` y `unwrapList`**: Los servicios procesan la respuesta del servidor, extraen `data` del envelope y validan que el contenido sea un arreglo. Una respuesta malformada se trata como un fallo.
-2. **`isApiUnavailable(error)`**: Detecta cuándo la API no está disponible (errores de red, status HTTP >= 500, o respuesta malformada).
-3. **`withFallback(fn, fallback, message)`**: Ejecuta la petición real. Si `env.enableMocks` es `true`, devuelve el valor de `fallback` sin llamar a la API. Si la API falla según `isApiUnavailable`, devuelve `fallback` y notifica una sola vez con `notifyWarning(message, ...)`. Las peticiones que resulten en errores 4xx o sean canceladas (vía `AbortSignal`) siempre se re-lanzan.
+2. **Manejo de errores**: Ante **cualquier** error de la petición (red caída, status HTTP 4xx/5xx, respuesta malformada, cancelación vía `AbortSignal` o excepciones inesperadas), el patrón ejecuta el fallback local. Así la feature nunca termina en estado de error por causas de disponibilidad del backend.
+3. **`withFallback(fn, fallback, message)`**: Ejecuta la petición real. Si `env.enableMocks` es `true`, devuelve el valor de `fallback` sin llamar a la API. Si `request()` falla por cualquier motivo, registra el error con `console.error`, notifica una sola vez con `notifyWarning(message, ...)` y devuelve el valor de `fallback`.
+
+   > **Nota (deuda técnica pendiente):** `features/location` aún conserva el filtro `isApiUnavailable` (solo red/5xx/malformado ejecuta el fallback). La corrección de `features/movies` (MULT-221) unifica el criterio: cualquier error activa el respaldo. Cuando la normalización de errores en `httpClient`/`ApiError` distinga errores recuperables de errores de aplicación, esta nota se puede eliminar y el filtro puede volver de forma controlada.
 4. **Store de origen (`useLocationSourceStore` / `useMoviesSourceStore`)**: Registra en un store Zustand si los datos mostrados provienen del fallback, permitiendo que la interfaz notifique al usuario que está visualizando datos de ejemplo.
 5. **Mocks con `withDelay(ms)`**: Los fixtures de respaldo integran un retardo simulado (aprox. 400ms) para ejercitar los estados de carga en la aplicación.
 

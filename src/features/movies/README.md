@@ -68,7 +68,7 @@ Executed QA (recorded evidence):
 
 Esta feature implementa el [patrón de servicios con fallback](../../docs/frontend-architecture/patterns/api-fallback.md) para garantizar la disponibilidad de datos en desarrollo:
 
-- **Servicios**: Los endpoints `getMovies`, `getMovieFunctions(movieId, cityId?)` y `getMovieRecommendations(movieId)` consumen el contrato de API, desempaquetan el envelope `{ success, data }` y, ante fallo de red/5xx o si `VITE_ENABLE_MOCKS=true`, recurren a los mocks `getMockMovies`, `getMockMovieFunctions` y `getMockMovieRecommendations` (con ~400ms de retardo).
+- **Servicios**: Los endpoints `getMovies`, `getMovieFunctions(movieId, cityId?)` y `getMovieRecommendations(movieId)` consumen el contrato de API, desempaquetan el envelope `{ success, data }` y, ante **cualquier error** de la petición o si `VITE_ENABLE_MOCKS=true`, recurren a los mocks `getMockMovies`, `getMockMovieFunctions` y `getMockMovieRecommendations` (con ~400ms de retardo).
 - **Notificaciones**: Se emite una única alerta vía `notifyWarning` al activar el fallback.
 - **Estado**: Se registra el origen de los datos en `useMoviesSourceStore`.
 - **Hooks**: Los hooks `useMovieFunctions` (queryKey `["movieFunctions", movieId, cityId]`) y `useMovieRecommendations` (queryKey `["movieRecommendations", movieId]`) gestionan la caché (`staleTime` 60s y 10min respectivamente).
