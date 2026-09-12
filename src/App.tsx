@@ -14,7 +14,7 @@ function App() {
       <HealthStatus />
       <CineFlashBanner />
       <RouterProvider router={appRouter} />
-      <LocationGate />
+      <LocationGate router={appRouter} />
       <AppToaster />
     </QueryClientProvider>
   );
