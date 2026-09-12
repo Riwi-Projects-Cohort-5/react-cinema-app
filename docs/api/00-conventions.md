@@ -96,7 +96,7 @@ Toda respuesta no-2xx usa esta forma (mensaje legible, en español):
 > `/departments/{id}` y `/cities/{id}`.
 >
 > Impacto: cualquier servicio que lea la respuesta de axios directamente recibirá un objeto, no un
-> arreglo. Hoy `features/location/services/location.service.ts` desenvuelve la envoltura dentro de
+> arreglo. Hoy `features/location/services/location.service.ts` y `features/movies/services/movies.service.ts` desenvuelven la envoltura dentro de
 > la feature; **falta decidir en equipo** si se mueve a un interceptor de `httpClient` para no
 > repetirlo en cada feature. Esta sección debe reescribirse cuando se tome esa decisión.
 

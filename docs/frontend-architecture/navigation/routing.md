@@ -43,7 +43,7 @@ Los paths se centralizan en `src/routes/paths.ts` (`PATHS`) y se referencian des
 
 | Grupo         | Rutas                                                      | Layout                | Guard             |
 | ------------- | ---------------------------------------------------------- | --------------------- | ----------------- |
-| Público       | `/` (Home)                                                 | `PublicLayout`        | —                 |
+| Público       | `/` (Home)                                                 | `MainLayout`           | —                     |
 | Solo público  | `/auth/login`, `/auth/register`                            | —                     | `PublicOnlyRoute` |
 | Autenticado   | `/profile`, `/purchase-history`, `/checkout`               | `AuthenticatedLayout` | `ProtectedRoute`  |
 | Admin         | `/admin/dashboard`                                         | `AdminLayout`         | `ProtectedRoute`  |

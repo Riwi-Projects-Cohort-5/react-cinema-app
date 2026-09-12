@@ -67,8 +67,8 @@ src/routes/
 | --------------------- | -------------------------------- | ----------------------------------------------------------------- |
 | Guard `ProtectedRoute`| `src/routes/guards/ProtectedRoute.test.tsx` | Renderiza el `Outlet` autenticado; redirige a `/auth/login` sin sesión; conserva `state.from`. |
 | Guard `PublicOnlyRoute` | `src/routes/guards/PublicOnlyRoute.test.tsx` | Renderiza el `Outlet` sin sesión; redirige a `/` autenticado.     |
-| Router (integración)  | `src/routes/appRouter.test.tsx`  | Home (con `PublicLayout`), login, redirección de rutas privadas, acceso autenticado (con `AuthenticatedLayout`), dashboard admin, salida de rutas public-only, página 404 y página de error general. |
-| Layouts               | `src/layouts/layouts.test.tsx`   | `PublicLayout`, `AuthenticatedLayout` y `AdminLayout` renderizan su nav/sidebar y el `Outlet`. |
+| Router (integración)  | `src/routes/appRouter.test.tsx`  | Home (con `MainLayout`), login, redirección de rutas privadas, acceso autenticado (con `AuthenticatedLayout`), dashboard admin, salida de rutas public-only, página 404 y página de error general. |
+| Layouts               | `src/layouts/layouts.test.tsx`   | `MainLayout`, `AuthenticatedLayout` y `AdminLayout` renderizan su nav/sidebar y el `Outlet`. |
 | Base platform (smoke) | `src/test/smoke.test.tsx`        | Config de entorno, `PATHS`, session store y render de un componente compartido. |
 
 ## Documentos relacionados

@@ -1,16 +1,51 @@
 import { screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
+import type { Movie } from "@features/movies/interfaces/movie";
+import { useMovies } from "@features/movies/hooks/useMovies";
 import { renderRouter } from "@/test/helpers/renderRouter";
 import { PATHS } from "@routes/paths";
 import { useSessionStore } from "@services/session";
 
+vi.mock("@features/movies/hooks/useMovies", () => ({
+  useMovies: vi.fn(),
+}));
+
+const mockUseMovies = vi.mocked(useMovies);
+
+const mockMovie: Movie = {
+  id: 1,
+  title: "Guardianes de la Galaxia",
+  synopsis: "Un grupo de héroes intergalácticos debe unirse para salvar el universo.",
+  genre: "Acción",
+  rating: "PG-13",
+  duration: 121,
+  director: "James Gunn",
+  imageUrl: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=800",
+  bannerUrl: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=1200",
+  trailerUrl: "https://www.youtube.com/watch?v=d96cjJhvlMA",
+  releaseDate: "2014-08-01",
+  isActive: true,
+};
+
+const mockMoviesFixture = {
+  data: [mockMovie],
+  isPending: false,
+  isError: false,
+  error: null,
+  refetch: vi.fn(),
+};
+
 describe("appRouter", () => {
   it("renders the home page at the root path", () => {
+    mockUseMovies.mockReturnValue(mockMoviesFixture as unknown as ReturnType<typeof useMovies>);
+
     renderRouter(PATHS.home);
 
-    expect(screen.getByRole("heading", { name: "Home" })).toBeInTheDocument();
-    expect(screen.getAllByRole("link", { name: "Cartelera" })).toHaveLength(2);
+    expect(
+      screen.getByRole("region", { name: /carrusel de películas destacadas/i })
+    ).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Salas y Cines" })).toBeInTheDocument();
   });
 
   it("renders the login page when unauthenticated", () => {
@@ -37,33 +72,35 @@ describe("appRouter", () => {
     expect(screen.getByRole("heading", { name: "Purchase History" })).toBeInTheDocument();
   });
 
-  it("renders the main layout for private routes", () => {
+  it("renders the authenticated layout for private routes", () => {
     useSessionStore.setState({ accessToken: "valid-token" });
 
     renderRouter(PATHS.profile);
 
-    expect(useSessionStore.getState().accessToken).toBe("valid-token");
-    expect(screen.getAllByRole("link", { name: "Cartelera" })).toHaveLength(2);
-    expect(screen.getByRole("heading", { name: "Profile" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Perfil" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Historial de compras" })).toBeInTheDocument();
   });
 
-  it("renders the admin route within the main layout when authenticated", () => {
+  it("renders the admin layout when the user is authenticated", () => {
     useSessionStore.setState({ accessToken: "valid-token" });
 
     const router = renderRouter(PATHS.admin.dashboard);
 
     expect(router.state.location.pathname).toBe(PATHS.admin.dashboard);
-    expect(screen.getAllByRole("link", { name: "Cartelera" })).toHaveLength(2);
+    expect(screen.getByRole("link", { name: "Multicine Admin" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Admin Dashboard" })).toBeInTheDocument();
   });
 
   it("redirects authenticated users away from public-only routes", () => {
+    mockUseMovies.mockReturnValue(mockMoviesFixture as unknown as ReturnType<typeof useMovies>);
     useSessionStore.setState({ accessToken: "valid-token" });
 
     const router = renderRouter(PATHS.auth.register);
 
     expect(router.state.location.pathname).toBe(PATHS.home);
-    expect(screen.getByRole("heading", { name: "Home" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("region", { name: /carrusel de películas destacadas/i })
+    ).toBeInTheDocument();
   });
 
   it("renders the 404 page for unknown paths", () => {

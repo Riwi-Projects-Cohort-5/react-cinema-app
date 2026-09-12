@@ -25,3 +25,13 @@ dist-ssr
 
 # Local PR description drafts (not part of the repo)
 pr-body.md
+
+
+
+.env
+.env.local
+
+# Workspace artifacts (agent evidence, plans, notepads)
+.omo/
+.playwright-mcp/
+.debug-journal.md

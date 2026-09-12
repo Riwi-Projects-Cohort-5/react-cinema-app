@@ -40,6 +40,43 @@ describe("useTheme", () => {
     expect(result.current.theme).toBe("light");
     expect(getTheme()).toBe("light");
     expect(document.documentElement.dataset.theme).toBe("light");
+    expect(window.localStorage.getItem(THEME_STORAGE_KEY)).toBe("light");
+
+    act(() => {
+      result.current.toggleTheme();
+    });
+
+    expect(result.current.theme).toBe("dark");
+    expect(getTheme()).toBe("dark");
+    expect(document.documentElement.dataset.theme).toBeUndefined();
+    expect(window.localStorage.getItem(THEME_STORAGE_KEY)).toBe("dark");
+  });
+
+  it("handles storage fallback when localStorage throws", () => {
+    const originalSetItem = window.localStorage.setItem;
+    const originalGetItem = window.localStorage.getItem;
+
+    window.localStorage.getItem = () => {
+      throw new Error("localStorage disabled");
+    };
+    window.localStorage.setItem = () => {
+      throw new Error("localStorage disabled");
+    };
+
+    expect(getTheme()).toBe("dark");
+
+    const { result } = renderHook(() => useTheme());
+    expect(result.current.theme).toBe("dark");
+
+    act(() => {
+      result.current.toggleTheme();
+    });
+
+    expect(result.current.theme).toBe("light");
+    expect(document.documentElement.dataset.theme).toBe("light");
+
+    window.localStorage.setItem = originalSetItem;
+    window.localStorage.getItem = originalGetItem;
   });
 
   it("setTheme persists and applies the chosen theme", () => {

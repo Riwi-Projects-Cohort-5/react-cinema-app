@@ -37,7 +37,7 @@ en `src/test/`. Ver `docs/frontend-architecture/tooling/testing.md`.
 
 - src/: contiene la lógica principal de la aplicación.
 - src/features/: organiza las funcionalidades por módulos, como auth.
-- src/layouts/: app-shells globales (PublicLayout, AuthenticatedLayout, AdminLayout).
+- src/layouts/: app-shells globales (MainLayout, AuthenticatedLayout, AdminLayout).
 - src/pages/: páginas de nivel de aplicación (404 y error general).
 - src/shared/: componentes y utilidades reutilizables.
 - src/assets/: recursos estáticos como imágenes y estilos.
