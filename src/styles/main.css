@@ -251,7 +251,7 @@ a {
   transition: color var(--duration-fast) var(--ease-standard);
 }
 
-a:hover {
+a {
   color: var(--color-primary-hover);
 }
 

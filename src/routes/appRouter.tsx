@@ -1,6 +1,7 @@
 import { createBrowserRouter, type RouteObject } from "react-router";
 
 import { LoginPage } from "@features/auth/pages/login/LoginPage";
+import ForgotPasswordPage from "@features/auth/pages/forgot-password/ForgotPasswordPage";
 import { RegisterPage } from "@features/auth/pages/register/RegisterPage";
 import { MainLayout } from "@layouts";
 import { GeneralErrorPage, NotFoundPage } from "@pages";
@@ -21,6 +22,7 @@ export const appRoutes: RouteObject[] = [
         element: <PublicOnlyRoute />,
         children: [
           { path: PATHS.auth.login, element: <LoginPage /> },
+          { path: PATHS.auth.forgotPassword, element: <ForgotPasswordPage /> },
           { path: PATHS.auth.register, element: <RegisterPage /> },
         ],
       },
