@@ -4,6 +4,7 @@ import { CaretLeft, CaretRight } from "@phosphor-icons/react";
 import { useHeroCarousel, useMovies } from "@features/movies/hooks";
 import { getBackdropUrl } from "@features/movies/utils";
 import { notifyInfo } from "@services/notify";
+import { Button } from "@shared/components/primitives";
 import { cn } from "@shared/utils/cn";
 
 import { HeroProgress, HeroSlideContent, TrailerLightbox } from "@features/movies/components";
@@ -29,15 +30,16 @@ export function Hero() {
     return (
       <div className="flex flex-col items-center justify-center gap-4 w-full px-4 md:px-0 h-[520px] md:h-[430px] lg:h-[520px] min-h-[600px] md:min-h-0 lg:min-h-0 mt-5 bg-surface-variant p-6 text-center">
         <p className="text-text-secondary">No pudimos cargar las películas</p>
-        <button
+        <Button
           type="button"
+          variant="outline"
           onClick={() => {
             void refetch();
           }}
-          className="border border-text-primary/20 px-4 py-2 rounded-lg text-sm text-text-primary hover:bg-surface-variant transition-colors"
+          className="border border-text-primary/20 px-4 py-2 rounded-lg text-sm text-text-primary hover:bg-surface-variant transition-colors duration-fast focus:ring-0 focus:ring-offset-0"
         >
           Reintentar
-        </button>
+        </Button>
       </div>
     );
   }
@@ -133,24 +135,32 @@ export function Hero() {
         </div>
 
         {/* Navigation arrows */}
-        <button
+        <Button
           type="button"
+          variant="outline"
+          size="icon"
+          radius="full"
+          shadow="xl"
           onClick={prev}
           aria-label="Anterior"
           aria-controls="hero-carousel"
-          className="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center bg-background/65 border border-text-primary/15 rounded-full backdrop-blur-sm z-20 text-text-primary shadow-xl hover:bg-background/80 transition-colors focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+          className="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 bg-background/65 border border-text-primary/15 backdrop-blur-sm z-20 text-text-primary hover:bg-background/80 transition-colors duration-fast focus:ring-0 focus:ring-offset-0 focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
         >
           <CaretLeft size={20} aria-hidden="true" />
-        </button>
-        <button
+        </Button>
+        <Button
           type="button"
+          variant="outline"
+          size="icon"
+          radius="full"
+          shadow="xl"
           onClick={next}
           aria-label="Siguiente"
           aria-controls="hero-carousel"
-          className="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center bg-background/65 border border-text-primary/15 rounded-full backdrop-blur-sm z-20 text-text-primary shadow-xl hover:bg-background/80 transition-colors focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+          className="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 bg-background/65 border border-text-primary/15 backdrop-blur-sm z-20 text-text-primary hover:bg-background/80 transition-colors duration-fast focus:ring-0 focus:ring-offset-0 focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
         >
           <CaretRight size={20} aria-hidden="true" />
-        </button>
+        </Button>
       </div>
 
       {/* Progress indicators and controls */}
