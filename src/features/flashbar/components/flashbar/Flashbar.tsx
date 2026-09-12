@@ -23,14 +23,6 @@ const TONE_TEXT: Record<FlashbarTone, string> = {
   error: "text-error",
 };
 
-const TONE_BORDER_Y: Record<FlashbarTone, string> = {
-  accent: "border-y-accent",
-  success: "border-y-success",
-  info: "border-y-info",
-  warning: "border-y-warning",
-  error: "border-y-error",
-};
-
 const TONE_BORDER_LEFT: Record<FlashbarTone, string> = {
   accent: "border-l-accent",
   success: "border-l-success",
@@ -91,18 +83,17 @@ export function Flashbar({
       role={tone === "error" ? "alert" : "status"}
       aria-label={title}
       className={cn(
-        "flex h-14 items-center gap-4 overflow-hidden border-y border-l-[3px] bg-surface px-4 lg:px-16",
-        TONE_BORDER_Y[tone],
+        "flex h-14 items-center gap-4 overflow-hidden border border-border/40 border-l-[3px] bg-surface px-4 lg:px-16",
         TONE_BORDER_LEFT[tone],
         fixed ? "fixed inset-x-0 top-0 z-50" : "relative",
         className
       )}
     >
       <IconBadge
-        className={TONE_BADGE[tone]}
+        className={`${TONE_BADGE[tone]} h-6 w-6`}
         icon={
           icon ?? (
-            <ToneIcon size={16} weight="bold" className={TONE_TEXT[tone]} aria-hidden="true" />
+            <ToneIcon size={14} weight="bold" className={TONE_TEXT[tone]} aria-hidden="true" />
           )
         }
       />
@@ -122,7 +113,7 @@ export function Flashbar({
         </span>
 
         {countdownSeconds !== undefined && (
-          <span className="ml-auto hidden shrink-0 items-center rounded-md border border-border bg-surface-variant px-2 md:inline-flex">
+          <span className="ml-auto hidden shrink-0 items-center rounded-md border border-border bg-surface-variant px-4 py-2 md:inline-flex">
             <Countdown seconds={countdownSeconds} onExpire={onCountdownExpire} />
           </span>
         )}
