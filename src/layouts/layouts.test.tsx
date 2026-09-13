@@ -25,8 +25,8 @@ describe("layouts", () => {
     renderLayout(MainLayout, PATHS.home);
 
     // Header (shared composite) — Register and Login buttons
-    expect(screen.getByRole("button", { name: "Register" })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Login" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Crear cuenta" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Iniciar sesión" })).toBeInTheDocument();
 
     // CentralNav — "Salas y Cines" is the unique link (Cartelera and Próximos
     // estrenos also appear in the Footer, so avoid ambiguous name matchers)

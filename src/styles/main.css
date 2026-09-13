@@ -272,6 +272,10 @@ ol {
   list-style: none;
 }
 
+button {
+  cursor: pointer;
+}
+
 ::selection {
   background-color: var(--color-primary);
   color: var(--color-text-primary);

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ArrowRight, Info, MapPin, Warning } from "@phosphor-icons/react";
 
 import cinemaHall from "@assets/cinema-hall.jpg";
-import logo from "@assets/logo.svg";
+import logotipo from "@assets/logotipo.svg";
 import Modal from "@shared/components/composites/Modal";
 import Button from "@shared/components/primitives/Button";
 import { cn } from "@shared/utils/cn";
@@ -129,7 +129,7 @@ export function LocationWizardModal({
             className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-background from-35% via-background/85 to-transparent"
           />
 
-          <img src={logo} alt="AbsoluteCinema" className="relative z-10 h-5 w-auto" />
+          <img src={logotipo} alt="AbsoluteCinema" className="relative z-10 h-5 w-auto" />
 
           <div className="relative z-10">
             <p className="text-overline font-semibold uppercase tracking-overline text-primary">
