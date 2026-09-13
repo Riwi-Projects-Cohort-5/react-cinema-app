@@ -8,10 +8,10 @@ export const emailSchema = z
   .email({ message: fieldMessages.email.invalid });
 
 // ==================== PASSWORD ====================
-// Validación básica para login (solo requerido)
+// Validación básica para flujos que solo requieren presencia.
 export const passwordBasicSchema = z.string().min(1, fieldMessages.password.required);
 
-// Validación estricta para registro y reset (con todas las reglas)
+// Validación estricta para login, registro y reset.
 export const passwordStrictSchema = z
   .string()
   .min(8, fieldMessages.password.minLength)
@@ -23,7 +23,7 @@ export const passwordStrictSchema = z
 // ==================== LOGIN ====================
 export const loginSchema = z.object({
   email: emailSchema,
-  password: passwordBasicSchema,
+  password: passwordStrictSchema,
 });
 
 export type LoginFormData = z.infer<typeof loginSchema>;

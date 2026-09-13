@@ -69,16 +69,15 @@ const getStateClasses = (state: InputState): string => {
 
   const stateMap: Record<InputState, string> = {
     idle: `border-border text-text-primary focus:border-primary focus:ring-primary/50 ${baseTransition}`,
-    error: `border-error text-error focus:border-error focus:ring-error/50 ${baseTransition}`,
+    error: `border-error text-text-primary focus:border-error focus:ring-error/50 ${baseTransition}`,
     disabled: `opacity-40 cursor-not-allowed ${baseTransition}`,
   };
 
   return stateMap[state];
 };
 
-const getLabelClasses = (state: InputState): string => {
-  const isError = state === "error";
-  return `block text-sm font-medium mb-2 ${isError ? "text-error" : "text-text-secondary"}`;
+const getLabelClasses = (): string => {
+  return `block text-sm font-medium mb-2 text-text-secondary`;
 };
 
 const getBaseInputClasses = (state: InputState): string => {
@@ -264,9 +263,9 @@ const Input = React.forwardRef<
     return (
       <div className="w-full space-y-1">
         {label && (
-          <label htmlFor={inputId} className={getLabelClasses(state)}>
+          <label htmlFor={inputId} className={getLabelClasses()}>
             {label}
-            {required && <span className="text-error ml-1">*</span>}
+            {required && <span className="text-text-secondary ml-1">*</span>}
           </label>
         )}
 
