@@ -22,7 +22,9 @@ export const RegisterLayout = ({ children }: RegisterLayoutProps) => (
             <img
               src={brandLogo}
               alt="AbsoluteCinema"
-              className="h-auto w-full max-w-105 object-contain opacity-95"
+              width={187}
+              height={20}
+              className="absolute -top-6 -left-6 object-contain opacity-95 z-50"
             />
           </div>
           <div className="flex w-full flex-col justify-end pb-2">

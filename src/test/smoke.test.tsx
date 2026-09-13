@@ -47,7 +47,7 @@ describe("base platform smoke tests", () => {
 
     expect(screen.getByText(/cuéntanos sobre ti/i)).toBeInTheDocument();
     expect(screen.getByText(/paso\s*1\s*de\s*4/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/nombre \*/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/nombre\*/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/apellidos \*/i)).toBeInTheDocument();
     expect(screen.queryByLabelText(/correo electrónico/i)).not.toBeInTheDocument();
   });
