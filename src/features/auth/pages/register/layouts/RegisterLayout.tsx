@@ -16,11 +16,14 @@ export const RegisterLayout = ({ children }: RegisterLayoutProps) => (
           }}
         />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(124,140,255,0.18),transparent_18%),linear-gradient(180deg,rgba(5,11,22,0.10),rgba(5,11,22,0.42))]" />
-          <div className="relative z-10 flex w-full flex-col justify-between">
-            <div className="flex items-center gap-3" aria-label="AbsoluteCinema">
-              <img src="/logo.png" alt="" className="h-8 w-8 shrink-0" />
-              <img src="/nombre.svg" alt="AbsoluteCinema" className="h-auto w-[145px]" />
-            </div>
+        <div className="relative z-10 flex w-full flex-col justify-between">
+          <div className="flex items-start" aria-label="AbsoluteCinema">
+            <img
+              src="/nombre.svg"
+              alt="AbsoluteCinema"
+              className="h-auto w-full max-w-105 object-contain opacity-95"
+            />
+          </div>
           <div className="flex w-full flex-col justify-end pb-2">
             <GreenIndicator text="Únete hoy" className="mb-4 justify-start" />
             <h1 className="max-w-115 font-primary text-headline font-bold leading-tight text-text-primary">
