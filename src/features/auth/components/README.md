@@ -1,17 +1,19 @@
 # Componentes de autenticación
 
-Esta carpeta contiene componentes visuales reutilizables que representan partes del flujo de autenticación. La lógica de navegación, sesión y llamadas HTTP debe permanecer en las páginas y servicios correspondientes.
+En esta carpeta dejé los componentes visuales reutilizables del flujo de autenticación. Mantengo la navegación, la sesión y las llamadas HTTP en las páginas y servicios correspondientes.
 
 ## `LoginForm`
 
-`LoginForm` mantiene el estado local de `email`, `password`, visibilidad de la contraseña y `rememberMe`. Antes de enviar:
+En `LoginForm` mantengo el estado local de `email`, `password`, visibilidad de la contraseña y `rememberMe`. Antes de enviar:
 
 1. Evita el envío si el formulario está bloqueado o ya se está enviando.
 2. Recorta correo y contraseña.
-3. Ejecuta `loginSchema` mediante `useFormValidation`.
+3. Ejecuta `loginSchema` mediante `useFormValidation`; el schema aplica la validación estricta de contraseña.
 4. Invoca `onSubmit` con un `LoginFormData` válido.
 
-También muestra errores de campo, un mensaje general y el estado de carga recibido por props.
+El correo conserva el color normal del texto cuando tiene un error; el color de error queda reservado para el borde y el mensaje debajo del campo. Para la contraseña uso `passwordStrictSchema`, que exige longitud mínima, mayúscula, minúscula, número y carácter especial. Cuando cumple todas las reglas, muestro el `GreenIndicator` existente del sistema de diseño.
+
+Los botones sociales usan los SVG ubicados en `public/google.svg` y `public/apple.svg`. Actualmente son elementos visuales y todavía no conectan con proveedores OAuth.
 
 ## Cómo implementarlo
 
@@ -26,8 +28,4 @@ Usa el componente desde una página y conserva la operación de autenticación e
 />
 ```
 
-Para crear otro componente de auth, define una API de props pequeña, reutiliza los componentes de `src/shared/components` y deja los efectos secundarios fuera del componente visual. Exporta el componente desde `index.ts` para mantener el alias de importación estable.
-
-## Nota
-
-Los botones de Google y Apple están presentes como UI, pero todavía no conectan con un proveedor OAuth.
+Para crear otro componente de auth, defino una API de props pequeña, reutilizo los componentes de `src/shared/components` y dejo los efectos secundarios fuera del componente visual. Exporto el componente desde `index.ts` para mantener el alias de importación estable.

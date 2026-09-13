@@ -1,7 +1,8 @@
 import type { ReactNode } from "react";
-import { FilmSlate, X } from "@phosphor-icons/react";
+import { X } from "@phosphor-icons/react";
 import { Link, useNavigate } from "react-router";
 
+import logo from "@assets/logo.svg";
 import { PATHS } from "@routes/paths";
 
 interface AuthStat {
@@ -27,11 +28,8 @@ interface AuthLayoutProps {
 
 function BrandMark() {
   return (
-    <Link to={PATHS.home} className="relative z-10 flex items-center gap-2">
-      <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-white shadow-md">
-        <FilmSlate size={18} weight="bold" />
-      </span>
-      <span className="text-lg font-bold text-text-primary">AbsoluteCinema</span>
+    <Link to={PATHS.home} className="relative z-10 block w-[187px]">
+      <img src={logo} alt="AbsoluteCinema" className="h-auto w-full" />
     </Link>
   );
 }
@@ -71,11 +69,11 @@ export function AuthLayout({
   );
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background p-3 sm:p-6">
-      {/* Desktop: imagen a todo lo ancho de la tarjeta + form flotante a la derecha */}
+    <div className="flex min-h-screen w-full items-center justify-center bg-background">
+      {/* Desktop: imagen a todo lo ancho + form flotante a la derecha */}
       <div
-        className="relative hidden w-full max-w-[1400px] overflow-hidden rounded-2xl border border-border bg-cover bg-center shadow-xl lg:block"
-        style={{ minHeight: 720, backgroundImage }}
+        className="relative hidden min-h-screen w-full overflow-hidden bg-cover bg-center lg:block"
+        style={{ backgroundImage }}
       >
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-background/30 to-background/85" />
         <div
@@ -124,8 +122,8 @@ export function AuthLayout({
         </div>
       </div>
 
-      {/* Mobile: tarjeta simple apilada, sin imagen de fondo */}
-      <div className="relative w-full max-w-sm rounded-2xl border border-border bg-surface p-6 shadow-xl lg:hidden">
+      {/* Mobile: vista completa con formulario centrado */}
+      <div className="relative flex min-h-screen w-full items-center bg-surface px-6 py-12 lg:hidden">
         <button
           type="button"
           onClick={() => navigate(-1)}
@@ -135,11 +133,13 @@ export function AuthLayout({
           <X size={16} weight="bold" />
         </button>
 
-        <div className="mb-6">
-          <BrandMark />
-        </div>
+        <div className="mx-auto w-full max-w-sm">
+          <div className="mb-6">
+            <BrandMark />
+          </div>
 
-        {formPanel}
+          {formPanel}
+        </div>
       </div>
     </div>
   );

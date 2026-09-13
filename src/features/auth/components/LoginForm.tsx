@@ -1,6 +1,6 @@
  import { useState } from "react";
 import type { ChangeEvent, FormEvent } from "react";
-import { AppleLogo, ArrowRight, Eye, EyeSlash, GoogleLogo } from "@phosphor-icons/react";
+import { ArrowRight, Eye, EyeSlash } from "@phosphor-icons/react";
 import { Link } from "react-router";
 
 import Button from "@shared/components/primitives/Button";
@@ -156,14 +156,14 @@ export function LoginForm({
           type="button"
           className="flex items-center justify-center gap-2 md border border-border bg-black py-2 text-sm text-text-primary"
         >
-          <GoogleLogo size={18} weight="bold" className="text-[#4285F4]" />
+          <img src="/google.svg" alt="" aria-hidden="true" className="h-[18px] w-[18px]" />
           Google
         </button>
         <button
           type="button"
           className="flex items-center justify-center gap-2 md bg-black py-2 text-sm text-white"
         >
-          <AppleLogo size={18} weight="bold" className="text-white" />
+          <img src="/apple.svg" alt="" aria-hidden="true" className="h-[18px] w-[18px]" />
           Apple
         </button>
       </div>

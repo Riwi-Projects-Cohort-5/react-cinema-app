@@ -47,8 +47,10 @@ Archivos clave
 
 - `LoginForm.tsx`
   - Maneja estado local del formulario (`email`, `password`, `rememberMe`).
-  - Usa `useFormValidation` y `zod` para validaciones.
+  - Usa `useFormValidation` y `zod` para validaciones estrictas de contraseña.
   - Exporta un formulario con `Input`, `Checkbox` y `Button` reutilizables.
+  - Usa `GreenIndicator` cuando la contraseña cumple todas las reglas.
+  - Usa `public/google.svg` y `public/apple.svg` en los botones sociales.
   - Claves de personalización:
     - Cambiar el color o tamaño del botón mediante props y clases `className`.
     - Personalizar botones sociales (Google/Apple) en la sección inferior.
@@ -68,6 +70,7 @@ Rutas
 Agregar / usar imágenes de fondo
 - Opción `public/`: colocar una imagen en `public/` y pasar su URL mediante `imageSrc`.
 - Opción `src/assets/`: importar con alias `@assets` y pasar la variable importada a `AuthLayout`.
+- La marca de autenticación actual se importa desde `src/assets/logo.svg`.
 
 Ejemplos
 - Login page (usa `AuthLayout`):
