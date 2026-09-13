@@ -5,6 +5,7 @@ export { IconLink } from "./icon-link/IconLink";
 export { default as Input } from "./Input";
 export { default as Button } from "./Button";
 export { Checkbox, CheckboxRobot } from "./checkbox/Checkbox";
+export { default as GreenIndicator } from "./GreenIndicator";
 
 export { Dropdown } from "./dropdown/Dropdown";
 export type { DropdownOption, DropdownProps } from "./dropdown/Dropdown";

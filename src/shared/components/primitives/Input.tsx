@@ -2,8 +2,9 @@ import React from "react";
 import type { ZodType } from "zod";
 import { useFormField } from "../composites/forms/useFormField";
 
+
 type InputType =
-  "text" | "email" | "password" | "number" | "tel" | "url" | "search" | "textarea" | "select";
+  "text" | "email" | "password" | "number" | "tel" | "url" | "search" | "date" | "textarea" | "select";
 
 type InputState = "idle" | "error" | "disabled";
 
@@ -54,6 +55,9 @@ interface InputProps {
   onBlur?: (
     e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => void;
+
+  // Autocomplete HTML attribute
+  autoComplete?: string;
 
   // HTML nativo
   name?: string;
@@ -172,8 +176,10 @@ const Input = React.forwardRef<
       onBlurValidation,
       onBlur,
       icon,
+      autoComplete,
     },
     ref
+    
   ) => {
     const isError = state === "error";
     const isDisabled = state === "disabled";
@@ -182,7 +188,12 @@ const Input = React.forwardRef<
     const resolvedLabel = label ?? field.label;
     const resolvedError = error ?? field.error;
     const resolvedHelperText = helperText ?? field.helperText;
-    const resolvedRequired = required || field.required; // ← AGREGAR ;
+    const resolvedRequired = required || field.required;
+    const displayMessage = resolvedError || (isError ? errorMessage : resolvedHelperText);
+    const messageClassName = resolvedError || isError ? "text-error" : "text-text-secondary";
+    const hasFormFieldContext = Boolean(field.label || field.error || field.helperText || field.required);
+    const shouldRenderLabel = !hasFormFieldContext && Boolean(resolvedLabel);
+    const shouldRenderMessage = !hasFormFieldContext && Boolean(displayMessage);
     const baseInputClasses = getBaseInputClasses(state);
     const finalInputClasses = `${baseInputClasses} ${className}`.trim();
 
@@ -195,6 +206,7 @@ const Input = React.forwardRef<
       required,
       placeholder,
       className: finalInputClasses,
+      autoComplete,
     };
 
     // Renderizar el elemento correcto según el tipo
@@ -277,12 +289,9 @@ const Input = React.forwardRef<
     };
 
     // Determinar qué mensaje mostrar
-    const displayMessage = resolvedError || (isError ? errorMessage : resolvedHelperText);
-    const messageClassName = resolvedError || isError ? "text-error" : "text-text-secondary";
-
     return (
       <div className="w-full space-y-1">
-        {resolvedLabel && (
+        {shouldRenderLabel && (
           <label htmlFor={inputId} className={getLabelClasses(state)}>
             {resolvedLabel}
             {resolvedRequired && <span className="text-error ml-1">*</span>}
@@ -291,7 +300,7 @@ const Input = React.forwardRef<
 
         <div className="relative">{renderField()}</div>
 
-        {displayMessage && <p className={messageClassName}>{displayMessage}</p>}
+        {shouldRenderMessage && <p className={messageClassName}>{displayMessage}</p>}
       </div>
     );
   }

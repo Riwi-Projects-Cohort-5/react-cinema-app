@@ -18,6 +18,7 @@ const initialForm: FormState = {
   birthDate: "",
   gender: "",
   email: "",
+  confirmEmail: "",
   phone: "",
   password: "",
   confirmPassword: "",
@@ -64,6 +65,11 @@ const validateStep = (form: FormState, step: number): FieldErrors => {
     if (!form.email.trim()) errors.email = "El correo es obligatorio.";
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))
       errors.email = "Ingresa un correo válido.";
+
+    if (!form.confirmEmail.trim()) errors.confirmEmail = "Confirma tu correo.";
+    else if (form.confirmEmail.trim().toLowerCase() !== form.email.trim().toLowerCase())
+      errors.confirmEmail = "Los correos no coinciden.";
+
     if (!form.phone.trim()) errors.phone = "El teléfono es obligatorio.";
     else if (!/^\d{10}$/.test(form.phone.replace(/\s+/g, "")))
       errors.phone = "Ingresa un número de 10 dígitos.";
@@ -92,7 +98,7 @@ const validateStep = (form: FormState, step: number): FieldErrors => {
 };
 
 export const RegisterPage = () => {
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState(1);
   const [form, setForm] = useState<FormState>(initialForm);
   const [errors, setErrors] = useState<FieldErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -101,6 +107,7 @@ export const RegisterPage = () => {
   const updateField = (field: keyof FormState, value: string | boolean) => {
     setForm((previous) => ({ ...previous, [field]: value }));
     setErrors((previous) => ({ ...previous, [field]: undefined }));
+    setSubmitError("");
   };
 
   const handleNameChange = (field: "firstName" | "lastName", value: string) =>
@@ -129,6 +136,7 @@ export const RegisterPage = () => {
     }
     if (currentStep < steps.length - 1) {
       setCurrentStep((previous) => previous + 1);
+      setSubmitError("");
       return;
     }
 

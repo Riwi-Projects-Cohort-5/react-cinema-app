@@ -1,5 +1,7 @@
 import type { ReactNode } from "react";
 
+import { GreenIndicator } from "@shared/components/primitives";
+
 type RegisterLayoutProps = { children: ReactNode };
 
 export const RegisterLayout = ({ children }: RegisterLayoutProps) => (
@@ -14,18 +16,13 @@ export const RegisterLayout = ({ children }: RegisterLayoutProps) => (
           }}
         />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(124,140,255,0.18),transparent_18%),linear-gradient(180deg,rgba(5,11,22,0.10),rgba(5,11,22,0.42))]" />
-        <div className="relative z-10 flex w-full flex-col justify-between">
-          <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-surface shadow-sm ring-1 ring-border">
-              <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary text-[10px] font-bold text-text-primary" />
+          <div className="relative z-10 flex w-full flex-col justify-between">
+            <div className="flex items-center gap-3" aria-label="AbsoluteCinema">
+              <img src="/logo.png" alt="" className="h-8 w-8 shrink-0" />
+              <img src="/nombre.svg" alt="AbsoluteCinema" className="h-auto w-[145px]" />
             </div>
-            <span className="font-primary text-lg font-semibold tracking-tight text-text-primary">AbsoluteCinema</span>
-          </div>
           <div className="flex w-full flex-col justify-end pb-2">
-            <div className="mb-4 flex items-center gap-3 text-overline font-semibold uppercase text-text-secondary">
-              <span className="inline-block h-2 w-2 rounded-full bg-success shadow-xs" />
-              Únete hoy
-            </div>
+            <GreenIndicator text="Únete hoy" className="mb-4 justify-start" />
             <h1 className="max-w-115 font-primary text-headline font-bold leading-tight text-text-primary">
               Tu membresía<span className="block text-text-primary">empieza aquí.</span>
             </h1>
@@ -44,16 +41,16 @@ export const RegisterLayout = ({ children }: RegisterLayoutProps) => (
                   className="min-w-27.5 rounded-lg border border-border bg-surface/80 px-4 py-3 shadow-xs"
                 >
                   <div className="font-primary text-subtitle font-bold text-text-primary">{label}</div>
-                  <div className="text-overline uppercase text-text-secondary">
-                    {value}
-                  </div>
+                  <div className="text-overline uppercase text-text-secondary">{value}</div>
                 </div>
               ))}
             </div>
           </div>
         </div>
       </section>
-      <main className="flex min-w-0 flex-1">{children}</main>
+      <main className="flex min-w-0 flex-1 items-center justify-center px-4 py-8 sm:px-8 lg:max-w-160 lg:px-10 xl:px-12">
+        <div className="w-full max-w-130">{children}</div>
+      </main>
     </div>
   </div>
 );

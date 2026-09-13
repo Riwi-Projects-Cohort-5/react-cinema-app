@@ -4,6 +4,7 @@ export type FormState = {
   birthDate: string;
   gender: string;
   email: string;
+  confirmEmail: string;
   phone: string;
   password: string;
   confirmPassword: string;
