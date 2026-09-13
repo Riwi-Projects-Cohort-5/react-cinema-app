@@ -38,18 +38,17 @@ describe("base platform smoke tests", () => {
     expect(screen.getByRole("heading", { name: "Home" })).toBeInTheDocument();
   });
 
-  it("renders the contact step with unique email fields and the expected wizard flow", () => {
+  it("starts on the personal step and renders its fields before the contact step", () => {
     render(
       <MemoryRouter>
         <RegisterPage />
       </MemoryRouter>
     );
 
-    expect(screen.getByText(/¿cómo te contactamos\?/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/correo electrónico/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/confirmar correo/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/celular/i)).toBeInTheDocument();
-    expect(document.querySelectorAll('input[name="email"]').length).toBe(1);
-    expect(document.querySelectorAll('input[name="confirmEmail"]').length).toBe(1);
+    expect(screen.getByText(/cuéntanos sobre ti/i)).toBeInTheDocument();
+    expect(screen.getByText(/paso\s*1\s*de\s*4/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/nombre \*/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/apellidos \*/i)).toBeInTheDocument();
+    expect(screen.queryByLabelText(/correo electrónico/i)).not.toBeInTheDocument();
   });
 });
