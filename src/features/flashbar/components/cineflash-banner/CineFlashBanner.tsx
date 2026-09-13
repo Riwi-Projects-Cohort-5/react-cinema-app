@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 
 import { Flashbar } from "@features/flashbar/components/flashbar/Flashbar";
@@ -9,10 +9,6 @@ export function CineFlashBanner() {
   const queryClient = useQueryClient();
   const { data, isPending, isError } = useCineFlash(CINE_FLASH_DEFAULT_CITY_ID);
   const [isVisible, setIsVisible] = useState(true);
-
-  useEffect(() => {
-    setIsVisible(Boolean(data?.active));
-  }, [data?.active]);
 
   const handleCountdownExpire = (): void => {
     setIsVisible(false);
