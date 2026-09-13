@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 
+import brandLogo from "@assets/logo.svg";
 import { GreenIndicator } from "@shared/components/primitives";
 
 type RegisterLayoutProps = { children: ReactNode };
@@ -19,7 +20,7 @@ export const RegisterLayout = ({ children }: RegisterLayoutProps) => (
         <div className="relative z-10 flex w-full flex-col justify-between">
           <div className="flex items-start" aria-label="AbsoluteCinema">
             <img
-              src="/nombre.svg"
+              src={brandLogo}
               alt="AbsoluteCinema"
               className="h-auto w-full max-w-105 object-contain opacity-95"
             />

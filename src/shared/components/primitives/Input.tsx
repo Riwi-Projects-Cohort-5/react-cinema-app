@@ -133,7 +133,19 @@ interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
 
 const SelectInput = React.forwardRef<HTMLSelectElement, SelectProps>(
   ({ className, options, selectPlaceholder = "Selecciona una opción", ...props }, ref) => (
-    <select ref={ref} className={className} {...props}>
+    <select
+      ref={ref}
+      className={className}
+      style={{
+        backgroundImage:
+          "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'%3E%3Cg stroke='%23A8B3C7' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3.5 6.5L8 11l4.5-4.5'/%3E%3C/g%3E%3C/svg%3E\")",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "right 1.25rem center",
+        backgroundSize: "0.9rem 0.9rem",
+        ...props.style,
+      }}
+      {...props}
+    >
       <option value="">{selectPlaceholder}</option>
       {options.map((option) => (
         <option key={option.value} value={option.value}>

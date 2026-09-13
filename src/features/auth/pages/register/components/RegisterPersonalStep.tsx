@@ -52,6 +52,7 @@ export const RegisterPersonalStep = ({
         type="select"
         value={form.gender}
         onChange={(e) => updateField("gender", e.currentTarget.value)}
+        className="pr-12 appearance-none"
         options={[
           { value: "", label: "Prefiero no indicar" },
           { value: "masculino", label: "Masculino" },
