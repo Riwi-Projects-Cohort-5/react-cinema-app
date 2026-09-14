@@ -1,5 +1,5 @@
 import logo from "../../../../assets/logo.svg";
-import { Button } from "@shared/components/";
+import { Button,Input } from "@shared/components/";
 import {
   InstagramLogoIcon, FacebookLogoIcon, XLogoIcon, YoutubeLogoIcon,
 } from "@phosphor-icons/react";
@@ -243,10 +243,10 @@ export const Footer = () => {
               </h3>
 
               <form className="flex items-center gap-1">
-                <input
+                <Input
                   type="email"
                   placeholder="tu@email.com"
-                  className="h-6 w-150 rounded-md border border-white/5 bg-white/5 px-2 text-sm text-white"
+                  className="h-6  text-sm text-white"
                 />
 
                 <Button
