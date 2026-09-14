@@ -6,7 +6,7 @@ En `AuthLayout` concentré la composición visual compartida por las pantallas d
 
 Recibe contenido textual (`eyebrow`, `heading`, `description`), estadísticas opcionales y el contenido interactivo mediante `children`. `heading` acepta texto o `ReactNode` para poder controlar saltos de línea en títulos. `footer` permite agregar enlaces como registro o retorno al login. `imageSrc` permite configurar el fondo.
 
-Las vistas de login y recuperación ocupan toda la pantalla. En escritorio uso el arte como fondo full-screen y posiciono el formulario en un panel lateral. La prop opcional `formCard` activa únicamente para login el contenedor visual con fondo, borde, radio y sombra; recuperación mantiene el formulario abierto sobre el fondo. En mobile la vista sigue ocupando toda la pantalla y la card se aplica solo cuando `formCard` está activo.
+Las vistas de login y recuperación ocupan toda la pantalla. En escritorio divido visualmente la sección en dos mitades: el arte y el contenido editorial quedan a la izquierda, mientras el formulario queda centrado dentro de la mitad derecha. La prop opcional `formCard` activa únicamente para login el contenedor visual con fondo, borde, radio y sombra; recuperación mantiene el formulario flotante sobre el fondo, sin card visible. En mobile la vista sigue ocupando toda la pantalla y la card se aplica solo cuando `formCard` está activo.
 
 Cuando `formCard` está activo, el layout también agrega la línea superior con gradiente y la mantiene posicionada respecto al contenedor `relative` de la card. La marca se carga desde `src/assets/logo.svg` y se reutiliza en las variantes desktop y mobile.
 

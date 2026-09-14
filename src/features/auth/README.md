@@ -44,7 +44,8 @@ Archivos clave
     - `formCard?: boolean` — activa la card visual únicamente en las pantallas que la necesitan, actualmente login.
   - Características:
     - Soporta `backgroundImage` usando `imageSrc` o un gradiente por defecto.
-    - El login usa una card compacta con gradiente superior; recuperación mantiene el formulario abierto sobre el fondo.
+    - En desktop, ambos formularios se centran dentro de la mitad derecha de la sección.
+    - El login usa una card compacta con gradiente superior; recuperación mantiene el formulario flotante sobre el fondo, sin card visible.
     - `heading` acepta `ReactNode` para controlar saltos de línea.
 
 - `LoginForm.tsx`
@@ -68,6 +69,7 @@ Rutas
   - `PATHS.auth.forgotPassword = '/auth/forgot-password'`
 - `src/routes/appRouter.tsx` ya registra `ForgotPasswordPage`.
 - `MainLayout` detecta rutas `auth` y oculta `Header`, `CentralNav` y `Footer` en esas rutas.
+- El botón `Login` del header principal navega a `PATHS.auth.login` mediante un `Link`.
 
 Agregar / usar imágenes de fondo
 - Opción `public/`: colocar una imagen en `public/` y pasar su URL mediante `imageSrc`.
@@ -101,4 +103,4 @@ npm i
 npm run dev
 # Open http://localhost:5174/auth/login
 ```
- 
+

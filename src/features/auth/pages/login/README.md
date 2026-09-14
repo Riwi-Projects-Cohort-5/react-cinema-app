@@ -2,7 +2,7 @@
 
 `LoginPage` es la pantalla que orquesta el acceso. Renderiza `AuthLayout` y `LoginForm`, recibe las credenciales, llama a `login` y persiste el resultado.
 
-La página activa la prop `formCard` de `AuthLayout`. Por eso el formulario de login se muestra dentro de una card compacta, con borde, fondo, sombra, gradiente superior y el mismo tratamiento responsive en desktop y mobile. Esta variante no se comparte con `ForgotPasswordPage`.
+La página activa la prop `formCard` de `AuthLayout`. Por eso el formulario de login se muestra centrado dentro de la mitad derecha de la sección, dentro de una card compacta con borde, fondo, sombra y gradiente superior. El layout conserva la variante responsive para desktop y mobile. Esta card no se comparte con `ForgotPasswordPage`.
 
 ## Flujo actual
 
@@ -19,3 +19,5 @@ Mantén `handleSubmit` como coordinador y deja la presentación en `LoginForm`. 
 Para conservar la apariencia de la pantalla, el enlace `¿Olvidaste tu contraseña?` se mantiene en una sola línea mediante `whitespace-nowrap`.
 
 Prueba al menos login exitoso, credenciales inválidas, cuenta bloqueada, error inesperado y redirección desde una ruta protegida.
+
+La prueba de rutas valida que el heading de login se encuentre en sus dos variantes renderizadas: desktop y mobile.

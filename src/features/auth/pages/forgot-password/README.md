@@ -1,6 +1,6 @@
 # Recuperación de contraseña
 
-`ForgotPasswordPage` presenta un formulario abierto para capturar el correo y solicitar un enlace de recuperación. Actualmente mantiene `email` y `busy` localmente, muestra `AuthLayout` sin activar `formCard` y simula la respuesta con un `setTimeout` de 800 ms. El título editorial se fuerza en dos líneas para respetar el diseño visual.
+`ForgotPasswordPage` presenta un formulario flotante, centrado dentro de la mitad derecha de la sección y sin card visible, para capturar el correo y solicitar un enlace de recuperación. Actualmente mantiene `email` y `busy` localmente, muestra `AuthLayout` sin activar `formCard` y simula la respuesta con un `setTimeout` de 800 ms. El título editorial se fuerza en dos líneas para respetar el diseño visual.
 
 ## Estado actual
 

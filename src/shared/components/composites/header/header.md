@@ -4,14 +4,14 @@
 
 Barra superior (app-header) del sistema de diseño de **React Cinema App**. Vive en `src/shared/components/composites/header/Header.tsx` y se compone de primitivas (`Button`) con tokens del tema definidos en [Design tokens](../../../../../docs/design/11-design-tokens.md).
 
-- **Izquierda:** acciones de acceso — botón **Register** (secondary, fondo transparente, hover sutil con `secondary/30`) y botón **Login** (primary).
+- **Izquierda:** acciones de acceso — botón **Register** (secondary, fondo transparente, hover sutil con `secondary/30`) y botón **Login** (primary) enlazado a `PATHS.auth.login`.
 - **Derecha:** redes sociales (íconos Phosphor en `text-secondary`), separador `|` y el **logo** (`src/assets/logo.svg`).
 
 Se re-exporta desde el barrel de composites: `@shared/components/composites` (ver [README de composites](../../README.md)).
 
 ## Props
 
-Sin props: componente stateless, puramente presentacional. No recibe handlers ni configuración; la navegación que disparen los botones se conectará en la feature auth.
+Sin props: componente stateless, puramente presentacional. El botón Login navega a la vista de autenticación mediante `PATHS.auth.login`.
 
 ## Uso
 
@@ -27,7 +27,7 @@ import { Header } from "@shared/components/composites";
 | ------------- | ------------------------------------------------------------------------ |
 | Contenedor    | `header` con `bg-background`, `overflow-hidden`, alto `h-17`             |
 | Register      | Primitiva `Button` `variant="secondary"`, fondo anulado con `cn` (`bg-transparent`), `text-text-custom`, hover `bg-secondary/30` |
-| Login         | Primitiva `Button` `variant="primary"`, `text-white`, hover `bg-primary-hover` |
+| Login         | `Link` a `PATHS.auth.login` con la primitiva `Button` `variant="primary"`, `text-white`, hover `bg-primary-hover` |
 | Redes sociales | Phosphor `InstagramLogoIcon`, `FacebookLogoIcon`, `XLogoIcon`, `YoutubeLogoIcon` en `text-secondary` |
 | Logo          | `src/assets/logo.svg` (`w-40`)                                            |
 
