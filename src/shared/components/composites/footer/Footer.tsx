@@ -5,6 +5,7 @@ import {
 } from "@phosphor-icons/react";
 
 import { NavLink } from "react-router";
+import { cn } from "@shared/utils/cn";
 
 export const Footer = () => {
   return (
@@ -242,18 +243,24 @@ export const Footer = () => {
                 Newsletter
               </h3>
 
-              <form className="flex items-center gap-1">
+              <form className="flex items-center gap-2">
                 <Input
                   type="email"
                   placeholder="tu@email.com"
-                  className="h-6  text-sm text-white"
+                  className={cn(
+                    "h-6 border-white/10 bg-white/5 text-sm text-white",
+                    "placeholder:text-white/40 focus:border-primary   focus:ring-offset-transparent"
+                  )}
                 />
 
                 <Button
                   variant="secondary"
                   size="sm"
                   radius="sm"
-                  className="bg-transparent text-sm font-medium text-text-custom transition-all duration-200 hover:bg-secondary/30 focus:ring-2 focus:ring-secondary focus:ring-offset-2"
+                  className={cn(
+                    "h-6 bg-transparent text-sm font-medium text-text-custom transition-all duration-20",
+                    "hover:bg-secondary/30 focus:ring-2 focus:ring-secondary focus:ring-offset-0"
+                  )}
                 >
                   OK
                 </Button>
