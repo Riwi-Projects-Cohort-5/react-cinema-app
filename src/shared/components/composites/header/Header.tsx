@@ -5,8 +5,11 @@ import { Link } from "react-router";
 import { Button } from "@shared/components/";
 import { PATHS } from "@routes/paths";
 import { cn } from "@shared/utils/cn";
+import { useNavigate } from "react-router";
 
 const Header = () => {
+  const navigate = useNavigate();
+
   return (
     <main>
       <header className="relative h-17 w-full overflow-hidden bg-background">
@@ -16,7 +19,7 @@ const Header = () => {
             size="sm"
             radius="sm"
             className={cn("bg-transparent px-4 py-2 text-sm font-medium text-text-custom transition-all duration-200 hover:bg-secondary/30 focus:ring-2 focus:ring-secondary focus:ring-offset-2")} 
-           
+            onClick={() => navigate(PATHS.auth.register)}
           >
             Register
           </Button>

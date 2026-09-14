@@ -10,9 +10,11 @@ La configuración de entorno del frontend se declara en `.env.example` y se vali
 | --------------------- | ---------------------------------- | -------------------------------- |
 | `VITE_API_BASE_URL`   | `https://api.multicine.com/api/v1` | URL base versionada de la API.   |
 | `VITE_API_TIMEOUT_MS` | `15000`                            | Timeout por petición en ms.      |
+| `VITE_ENABLE_MOCKS`   | `false`                            | Fuerza los datos de respaldo locales sin llamar a la API (solo desarrollo). Con `false`, el respaldo entra solo si la API falla por red o 5xx. |
 
 - Definidas en `.env.example`; copiar a `.env.local` para desarrollo.
 - Tipadas en `src/vite-env.d.ts` (interface `ImportMetaEnv`).
+- `VITE_ENABLE_MOCKS` es consumido por el patrón `withFallback` de los servicios de feature (ver [Patrón de servicios con fallback](../patterns/api-fallback.md)).
 
 > `VITE_API_BASE_URL` corresponde a la [URL base versionada del contrato de API](../../api/00-conventions.md#1-url-base-y-versionado): el frontend configura la versión de la API en un único lugar y ningún componente hardcodea URLs.
 
@@ -33,5 +35,6 @@ import { env } from "@config/env";
 ## Documentos relacionados
 
 - [Cliente HTTP](../data-layer/http-client.md) — consume `env` para `baseURL` y `timeout`.
+- [Patrón de servicios con fallback](../patterns/api-fallback.md) — consume `env.enableMocks`.
 - [Despliegue](./deployment.md) — inyección de `VITE_API_BASE_URL` en build.
 - [Convenciones de API](../../api/00-conventions.md#1-url-base-y-versionado) — URL base y versionado.

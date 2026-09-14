@@ -34,28 +34,40 @@ Ninguno. Petición GET.
 ## Respuestas de éxito
 
 ### 200 OK
-Arreglo plano de departamentos del país (convenciones §5 — sin envelope de paginación).
+Arreglo de departamentos dentro de la envoltura `{ success, data }` que usa toda la API.
 
 ```json
-[
-  {
-    "id": 1,
-    "name": "Antioquia",
-    "countryId": 1
-  },
-  {
-    "id": 2,
-    "name": "Cundinamarca",
-    "countryId": 1
-  }
-]
+{
+  "success": true,
+  "data": [
+    {
+      "id": 1,
+      "name": "Antioquia",
+      "countryId": 1,
+      "isActive": true
+    },
+    {
+      "id": 2,
+      "name": "Cundinamarca",
+      "countryId": 1,
+      "isActive": true
+    }
+  ]
+}
 ```
 
 | Campo | Tipo | Notas |
 |---|---|---|
-| `id` | integer | Id del departamento (convenciones §8) |
-| `name` | string | Nombre del departamento |
-| `countryId` | integer | País padre, refleja el parámetro de ruta |
+| `success` | boolean | Envoltura común a todos los endpoints |
+| `data` | array | Lista de departamentos |
+| `data[].id` | integer | Id del departamento (convenciones §8) |
+| `data[].name` | string | Nombre del departamento |
+| `data[].countryId` | integer | País padre |
+| `data[].isActive` | boolean | Departamento habilitado en la plataforma |
+
+> **Ojo con el Mock Server:** ignora el parámetro de ruta. `GET /departments/2` devuelve los mismos
+> departamentos del país 1. La cascada no se puede validar visualmente contra el mock; usar el
+> respaldo local (`VITE_ENABLE_MOCKS=true`) para eso. Verificado el 2026-09-10.
 
 ## Respuestas de error
 Todas usan el envelope de convenciones §4 (`{ "error": "..." }`). Códigos relevantes: `500`.
@@ -70,6 +82,10 @@ Todas usan el envelope de convenciones §4 (`{ "error": "..." }`). Códigos rele
 - Mientras carga, el select de departamentos está deshabilitado y muestra un spinner/skeleton.
 - **Cuando cambia el país**: limpia el departamento actual **y** la selección de ciudad descendente (HU-FE-002) antes de consultar los nuevos departamentos — nunca muestres hijos obsoletos.
 - Estado vacío → "No hay departamentos disponibles" con la opción de volver y cambiar de país.
+- Los departamentos con `isActive: false` **no se listan** (mismo criterio que países, ver `#2`). Si
+  un país se queda sin departamentos activos, aplica el estado vacío de arriba.
+- **Respaldo local (solo desarrollo):** ante red caída o 5xx se sirven datos locales con aviso
+  visible; un 4xx sigue siendo error reintentable. Pendiente de retirar antes de pasar a `main`.
 - Error recuperable → mensaje + botón de reintento (§13); sin conexión → banner + reintento.
 
 ## Reglas de validación

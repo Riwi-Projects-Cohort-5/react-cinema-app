@@ -1,8 +1,10 @@
 import React from "react";
 import type { ZodType } from "zod";
+import { useFormField } from "../composites/forms/useFormField";
+
 
 type InputType =
-  "text" | "email" | "password" | "number" | "tel" | "url" | "search" | "textarea" | "select";
+  "text" | "email" | "password" | "number" | "tel" | "url" | "search" | "date" | "textarea" | "select";
 
 type InputState = "idle" | "error" | "disabled";
 
@@ -50,6 +52,12 @@ interface InputProps {
   onChange?: (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => void;
+  onBlur?: (
+    e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => void;
+
+  // Autocomplete HTML attribute
+  autoComplete?: string;
 
   // HTML nativo
   name?: string;
@@ -76,8 +84,9 @@ const getStateClasses = (state: InputState): string => {
   return stateMap[state];
 };
 
-const getLabelClasses = (): string => {
-  return `block text-sm font-medium mb-2 text-text-secondary`;
+const getLabelClasses = (state: InputState): string => {
+  const isError = state === "error";
+  return `block text-sm font-medium mb-2 ${isError ? "text-error" : "text-text-secondary"}`;
 };
 
 const getBaseInputClasses = (state: InputState): string => {
@@ -124,7 +133,19 @@ interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
 
 const SelectInput = React.forwardRef<HTMLSelectElement, SelectProps>(
   ({ className, options, selectPlaceholder = "Selecciona una opción", ...props }, ref) => (
-    <select ref={ref} className={className} {...props}>
+    <select
+      ref={ref}
+      className={className}
+      style={{
+        backgroundImage:
+          "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'%3E%3Cg stroke='%23A8B3C7' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3.5 6.5L8 11l4.5-4.5'/%3E%3C/g%3E%3C/svg%3E\")",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "right 1.25rem center",
+        backgroundSize: "0.9rem 0.9rem",
+        ...props.style,
+      }}
+      {...props}
+    >
       <option value="">{selectPlaceholder}</option>
       {options.map((option) => (
         <option key={option.value} value={option.value}>
@@ -165,13 +186,26 @@ const Input = React.forwardRef<
       fieldSchema,
       error,
       onBlurValidation,
+      onBlur,
       icon,
+      autoComplete,
     },
     ref
+    
   ) => {
     const isError = state === "error";
     const isDisabled = state === "disabled";
     const inputId = id || name;
+    const field = useFormField();
+    const resolvedLabel = label ?? field.label;
+    const resolvedError = error ?? field.error;
+    const resolvedHelperText = helperText ?? field.helperText;
+    const resolvedRequired = required || field.required;
+    const displayMessage = resolvedError || (isError ? errorMessage : resolvedHelperText);
+    const messageClassName = resolvedError || isError ? "text-error" : "text-text-secondary";
+    const hasFormFieldContext = Boolean(field.label || field.error || field.helperText || field.required);
+    const shouldRenderLabel = !hasFormFieldContext && Boolean(resolvedLabel);
+    const shouldRenderMessage = !hasFormFieldContext && Boolean(displayMessage);
     const baseInputClasses = getBaseInputClasses(state);
     const finalInputClasses = `${baseInputClasses} ${className}`.trim();
 
@@ -184,6 +218,7 @@ const Input = React.forwardRef<
       required,
       placeholder,
       className: finalInputClasses,
+      autoComplete,
     };
 
     // Renderizar el elemento correcto según el tipo
@@ -205,6 +240,9 @@ const Input = React.forwardRef<
                 icon?.right ? "pr-10" : ""
               }`}
               onBlur={(e) => {
+                if (onBlur) {
+                  onBlur(e);
+                }
                 if (onBlurValidation && fieldSchema && fieldName) {
                   onBlurValidation(fieldName, e.currentTarget.value, fieldSchema);
                 }
@@ -220,6 +258,9 @@ const Input = React.forwardRef<
                 icon?.right ? "pr-10" : ""
               }`}
               onBlur={(e) => {
+                if (onBlur) {
+                  onBlur(e);
+                }
                 if (onBlurValidation && fieldSchema && fieldName) {
                   onBlurValidation(fieldName, e.currentTarget.value, fieldSchema);
                 }
@@ -234,6 +275,9 @@ const Input = React.forwardRef<
                 icon?.right ? "pr-10" : ""
               }`}
               onBlur={(e) => {
+                if (onBlur) {
+                  onBlur(e);
+                }
                 if (onBlurValidation && fieldSchema && fieldName) {
                   onBlurValidation(fieldName, e.currentTarget.value, fieldSchema);
                 }
@@ -257,21 +301,18 @@ const Input = React.forwardRef<
     };
 
     // Determinar qué mensaje mostrar
-    const displayMessage = error || (isError ? errorMessage : helperText);
-    const messageClassName = error || isError ? "text-error" : "text-text-secondary";
-
     return (
       <div className="w-full space-y-1">
-        {label && (
-          <label htmlFor={inputId} className={getLabelClasses()}>
-            {label}
-            {required && <span className="text-text-secondary ml-1">*</span>}
+{shouldRenderLabel && (
+          <label htmlFor={inputId} className={getLabelClasses(state)}>
+            {resolvedLabel}
+            {resolvedRequired && <span className="text-error ml-1">*</span>}
           </label>
         )}
 
         <div className="relative">{renderField()}</div>
 
-        {displayMessage && <p className={messageClassName}>{displayMessage}</p>}
+        {shouldRenderMessage && <p className={messageClassName}>{displayMessage}</p>}
       </div>
     );
   }

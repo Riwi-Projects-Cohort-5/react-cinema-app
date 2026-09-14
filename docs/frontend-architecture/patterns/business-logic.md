@@ -70,6 +70,8 @@ Los servicios son responsables de la comunicación con el backend. Toda petició
 
 Cada `features/<feature>/services/` expone funciones que mapean uno o más endpoints del contrato de API (ver el [catálogo de endpoints](../../api/README.md) y las [convenciones de capa de datos](../../api/00-conventions.md#12-capa-de-datos-en-frontend-axios--tanstack-query)). El tipado de estas funciones debe declarar su retorno explícitamente (ver [guía de tipado §6](../../type-guides/typing-guide.md#6-tipado-de-la-capa-de-servicios)).
 
+Los servicios de feature que consumen endpoints de listado desempaquetan el envelope `{ success, data }` y pueden devolver datos de respaldo locales cuando la API no está disponible (red/5xx) o cuando `env.enableMocks` está activo, notificando al usuario y registrando el origen en un store dedicado de la feature. Para más información, consulta el [Patrón de servicios con fallback](./api-fallback.md).
+
 ## Reglas generales
 
 - No duplicar lógica de negocio.

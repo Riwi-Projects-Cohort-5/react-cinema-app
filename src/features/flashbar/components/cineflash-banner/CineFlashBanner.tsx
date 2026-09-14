@@ -1,22 +1,24 @@
+import { useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 
 import { Flashbar } from "@features/flashbar/components/flashbar/Flashbar";
-
 import { CINE_FLASH_DEFAULT_CITY_ID } from "@features/flashbar/config";
 import { useCineFlash } from "@features/flashbar/hooks/useCineFlash";
 
 export function CineFlashBanner() {
   const queryClient = useQueryClient();
   const { data, isPending, isError } = useCineFlash(CINE_FLASH_DEFAULT_CITY_ID);
-
-  if (isPending || isError || !data?.active) {
-    return null;
-  }
+  const [isVisible, setIsVisible] = useState(true);
 
   const handleCountdownExpire = (): void => {
+    setIsVisible(false);
     void queryClient.invalidateQueries({ queryKey: ["cineflash"] });
     void queryClient.invalidateQueries({ queryKey: ["movies", "cineflash"] });
   };
+
+  if (isPending || isError || !data?.active || !isVisible) {
+    return null;
+  }
 
   return (
     <Flashbar
@@ -24,6 +26,10 @@ export function CineFlashBanner() {
       message={data.terms}
       countdownSeconds={data.remainingSeconds}
       onCountdownExpire={handleCountdownExpire}
+      actionLabel="Ver funciones"
+      onAction={() => console.log("Ver funciones")}
+      fixed={false}
+      className="mt-8 mb-8"
     />
   );
 }

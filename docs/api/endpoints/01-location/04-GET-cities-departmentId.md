@@ -34,31 +34,40 @@ Ninguno. Petición GET.
 ## Respuestas de éxito
 
 ### 200 OK
-Arreglo plano de ciudades del departamento (convenciones §5 — sin envelope de paginación).
+Arreglo de ciudades dentro de la envoltura `{ success, data }` que usa toda la API.
 
 ```json
-[
-  {
-    "id": 1,
-    "name": "Medellin",
-    "departmentId": 1,
-    "isActive": true
-  },
-  {
-    "id": 2,
-    "name": "Envigado",
-    "departmentId": 1,
-    "isActive": true
-  }
-]
+{
+  "success": true,
+  "data": [
+    {
+      "id": 1,
+      "name": "Medellín",
+      "departmentId": 1,
+      "isActive": true
+    },
+    {
+      "id": 2,
+      "name": "Envigado",
+      "departmentId": 1,
+      "isActive": true
+    }
+  ]
+}
 ```
 
 | Campo | Tipo | Notas |
 |---|---|---|
-| `id` | integer | Id de la ciudad (convenciones §8) |
-| `name` | string | Nombre de la ciudad |
-| `departmentId` | integer | Departamento padre, refleja el parámetro de ruta |
-| `isActive` | boolean | Flag de ciudad activa |
+| `success` | boolean | Envoltura común a todos los endpoints |
+| `data` | array | Lista de ciudades |
+| `data[].id` | integer | Id de la ciudad (convenciones §8) |
+| `data[].name` | string | Nombre de la ciudad |
+| `data[].departmentId` | integer | Departamento padre |
+| `data[].isActive` | boolean | Flag de ciudad activa |
+
+> **Ojo con el Mock Server:** ignora el parámetro de ruta y devuelve siempre ciudades con
+> `departmentId: 1`, todas activas. No permite ejercitar el caso "sin cines activos" ni la lista
+> vacía; para eso usar el respaldo local (`VITE_ENABLE_MOCKS=true`). Verificado el 2026-09-10.
 
 ## Respuestas de error
 Todas usan el envelope de convenciones §4 (`{ "error": "..." }`). Códigos relevantes: `500`.
@@ -70,11 +79,17 @@ Todas usan el envelope de convenciones §4 (`{ "error": "..." }`). Códigos rele
 ## Consideraciones de frontend
 - **Select dependiente**: consulta cuando se elige un departamento; deshabilita el select mientras carga.
 - Clave de TanStack Query `["cities", departmentId]`; `staleTime` ~30 min.
-- **Las ciudades no activas no son seleccionables**: si el backend devuelve `isActive: false` (RN-006 excluye las ciudades sin cines en operación), renderízala deshabilitada con una nota ("Sin cines activos").
+- **Ciudades con `isActive: false`:** se listan como **seleccionables** con el sufijo "· Sin cines
+  activos". Al elegirlas se muestra un aviso inline y se bloquea el botón "Confirmar ubicación".
+  Decisión de HU-FE-002 / UBI-05 (2026-09-10): se prefirió explicar por qué no se puede continuar
+  antes que ofrecer una opción inerte sin explicación. Sustituye la indicación anterior de
+  renderizarlas deshabilitadas. RN-006 sigue vigente en backend.
 - **Cuando cambia el departamento** → limpiar la ciudad seleccionada previamente antes de re-consultar.
 - Al confirmar, persistir la ciudad seleccionada (p. ej. `localStorage` con la clave `multicine_city`); el contrato de persistencia en cuenta (`POST /users/location`) está pendiente de confirmación con el backend.
 - **Cambiar la ciudad invalida la cartelera**: `queryClient.invalidateQueries(["movies"])` para que las secciones de cartelera se refresquen para la nueva ciudad (HU-FE-003).
 - Estado vacío → "No hay ciudades disponibles"; estados sin conexión/recuperables según §13.
+- **Respaldo local (solo desarrollo):** ante red caída o 5xx se sirven datos locales con aviso
+  visible; un 4xx sigue siendo error reintentable. Pendiente de retirar antes de pasar a `main`.
 
 ## Reglas de validación
 - `departmentId` debe ser un entero positivo.
