@@ -77,7 +77,7 @@ const getStateClasses = (state: InputState): string => {
 
   const stateMap: Record<InputState, string> = {
     idle: `border-border text-text-primary focus:border-primary focus:ring-primary/50 ${baseTransition}`,
-    error: `border-error text-error focus:border-error focus:ring-error/50 ${baseTransition}`,
+    error: `border-error text-text-primary focus:border-error focus:ring-error/50 ${baseTransition}`,
     disabled: `opacity-40 cursor-not-allowed ${baseTransition}`,
   };
 
@@ -303,7 +303,7 @@ const Input = React.forwardRef<
     // Determinar qué mensaje mostrar
     return (
       <div className="w-full space-y-1">
-        {shouldRenderLabel && (
+{shouldRenderLabel && (
           <label htmlFor={inputId} className={getLabelClasses(state)}>
             {resolvedLabel}
             {resolvedRequired && <span className="text-error ml-1">*</span>}

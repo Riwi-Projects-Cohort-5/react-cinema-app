@@ -51,7 +51,7 @@ describe("appRouter", () => {
   it("renders the login page when unauthenticated", () => {
     renderRouter(PATHS.auth.login);
 
-    expect(screen.getByText("LoginPage")).toBeInTheDocument();
+    expect(screen.getAllByRole("heading", { name: "Iniciar sesión" })).toHaveLength(2);
   });
 
   it("redirects unauthenticated users from a private route to login", () => {
@@ -60,7 +60,7 @@ describe("appRouter", () => {
     const router = renderRouter(PATHS.profile);
 
     expect(router.state.location.pathname).toBe(PATHS.auth.login);
-    expect(screen.getByText("LoginPage")).toBeInTheDocument();
+    expect(screen.getAllByRole("heading", { name: "Iniciar sesión" })).toHaveLength(2);
   });
 
   it("renders a private route when the user is authenticated", () => {

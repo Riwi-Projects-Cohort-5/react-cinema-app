@@ -1,7 +1,9 @@
-import { PATHS } from "@/routes/paths";
 import logo from "../../../../assets/logo.svg";
 import { InstagramLogoIcon, FacebookLogoIcon, XLogoIcon, YoutubeLogoIcon } from "@phosphor-icons/react";
+import { Link } from "react-router";
+
 import { Button } from "@shared/components/";
+import { PATHS } from "@routes/paths";
 import { cn } from "@shared/utils/cn";
 import { useNavigate } from "react-router";
 
@@ -21,14 +23,16 @@ const Header = () => {
           >
             Register
           </Button>
-          <Button
-            variant="primary"
-            size="sm"
-            radius="sm"
-            className="px-6 py-2 text-sm font-medium transition-all duration-200 hover:bg-primary-hover focus:ring-2 focus:ring-primary focus:ring-offset-2"
-          >
-            Login
-          </Button>
+          <Link to={PATHS.auth.login}>
+            <Button
+              variant="primary"
+              size="sm"
+              radius="sm"
+              className="px-6 py-2 text-sm font-medium transition-all duration-200 hover:bg-primary-hover focus:ring-2 focus:ring-primary focus:ring-offset-2"
+            >
+              Login
+            </Button>
+          </Link>
 
         </div>
 
