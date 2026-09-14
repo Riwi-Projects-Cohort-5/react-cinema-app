@@ -23,6 +23,7 @@ interface AuthLayoutProps {
   formEyebrow: string;
   formTitle: string;
   formSubtitle?: string;
+  formCard?: boolean;
   children: ReactNode;
   footer?: ReactNode;
 }
@@ -44,6 +45,7 @@ export function AuthLayout({
   formEyebrow,
   formTitle,
   formSubtitle,
+  formCard = false,
   children,
   footer,
 }: AuthLayoutProps) {
@@ -112,8 +114,10 @@ export function AuthLayout({
             </div>
           )}
         </div>
-        <div className="absolute  inset-y-0 right-0 z-20 flex items-center p-4 lg:p-6">
-          <div className="relative flex w-full max-w-sm items-center justify-center rounded-2xl border border-border bg-surface/95 p-6 shadow-xl backdrop-blur before:absolute before:inset-x-0 before:top-0 before:h-[2px] before:rounded-t-2xl before:bg-[linear-gradient(to_right,transparent,var(--color-primary),var(--color-accent),transparent)]">
+        <div className="absolute inset-y-0 right-0 z-20 flex w-1/2 items-center justify-center px-8 lg:px-12">
+          <div
+            className={`${formCard ? "relative rounded-2xl border border-border bg-surface/95 p-6 shadow-xl backdrop-blur before:absolute before:inset-x-0 before:top-0 before:h-[2px] before:rounded-t-2xl before:bg-[linear-gradient(to_right,transparent,var(--color-primary),var(--color-accent),transparent)]" : ""} flex h-fit w-full max-w-sm items-center justify-center`}
+          >
             <div className="w-full">{formPanel}</div>
           </div>
         </div>
@@ -135,7 +139,13 @@ export function AuthLayout({
             <BrandMark />
           </div>
 
-          {formPanel}
+          {formCard ? (
+            <div className="relative rounded-2xl border border-border bg-surface/95 p-6 shadow-xl backdrop-blur before:absolute before:inset-x-0 before:top-0 before:h-[2px] before:rounded-t-2xl before:bg-[linear-gradient(to_right,transparent,var(--color-primary),var(--color-accent),transparent)]">
+              {formPanel}
+            </div>
+          ) : (
+            formPanel
+          )}
         </div>
       </div>
     </div>

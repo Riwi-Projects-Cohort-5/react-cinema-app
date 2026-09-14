@@ -81,6 +81,7 @@ export const LoginPage = () => {
       formEyebrow="Bienvenido de vuelta"
       formTitle="Iniciar sesión"
       formSubtitle="Accede a tus entradas, membresía y beneficios."
+      formCard
       footer={
         <>
           ¿No tienes cuenta?{" "}
