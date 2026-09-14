@@ -1,10 +1,12 @@
 import { render, screen } from "@testing-library/react";
+import { MemoryRouter } from "react-router";
 import { describe, expect, it } from "vitest";
 
 import { env } from "@config/env";
 import { PATHS } from "@routes/paths";
 import { clearSession, getAccessToken, useSessionStore } from "@services/session";
 import { PlaceholderPage } from "@shared/components/PlaceholderPage";
+import { RegisterPage } from "@features/auth/pages/register/pages/RegisterPage";
 
 describe("base platform smoke tests", () => {
   it("loads the environment configuration with defaults", () => {
@@ -34,5 +36,19 @@ describe("base platform smoke tests", () => {
     render(<PlaceholderPage title="Home" />);
 
     expect(screen.getByRole("heading", { name: "Home" })).toBeInTheDocument();
+  });
+
+  it("starts on the personal step and renders its fields before the contact step", () => {
+    render(
+      <MemoryRouter>
+        <RegisterPage />
+      </MemoryRouter>
+    );
+
+    expect(screen.getByText(/cuéntanos sobre ti/i)).toBeInTheDocument();
+    expect(screen.getByText(/paso\s*1\s*de\s*4/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/nombre\*/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/apellidos\*/i)).toBeInTheDocument();
+    expect(screen.queryByLabelText(/correo electrónico/i)).not.toBeInTheDocument();
   });
 });

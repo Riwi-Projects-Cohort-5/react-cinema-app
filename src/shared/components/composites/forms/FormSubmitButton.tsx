@@ -25,7 +25,7 @@ export const FormSubmitButton = React.forwardRef<HTMLButtonElement, FormSubmitBu
         type="submit"
         variant="primary"
         size="md"
-        state={isDisabled ? "disabled" : isSubmitting ? "loading" : "default"}
+        state={isSubmitting ? "loading" : isDisabled ? "disabled" : "default"}
         disabled={isDisabled}
         className={className}
         {...props}

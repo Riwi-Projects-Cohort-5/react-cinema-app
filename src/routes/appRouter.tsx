@@ -1,7 +1,7 @@
 import { createBrowserRouter, type RouteObject } from "react-router";
 
 import { LoginPage } from "@features/auth/pages/login/LoginPage";
-import { RegisterPage } from "@features/auth/pages/register/RegisterPage";
+import { RegisterPage } from "@features/auth/pages/register/pages/RegisterPage";
 import { AdminLayout, AuthenticatedLayout, MainLayout } from "@layouts";
 import { GeneralErrorPage, NotFoundPage } from "@pages";
 import { ProtectedRoute, PublicOnlyRoute } from "@routes/guards";
