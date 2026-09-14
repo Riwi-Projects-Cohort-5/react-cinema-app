@@ -1,4 +1,4 @@
- import { useState } from "react";
+import { useState } from "react";
 import type { ChangeEvent, FormEvent } from "react";
 import { ArrowRight, Eye, EyeSlash } from "@phosphor-icons/react";
 import { Link } from "react-router";
@@ -17,7 +17,9 @@ import {
 
 import { PATHS } from "@routes/paths";
 
-type LoginInputChangeEvent = ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>;
+type LoginInputChangeEvent = ChangeEvent<
+  HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+>;
 
 interface LoginFormProps {
   onSubmit: (data: LoginFormData) => void | Promise<void>;
@@ -36,14 +38,14 @@ export function LoginForm({
 }: LoginFormProps) {
   const [formData, setFormData] = useState<LoginFormData>(EMPTY_FORM);
   const [showPassword, setShowPassword] = useState(false);
- 
+
   const [rememberMe, setRememberMe] = useState(false);
   const { errors, validateField, validateForm } = useFormValidation<LoginFormData>(loginSchema);
 
   const handleBlurValidation = async (
     fieldName: string,
     value: unknown,
-    fieldSchema: Parameters<typeof validateField>[2],
+    fieldSchema: Parameters<typeof validateField>[2]
   ) => {
     await validateField(fieldName, value, fieldSchema);
   };
@@ -71,7 +73,7 @@ export function LoginForm({
   const passwordIsValid = passwordStrictSchema.safeParse(formData.password).success;
 
   return (
-    <form onSubmit={handleSubmit} noValidate className="space-y-4">
+    <form onSubmit={handleSubmit} noValidate className="space-y-3">
       <Input
         type="email"
         label="Correo electrónico"
@@ -116,7 +118,7 @@ export function LoginForm({
 
       {passwordIsValid && <GreenIndicator text="Contraseña válida" className="justify-start" />}
 
-      <div className="flex items-center justify-between gap-4">
+      <div className="flex items-center justify-between gap-4 pt-1">
         <label className="flex cursor-pointer items-center gap-2 text-sm text-text-secondary">
           <Checkbox
             checked={rememberMe}
@@ -138,14 +140,14 @@ export function LoginForm({
         variant="primary"
         size="md"
         radius="md"
-        className="w-full gap-2 text-sm"
+        className="w-full gap-2 text-sm mt-1"
         state={busy ? "loading" : "default"}
       >
         Iniciar sesión
         <ArrowRight size={18} weight="bold" />
       </Button>
 
-      <div className="my-2 flex items-center gap-3">
+      <div className="my-3 flex items-center gap-3">
         <span className="h-px flex-1 bg-border" />
         <span className="text-xs text-text-secondary">o continúa con</span>
         <span className="h-px flex-1 bg-border" />
@@ -154,14 +156,14 @@ export function LoginForm({
       <div className="grid grid-cols-2 gap-3">
         <button
           type="button"
-          className="flex items-center justify-center gap-2 md border border-border bg-black py-2 text-sm text-text-primary"
+          className="flex items-center justify-center gap-2 rounded-xl border border-border bg-black/40 py-2.5 text-sm font-medium text-text-primary transition-colors hover:bg-black/60"
         >
           <img src="/google.svg" alt="" aria-hidden="true" className="h-[18px] w-[18px]" />
           Google
         </button>
         <button
           type="button"
-          className="flex items-center justify-center gap-2 md bg-black py-2 text-sm text-white"
+          className="flex items-center justify-center gap-2 rounded-xl border border-border bg-black/40 py-2.5 text-sm font-medium text-white transition-colors hover:bg-black/60"
         >
           <img src="/apple.svg" alt="" aria-hidden="true" className="h-[18px] w-[18px]" />
           Apple

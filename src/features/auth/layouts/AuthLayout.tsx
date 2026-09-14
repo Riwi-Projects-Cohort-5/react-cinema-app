@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router";
 
 import logo from "@assets/logo.svg";
 import { PATHS } from "@routes/paths";
+import { GreenIndicator } from "@/shared/components";
 
 interface AuthStat {
   label: string;
@@ -16,7 +17,7 @@ interface AuthLayoutProps {
   /** Imagen que se muestra flotando en el lado derecho (opcional). */
   rightImageSrc?: string;
   eyebrow: string;
-  heading: string;
+  heading: ReactNode;
   description?: string;
   stats?: AuthStat[];
   formEyebrow: string;
@@ -54,9 +55,7 @@ export function AuthLayout({
 
   const formPanel = (
     <>
-      <span className="text-overline font-semibold uppercase tracking-overline text-accent">
-        {formEyebrow}
-      </span>
+      <GreenIndicator text={formEyebrow} className="justify-start" />
       <h2 className="mt-2 text-title font-semibold tracking-title text-text-primary">
         {formTitle}
       </h2>
@@ -91,9 +90,7 @@ export function AuthLayout({
         </div>
 
         <div className="absolute inset-x-0 bottom-0 z-10 max-w-lg p-6">
-          <span className="text-overline font-semibold uppercase tracking-overline text-accent">
-            {eyebrow}
-          </span>
+          <GreenIndicator text={eyebrow} className="justify-start" />
           <h1 className="mt-3 text-headline font-semibold tracking-headline text-text-primary">
             {heading}
           </h1>
@@ -115,8 +112,8 @@ export function AuthLayout({
             </div>
           )}
         </div>
-        <div className="absolute inset-y-0 right-0 z-20 flex items-stretch p-4 lg:p-6">
-          <div className="flex h-full w-full max-w-sm items-center justify-center rounded-2xl border border-border bg-surface/95 p-6 shadow-xl backdrop-blur">
+        <div className="absolute  inset-y-0 right-0 z-20 flex items-center p-4 lg:p-6">
+          <div className="relative flex w-full max-w-sm items-center justify-center rounded-2xl border border-border bg-surface/95 p-6 shadow-xl backdrop-blur before:absolute before:inset-x-0 before:top-0 before:h-[2px] before:rounded-t-2xl before:bg-[linear-gradient(to_right,transparent,var(--color-primary),var(--color-accent),transparent)]">
             <div className="w-full">{formPanel}</div>
           </div>
         </div>

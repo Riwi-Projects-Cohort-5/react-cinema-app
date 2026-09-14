@@ -41,9 +41,11 @@ Archivos clave
     - `imageSrc?: string` — URL opcional para la imagen de fondo principal.
     - `eyebrow`, `heading`, `description`, `stats` — contenido del panel izquierdo.
     - `formEyebrow`, `formTitle`, `formSubtitle`, `children`, `footer` — contenido del panel del formulario.
+    - `formCard?: boolean` — activa la card visual únicamente en las pantallas que la necesitan, actualmente login.
   - Características:
     - Soporta `backgroundImage` usando `imageSrc` o un gradiente por defecto.
-    - El panel derecho está centrado y se puede ajustar mediante clases `p-*`, `max-w-*`, etc.
+    - El login usa una card compacta con gradiente superior; recuperación mantiene el formulario abierto sobre el fondo.
+    - `heading` acepta `ReactNode` para controlar saltos de línea.
 
 - `LoginForm.tsx`
   - Maneja estado local del formulario (`email`, `password`, `rememberMe`).
@@ -83,6 +85,7 @@ Ejemplos
   imageSrc="/login.png"
   formEyebrow="Bienvenido de vuelta"
   formTitle="Inicia sesión"
+  formCard
 >
   <LoginForm ... />
 </AuthLayout>

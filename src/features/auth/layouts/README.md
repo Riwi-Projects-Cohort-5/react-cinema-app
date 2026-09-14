@@ -4,11 +4,11 @@ En `AuthLayout` concentré la composición visual compartida por las pantallas d
 
 ## `AuthLayout`
 
-Recibe contenido textual (`eyebrow`, `heading`, `description`), estadísticas opcionales y el contenido interactivo mediante `children`. `footer` permite agregar enlaces como registro o retorno al login. `imageSrc` permite configurar el fondo.
+Recibe contenido textual (`eyebrow`, `heading`, `description`), estadísticas opcionales y el contenido interactivo mediante `children`. `heading` acepta texto o `ReactNode` para poder controlar saltos de línea en títulos. `footer` permite agregar enlaces como registro o retorno al login. `imageSrc` permite configurar el fondo.
 
-Las vistas de login y recuperación ocupan toda la pantalla. En escritorio uso el arte como fondo full-screen y posiciono el formulario en un panel lateral; en mobile mantengo una vista full-screen con el formulario centrado, sin una card exterior que encierre toda la página.
+Las vistas de login y recuperación ocupan toda la pantalla. En escritorio uso el arte como fondo full-screen y posiciono el formulario en un panel lateral. La prop opcional `formCard` activa únicamente para login el contenedor visual con fondo, borde, radio y sombra; recuperación mantiene el formulario abierto sobre el fondo. En mobile la vista sigue ocupando toda la pantalla y la card se aplica solo cuando `formCard` está activo.
 
-La marca se carga desde `src/assets/logo.svg` y se reutiliza en las variantes desktop y mobile.
+Cuando `formCard` está activo, el layout también agrega la línea superior con gradiente y la mantiene posicionada respecto al contenedor `relative` de la card. La marca se carga desde `src/assets/logo.svg` y se reutiliza en las variantes desktop y mobile.
 
 La navegación de cierre en mobile usa `navigate(-1)` y la marca enlaza a `PATHS.home`.
 
@@ -23,6 +23,7 @@ Una página debe encargarse de su estado y pasar el formulario como hijo:
   formEyebrow="Autenticación"
   formTitle="Iniciar sesión"
   formSubtitle="Continúa para ver tus entradas."
+  formCard
   footer={<Link to={PATHS.auth.register}>Crear cuenta</Link>}
 >
   <LoginForm onSubmit={handleSubmit} />

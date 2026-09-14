@@ -19,7 +19,13 @@ export const ForgotPasswordPage = () => {
   return (
     <AuthLayout
       eyebrow="SIN COMPLICACIONES"
-      heading="Volver siempre es fácil"
+      heading={
+        <>
+          Volver siempre
+          <br />
+          es fácil.
+        </>
+      }
       description="En unos pasos recuperarás el acceso completo a tus entradas, membresía y beneficios."
       formEyebrow="Recuperar acceso"
       formTitle="¿Olvidaste tu contraseña?"

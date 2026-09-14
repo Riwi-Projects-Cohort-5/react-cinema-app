@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 
 import { LoginForm } from "@features/auth/components";
@@ -25,8 +25,17 @@ export const LoginPage = () => {
     useAuthStore();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [now, setNow] = useState(() => Date.now());
 
-  const isLocked = Boolean(lockedUntil && lockedUntil > Date.now());
+  useEffect(() => {
+    if (!lockedUntil) return;
+    const interval = setInterval(() => {
+      setNow(Date.now());
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [lockedUntil]);
+
+  const isLocked = Boolean(lockedUntil && lockedUntil > now);
 
   const handleSubmit = async (data: LoginFormData) => {
     setIsSubmitting(true);
