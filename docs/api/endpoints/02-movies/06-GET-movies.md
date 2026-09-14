@@ -33,24 +33,20 @@ Ninguno. Petición GET.
 ## Respuestas de éxito
 
 ### 200 OK
-Arreglo plano de películas activas (convenciones §5 — sin envelope de paginación), ordenadas por `releaseDate` descendente.
+Arreglo plano de películas activas (convenciones §5 — sin envelope de paginación).
 
 ```json
 [
   {
     "id": 1,
-    "title": "Spider-Man: No Way Home",
-    "synopsis": "Peter Parker enfrenta las consecuencias de su identidad revelada y solicita ayuda al Doctor Strange.",
-    "genre": "Accion",
-    "classification": "PG-13",
-    "duration": 148,
-    "director": "Jon Watts",
-    "language": "Ingles",
-    "isSubtitled": true,
-    "posterUrl": "https://image.tmdb.org/t/p/w500/1g0dhY21LbhE2vWwoKG2hVs2i6E.jpg",
-    "trailerUrl": "https://www.youtube.com/watch?v=JfVOs4VSpmA",
-    "releaseDate": "2021-12-17",
-    "rating": 8.3,
+    "title": "Dune: Parte 2",
+    "synopsis": "Paul Atreides se une a Chani y a los Fremen mientras busca venganza contra los conspiradores que destruyeron a su familia.",
+    "genre": "Ciencia Ficción / Aventura",
+    "rating": "PG-13",
+    "duration": 166,
+    "imageUrl": "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=800",
+    "bannerUrl": "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=1200",
+    "trailerUrl": "https://www.youtube.com/watch?v=Way9Dexny3w",
     "isActive": true
   }
 ]
@@ -61,17 +57,15 @@ Arreglo plano de películas activas (convenciones §5 — sin envelope de pagina
 | `id` | integer | Id de la película (convenciones §8); se pasa a `GET /movies/{movieId}` |
 | `title` | string | Título |
 | `synopsis` | string | Sinopsis |
-| `genre` | string | Género en display (p. ej. `Accion`) |
-| `classification` | string | Clasificación de edad (p. ej. `PG-13`) |
+| `genre` | string | Género en display (p. ej. `Ciencia Ficción / Aventura`) |
+| `rating` | string | Clasificación / calificación de edad (p. ej. `PG-13`, `ATP`, `+16`) |
 | `duration` | integer | Duración en minutos |
-| `director` | string | Director |
-| `language` | string | Idioma original (p. ej. `Ingles`) |
-| `isSubtitled` | boolean | `true` si se exhibe subtitulada |
-| `posterUrl` | string | URL del póster (CDN) |
+| `imageUrl` | string | URL del póster (w=800) |
+| `bannerUrl` | string | URL del banner / backdrop (w=1200) |
 | `trailerUrl` | string \| null | URL de YouTube del trailer |
-| `releaseDate` | string `YYYY-MM-DD` | Fecha de estreno |
-| `rating` | number | Calificación 0–10, un decimal |
 | `isActive` | boolean | Siempre `true` (las inactivas se filtran en el servidor) |
+
+> **Nota sobre campos adicionales:** Los campos `director`, `cast` y `releaseDate` solo están presentes en el endpoint de detalle (`GET /movies/{movieId}` #9), no en este listado.
 
 ## Respuestas de error
 Todas usan el envelope de convenciones §4 (`{ "error": "..." }`). Códigos relevantes: `500`, `503`.

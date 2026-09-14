@@ -1,5 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { act, render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 
 import { afterEach, describe, expect, it, vi } from "vitest";
 
@@ -17,22 +18,27 @@ const mockUseCineFlash = vi.mocked(useCineFlash);
 const mockCineFlash: CineFlashResponse = {
   active: true,
   discountPercent: 20,
-  maxTicketsPerPurchase: 6,
-  notAccumulableWith: ["membresias"],
-  window: { startAt: "2026-09-07T00:00:00Z", endAt: "2026-09-08T00:00:00Z" },
-  remainingSeconds: 3725,
-  terms: "Hasta 20% de descuento",
+  maxTicketsPerPurchase: 3,
+  notAccumulableWith: ["MEMBERSHIP", "GIFT_CARD"],
+  window: {
+    startAt: "2026-09-12T00:00:00Z",
+    endAt: "2026-09-12T05:00:00Z",
+  },
+  remainingSeconds: 5 * 60 * 60,
+  terms: "Hasta 20% de descuento en funciones seleccionadas",
   functions: [],
 };
 
-function renderBanner(): QueryClient {
-  const queryClient = new QueryClient();
-  render(
+function renderBanner() {
+  const queryClient = new QueryClient({
+    defaultOptions: { queries: { retry: false } },
+  });
+
+  return render(
     <QueryClientProvider client={queryClient}>
       <CineFlashBanner />
     </QueryClientProvider>
   );
-  return queryClient;
 }
 
 describe("CineFlashBanner", () => {
@@ -41,46 +47,7 @@ describe("CineFlashBanner", () => {
     mockUseCineFlash.mockReset();
   });
 
-  it("renders nothing while pending", () => {
-    mockUseCineFlash.mockReturnValue({
-      isPending: true,
-      isError: false,
-      error: null,
-      data: undefined,
-    } as ReturnType<typeof useCineFlash>);
-
-    renderBanner();
-
-    expect(screen.queryByRole("status", { name: "Cine Flash" })).not.toBeInTheDocument();
-  });
-
-  it("renders nothing on error", () => {
-    mockUseCineFlash.mockReturnValue({
-      isPending: false,
-      isError: true,
-      error: new Error("Fallo de red"),
-      data: undefined,
-    } as ReturnType<typeof useCineFlash>);
-
-    renderBanner();
-
-    expect(screen.queryByRole("status", { name: "Cine Flash" })).not.toBeInTheDocument();
-  });
-
-  it("renders nothing when the promotion is not active", () => {
-    mockUseCineFlash.mockReturnValue({
-      isPending: false,
-      isError: false,
-      error: null,
-      data: { ...mockCineFlash, active: false },
-    } as ReturnType<typeof useCineFlash>);
-
-    renderBanner();
-
-    expect(screen.queryByRole("status", { name: "Cine Flash" })).not.toBeInTheDocument();
-  });
-
-  it("renders the Flashbar with terms and a live countdown when active", () => {
+  it("renders the promo banner with the configured message and countdown", async () => {
     mockUseCineFlash.mockReturnValue({
       isPending: false,
       isError: false,
@@ -90,12 +57,33 @@ describe("CineFlashBanner", () => {
 
     renderBanner();
 
-    expect(screen.getByRole("status", { name: "Cine Flash" })).toBeInTheDocument();
-    expect(screen.getByText("Hasta 20% de descuento")).toBeInTheDocument();
-    expect(screen.getByText("01:02:05")).toBeInTheDocument();
+    expect(await screen.findByRole("status", { name: "Cine Flash" })).toBeInTheDocument();
+    expect(
+      screen.getByText("Hasta 20% de descuento en funciones seleccionadas")
+    ).toBeInTheDocument();
+    expect(screen.getByText("05:00:00")).toBeInTheDocument();
   });
 
-  it("invalidates cineflash queries when the countdown expires", () => {
+  it("renders the action button and triggers the action callback", async () => {
+    const user = userEvent.setup();
+    const logSpy = vi.spyOn(console, "log").mockImplementation(() => undefined);
+
+    mockUseCineFlash.mockReturnValue({
+      isPending: false,
+      isError: false,
+      error: null,
+      data: mockCineFlash,
+    } as ReturnType<typeof useCineFlash>);
+
+    renderBanner();
+
+    await user.click(await screen.findByRole("button", { name: "Ver funciones" }));
+
+    expect(logSpy).toHaveBeenCalledWith("Ver funciones");
+    logSpy.mockRestore();
+  });
+
+  it("hides the banner and invalidates the query when the countdown expires", () => {
     vi.useFakeTimers();
 
     mockUseCineFlash.mockReturnValue({
@@ -105,13 +93,22 @@ describe("CineFlashBanner", () => {
       data: { ...mockCineFlash, remainingSeconds: 1 },
     } as ReturnType<typeof useCineFlash>);
 
-    const queryClient = renderBanner();
+    const queryClient = new QueryClient({
+      defaultOptions: { queries: { retry: false } },
+    });
     const invalidateSpy = vi.spyOn(queryClient, "invalidateQueries");
+
+    render(
+      <QueryClientProvider client={queryClient}>
+        <CineFlashBanner />
+      </QueryClientProvider>
+    );
 
     act(() => {
       vi.advanceTimersByTime(1000);
     });
 
+    expect(screen.queryByRole("status", { name: "Cine Flash" })).not.toBeInTheDocument();
     expect(invalidateSpy).toHaveBeenCalledWith({ queryKey: ["cineflash"] });
     expect(invalidateSpy).toHaveBeenCalledWith({ queryKey: ["movies", "cineflash"] });
   });

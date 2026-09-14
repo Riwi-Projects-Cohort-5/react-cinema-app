@@ -1,5 +1,12 @@
 # CineFlashBanner
 
-Contenedor de la feature que conecta `GET /cineflash` (hook `useCineFlash`) con el `Flashbar`. No renderiza nada mientras carga, ante error o cuando `active` es `false` (nunca un banner vacío). Al expirar la cuenta regresiva invalida la query `["cineflash"]`.
+Componente visual para renderizar el banner promocional de Cine Flash dentro de la home.
 
-Pendiente: ciudad real (hoy usa `CINE_FLASH_DEFAULT_CITY_ID` en `config.ts`).
+Actualmente usa datos mockeados para mostrar:
+
+- título: "Cine Flash"
+- mensaje promocional
+- cuenta regresiva en segundos
+- acción: "Ver funciones"
+
+Se integra con `Flashbar` y se ubica en el flujo normal de la página con `fixed={false}` para que aparezca como contenido del home y no como overlay global.

@@ -8,7 +8,7 @@ Los app-shells globales envuelven los grupos de rutas de la aplicación. Viven e
 
 | Layout               | Archivo                                    | Nav / estructura                                              |
 | -------------------- | ------------------------------------------ | ------------------------------------------------------------- |
-| **Main (público)**   | `src/shared/layouts/MainLayout.tsx`        | Header + CentralNav + `<Outlet />` + Footer; envuelve casa y auth |
+| **Main (público)**   | `src/shared/layouts/MainLayout.tsx`        | Header + CentralNav + `<Outlet />` + Footer; envuelve la home |
 | **Autenticado**      | `src/layouts/AuthenticatedLayout.tsx`      | Perfil, Historial de compras, Checkout                         |
 | **Admin**            | `src/layouts/AdminLayout.tsx`              | Sidebar: Dashboard                                             |
 

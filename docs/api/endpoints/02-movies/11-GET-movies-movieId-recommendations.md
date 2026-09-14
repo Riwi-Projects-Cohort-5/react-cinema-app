@@ -39,12 +39,10 @@ Arreglo plano de películas recomendadas (convenciones §5 — sin envelope de p
 ```json
 [
   {
-    "id": 3,
-    "title": "Top Gun: Maverick",
-    "genre": "Accion",
-    "classification": "PG-13",
-    "rating": 8.3,
-    "posterUrl": "https://image.tmdb.org/t/p/w500/62HCnUTziyWcpDaBO2i1wY4ip9o.jpg"
+    "id": 2,
+    "title": "Spider-Man: Beyond the Spider-Verse",
+    "genre": "Animación / Acción",
+    "imageUrl": "https://images.unsplash.com/photo-1635805737707-575885ab0820?w=800"
   }
 ]
 ```
@@ -54,9 +52,7 @@ Arreglo plano de películas recomendadas (convenciones §5 — sin envelope de p
 | `id` | integer | Convenciones §8; enlaza con `GET /movies/{movieId}` |
 | `title` | string | Título |
 | `genre` | string | Género en display |
-| `classification` | string | Clasificación de edad |
-| `rating` | number | Calificación 0–10, un decimal |
-| `posterUrl` | string | URL del póster (CDN) |
+| `imageUrl` | string | URL del póster/imagen |
 
 ## Respuestas de error
 Todas usan el envelope de convenciones §4 (`{ "error": "..." }`). Códigos relevantes: `404`, `500`.
