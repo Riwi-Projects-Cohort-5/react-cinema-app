@@ -281,11 +281,6 @@ ol {
    6. ACCESIBILIDAD
    ============================================================================ */
 
-:focus-visible {
-  outline: 2px solid var(--color-primary);
-  outline-offset: 2px;
-  border-radius: var(--radius-xs);
-}
 
 @media (prefers-reduced-motion: reduce) {
   *,

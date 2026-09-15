@@ -259,7 +259,7 @@ export const Footer = () => {
                   radius="sm"
                   className={cn(
                     "h-6 bg-transparent text-sm font-medium text-text-custom transition-all duration-20",
-                    "hover:bg-secondary/30 focus:ring-2 focus:ring-secondary focus:ring-offset-0"
+                    "hover:bg-secondary/30"
                   )}
                 >
                   OK
