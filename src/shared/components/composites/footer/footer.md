@@ -18,13 +18,13 @@ Se re-exporta desde el barrel de composites: `@shared/components/composites` (ve
 
 ## Composición
 
-| Elemento     | Detalle                                                                          |
-| ------------ | -------------------------------------------------------------------------------- |
-| Contenedor   | `<footer>` `bg-divider`, `text-text-custom`, grilla `gap-10` `md:grid-cols-4`     |
-| Títulos      | `text-sm`, `uppercase`, `tracking-widest`, `text-white/40`                       |
-| Links        | `NavLink` `text-sm`, hover `text-white`                                           |
-| Newsletter   | `input` con borde/fondo `white/5` + `Button` secondary (fondo anulado con `cn`)   |
-| Redes        | `a` `h-7 w-7` `rounded-md` `bg-white/5` con íconos Phosphor `size-20`             |
+| Elemento   | Detalle                                                                         |
+| ---------- | ------------------------------------------------------------------------------- |
+| Contenedor | `<footer>` `bg-divider`, `text-text-custom`, grilla `gap-10` `md:grid-cols-4`   |
+| Títulos    | `text-sm`, `uppercase`, `tracking-widest`, `text-white/40`                      |
+| Links      | `NavLink` `text-sm`, hover `text-white`                                         |
+| Newsletter | `input` con borde/fondo `white/5` + `Button` secondary (fondo anulado con `cn`) |
+| Redes      | `a` `h-7 w-7` `rounded-md` `bg-white/5` con íconos Phosphor `size-20`           |
 
 ## Documentos relacionados
 

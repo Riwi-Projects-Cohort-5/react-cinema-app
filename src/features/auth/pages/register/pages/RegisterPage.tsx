@@ -1,9 +1,17 @@
 import { useState } from "react";
+import type React from "react";
 
 import { RegisterWizard } from "../components/RegisterWizard";
-import type { FieldErrors, FormState, StepConfig } from "../interfaces/Register.interfaces";
+import type {
+  FieldErrors,
+  FormState,
+  StepConfig,
+  RegisterPayload,
+} from "../interfaces/Register.interfaces";
 import { RegisterLayout } from "../layouts/RegisterLayout";
 import { registerUser } from "../services/Register.services";
+import { ApiError } from "@services/api-error";
+import { Link } from "react-router";
 
 const steps: StepConfig[] = [
   { label: "Personal", title: "Cuéntanos sobre ti" },
@@ -102,7 +110,7 @@ export const RegisterPage = () => {
   const [form, setForm] = useState<FormState>(initialForm);
   const [errors, setErrors] = useState<FieldErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitError, setSubmitError] = useState("");
+  const [submitError, setSubmitError] = useState<React.ReactNode>("");
 
   const updateField = (field: keyof FormState, value: string | boolean) => {
     setForm((previous) => ({ ...previous, [field]: value }));
@@ -143,32 +151,71 @@ export const RegisterPage = () => {
     try {
       setIsSubmitting(true);
       setSubmitError("");
-      const data = await registerUser({
-        personal: {
-          firstName: form.firstName,
-          lastName: form.lastName,
-          documentType: "CC",
-          documentNumber: "1032456789",
-          birthDate: form.birthDate,
-          gender: form.gender === "masculino" ? "M" : form.gender === "femenino" ? "F" : "O",
-        },
-        contact: { email: form.email, phone: form.phone },
+
+      // Map form to flat backend DTO
+      const payload: RegisterPayload = {
+        firstName: form.firstName,
+        lastName: form.lastName,
+        phone: form.phone,
+        birthDate: form.birthDate,
+        // TODO(BE-? confirm allowed gender values): mapping provisional to readable Spanish
+        gender:
+          form.gender === "masculino"
+            ? "Masculino"
+            : form.gender === "femenino"
+              ? "Femenino"
+              : form.gender,
+        cityId: Number(form.city),
+        email: form.email,
+        confirmEmail: form.confirmEmail,
         password: form.password,
-        preferences: {
-          cityId: form.city || "8f7e6d5c-4b3a-4c2d-9e1f-0a1b2c3d4e5f",
-          favoriteCinemaId: "1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d",
-        },
-        consents: {
-          dataProcessing: form.consentPersonal || form.acceptTerms,
-          terms: form.consentTerms || form.acceptTerms,
-          commercialEmail: form.marketing,
-        },
-        captchaToken: "demo-captcha-token",
-      });
+        confirmPassword: form.confirmPassword,
+        documentType: "CC",
+        documentNumber: "1032456789",
+        favoriteCinemaId: "",
+        personalDataConsent: Boolean(form.consentPersonal || form.acceptTerms),
+        termsConsent: Boolean(form.consentTerms || form.acceptTerms),
+        commercialConsent: Boolean(form.marketing),
+      };
+
+      // NOTE: captcha field name and inclusion must be confirmed with backend (BE-1). Not sending any captcha token now.
+
+      const data = await registerUser(payload);
       console.log("[REGISTER-SUCCESS] Registro exitoso:", data);
       alert("Registro completado correctamente.");
     } catch (error) {
-      setSubmitError(error instanceof Error ? error.message : "Hubo un problema al registrar.");
+      // Differentiated error handling for API responses
+      if (error instanceof ApiError) {
+        if (error.status === 400 && error.details) {
+          const fieldErrors: FieldErrors = {};
+          for (const detail of error.details) {
+            // Map backend field names to form fields when possible
+            const backendField = detail.field;
+            // Simple heuristics: backend might use 'email' or 'confirmEmail' etc.
+            fieldErrors[backendField as keyof FieldErrors] = detail.message;
+          }
+          setErrors((previous) => ({ ...previous, ...fieldErrors }));
+          setSubmitError("");
+        } else if (error.status === 403) {
+          setSubmitError("Error de captcha: verifica que no seas un bot y vuelve a intentarlo.");
+        } else if (error.status === 409) {
+          const emailMessage = error.message || "El correo ya está registrado.";
+          setErrors((previous) => ({ ...previous, email: emailMessage }));
+          setSubmitError(
+            <span>
+              {emailMessage} ¿Quieres{" "}
+              <Link to="/auth/login" className="text-primary">
+                iniciar sesión
+              </Link>
+              ?
+            </span>
+          );
+        } else {
+          setSubmitError(error.message || "Hubo un problema al registrar.");
+        }
+      } else {
+        setSubmitError(error instanceof Error ? error.message : "Hubo un problema al registrar.");
+      }
     } finally {
       setIsSubmitting(false);
     }

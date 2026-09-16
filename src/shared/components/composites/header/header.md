@@ -23,13 +23,13 @@ import { Header } from "@shared/components/composites";
 
 ## Composición
 
-| Elemento      | Detalle                                                                  |
-| ------------- | ------------------------------------------------------------------------ |
-| Contenedor    | `header` con `bg-background`, `overflow-hidden`, alto `h-17`             |
-| Register      | Primitiva `Button` `variant="secondary"`, fondo anulado con `cn` (`bg-transparent`), `text-text-custom`, hover `bg-secondary/30` |
-| Login         | `Link` a `PATHS.auth.login` con la primitiva `Button` `variant="primary"`, `text-white`, hover `bg-primary-hover` |
-| Redes sociales | Phosphor `InstagramLogoIcon`, `FacebookLogoIcon`, `XLogoIcon`, `YoutubeLogoIcon` en `text-secondary` |
-| Logo          | `src/assets/logo.svg` (`w-40`)                                            |
+| Elemento       | Detalle                                                                                                                          |
+| -------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| Contenedor     | `header` con `bg-background`, `overflow-hidden`, alto `h-17`                                                                     |
+| Register       | Primitiva `Button` `variant="secondary"`, fondo anulado con `cn` (`bg-transparent`), `text-text-custom`, hover `bg-secondary/30` |
+| Login          | `Link` a `PATHS.auth.login` con la primitiva `Button` `variant="primary"`, `text-white`, hover `bg-primary-hover`                |
+| Redes sociales | Phosphor `InstagramLogoIcon`, `FacebookLogoIcon`, `XLogoIcon`, `YoutubeLogoIcon` en `text-secondary`                             |
+| Logo           | `src/assets/logo.svg` (`w-40`)                                                                                                   |
 
 > El botón Register anula el fondo de la variante `secondary` con `cn` + `tailwind-merge` (patrón documentado en [README de primitivas](../../README.md)); el estilo del botón base es relativo y configurable desde el consumidor.
 

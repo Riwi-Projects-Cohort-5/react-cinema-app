@@ -10,24 +10,24 @@ Se re-exporta desde el barrel de primitivas: `@shared/components/primitives` (ve
 
 ## Props
 
-| Prop | Tipo | Default | Descripción |
-| ---- | ---- | ------- | ----------- |
-| `options` | `DropdownOption<V>[]` | — | Lista de opciones. **Requerido.** |
-| `label` | `string` | — | Etiqueta superior (estilo overline, uppercase). |
-| `optionalHint` | `string` | — | Texto auxiliar junto a la etiqueta, ej. `"(opcional)"`. |
-| `placeholder` | `string` | `"Seleccionar…"` | Texto cuando no hay selección. |
-| `value` | `V \| null` | `undefined` | Valor controlado. |
-| `onChange` | `(value: V \| null) => void` | — | Callback al seleccionar. |
-| `defaultValue` | `V \| null` | `null` | Valor inicial no-controlado. |
-| `filterable` | `boolean` | `false` | Muestra un campo de búsqueda sobre el listado. |
-| `filter` | `(option, query) => boolean` | `includes` case-insensitive | Predicado de filtrado personalizado. |
-| `filterPlaceholder` | `string` | `"Buscar…"` | Placeholder del campo de búsqueda. |
-| `disabled` | `boolean` | `false` | Deshabilita el control (`opacity-40`, bloqueo). |
-| `id` | `string` | — | Identificador del elemento raíz. |
-| `className` | `string` | `""` | Clases sobre el contenedor raíz. |
-| `listClassName` | `string` | `""` | Clases sobre el `<ul role="listbox">`. |
-| `triggerIcon` | `ReactNode` | — | Ícono lead dentro del trigger (antes del texto). |
-| `triggerClassName` | `string` | `""` | Clases sobre el `<button>` trigger; al componerse con `cn` (que usa `tailwind-merge`), sobreescriben el estilo base del trigger. |
+| Prop                | Tipo                         | Default                     | Descripción                                                                                                                      |
+| ------------------- | ---------------------------- | --------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| `options`           | `DropdownOption<V>[]`        | —                           | Lista de opciones. **Requerido.**                                                                                                |
+| `label`             | `string`                     | —                           | Etiqueta superior (estilo overline, uppercase).                                                                                  |
+| `optionalHint`      | `string`                     | —                           | Texto auxiliar junto a la etiqueta, ej. `"(opcional)"`.                                                                          |
+| `placeholder`       | `string`                     | `"Seleccionar…"`            | Texto cuando no hay selección.                                                                                                   |
+| `value`             | `V \| null`                  | `undefined`                 | Valor controlado.                                                                                                                |
+| `onChange`          | `(value: V \| null) => void` | —                           | Callback al seleccionar.                                                                                                         |
+| `defaultValue`      | `V \| null`                  | `null`                      | Valor inicial no-controlado.                                                                                                     |
+| `filterable`        | `boolean`                    | `false`                     | Muestra un campo de búsqueda sobre el listado.                                                                                   |
+| `filter`            | `(option, query) => boolean` | `includes` case-insensitive | Predicado de filtrado personalizado.                                                                                             |
+| `filterPlaceholder` | `string`                     | `"Buscar…"`                 | Placeholder del campo de búsqueda.                                                                                               |
+| `disabled`          | `boolean`                    | `false`                     | Deshabilita el control (`opacity-40`, bloqueo).                                                                                  |
+| `id`                | `string`                     | —                           | Identificador del elemento raíz.                                                                                                 |
+| `className`         | `string`                     | `""`                        | Clases sobre el contenedor raíz.                                                                                                 |
+| `listClassName`     | `string`                     | `""`                        | Clases sobre el `<ul role="listbox">`.                                                                                           |
+| `triggerIcon`       | `ReactNode`                  | —                           | Ícono lead dentro del trigger (antes del texto).                                                                                 |
+| `triggerClassName`  | `string`                     | `""`                        | Clases sobre el `<button>` trigger; al componerse con `cn` (que usa `tailwind-merge`), sobreescriben el estilo base del trigger. |
 
 ### `DropdownOption<V>`
 
@@ -118,9 +118,9 @@ import { cn } from "@shared/utils/cn";
   triggerIcon={<MapPinIcon size={18} weight="fill" className="text-primary" />}
   triggerClassName={cn(
     "h-auto w-auto gap-2 rounded-full bg-surface-variant px-4 py-2 text-sm",
-    "border-transparent outline outline-1 outline-offset-[-1px] outline-border",
+    "border-transparent outline outline-1 outline-offset-[-1px] outline-border"
   )}
-/>
+/>;
 ```
 
 ## Teclado

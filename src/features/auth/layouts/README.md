@@ -28,4 +28,4 @@ Una página debe encargarse de su estado y pasar el formulario como hijo:
 >
   <LoginForm onSubmit={handleSubmit} />
 </AuthLayout>
-``` 
+```

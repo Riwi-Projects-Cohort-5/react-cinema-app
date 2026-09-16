@@ -14,10 +14,12 @@ Esta documentación está colocada en `src/features/auth` y describe la implemen
 - [store](./store/README.md): estado de usuario, bloqueo y errores de login.
 
 Propósito
+
 - Proveer páginas y componentes para login, registro y recuperación de contraseña.
 - Ofrecer una `AuthLayout` reutilizable con soporte para imágenes de fondo y panel de formulario.
 
 Estructura principal
+
 ```
 src/features/auth/
 ├─ components/
@@ -63,6 +65,7 @@ Archivos clave
   - Usa `AuthLayout` y un formulario simple que envía el email para recibir enlace.
 
 Rutas
+
 - Definidas en `src/routes/paths.ts`:
   - `PATHS.auth.login = '/auth/login'`
   - `PATHS.auth.register = '/auth/register'`
@@ -72,12 +75,15 @@ Rutas
 - El botón `Login` del header principal navega a `PATHS.auth.login` mediante un `Link`.
 
 Agregar / usar imágenes de fondo
+
 - Opción `public/`: colocar una imagen en `public/` y pasar su URL mediante `imageSrc`.
 - Opción `src/assets/`: importar con alias `@assets` y pasar la variable importada a `AuthLayout`.
 - La marca de autenticación actual se importa desde `src/assets/logo.svg`.
 
 Ejemplos
+
 - Login page (usa `AuthLayout`):
+
 ```tsx
 <AuthLayout
   eyebrow="La experiencia es todo"
@@ -94,13 +100,16 @@ Ejemplos
 ```
 
 Cómo desarrollar y probar
+
 1. Instala dependencias:
+
 ```bash
 npm i
 ```
+
 2. Levanta el servidor:
+
 ```bash
 npm run dev
 # Open http://localhost:5174/auth/login
 ```
-

@@ -46,7 +46,9 @@ export const RegisterLayout = ({ children }: RegisterLayoutProps) => (
                   key={label}
                   className="min-w-27.5 rounded-lg border border-border bg-surface/80 px-4 py-3 shadow-xs"
                 >
-                  <div className="font-primary text-subtitle font-bold text-text-primary">{label}</div>
+                  <div className="font-primary text-subtitle font-bold text-text-primary">
+                    {label}
+                  </div>
                   <div className="text-overline uppercase text-text-secondary">{value}</div>
                 </div>
               ))}

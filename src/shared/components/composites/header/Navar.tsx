@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router';
+import { NavLink } from "react-router";
 import { MagnifyingGlassIcon } from "@phosphor-icons/react";
 import { Button } from "@shared/components/";
 import { LocationIndicator } from "@features/location/components/location-indicator/LocationIndicator";
@@ -35,15 +35,15 @@ export default function CentralNav() {
       </ul>
 
       <div className="flex items-center gap-2">
-        
-
         <LocationIndicator />
         <Button
           variant="secondary"
           size="sm"
           radius="full"
           aria-label="Buscar"
-          className={cn("bg-surface-variant text-text-primary  outline-2 outline-offset outline-border hover:bg-surface-variant/80")}
+          className={cn(
+            "bg-surface-variant text-text-primary  outline-2 outline-offset outline-border hover:bg-surface-variant/80"
+          )}
         >
           <MagnifyingGlassIcon size={18} />
         </Button>

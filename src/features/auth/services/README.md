@@ -10,12 +10,9 @@ Los servicios encapsulan las llamadas HTTP del feature. `auth.services.ts` impor
 
 ```ts
 export async function requestPasswordReset(
-  payload: PasswordResetRequest,
+  payload: PasswordResetRequest
 ): Promise<PasswordResetResponse> {
-  const { data } = await httpClient.post<PasswordResetResponse>(
-    "/auth/password-reset",
-    payload,
-  );
+  const { data } = await httpClient.post<PasswordResetResponse>("/auth/password-reset", payload);
   return data;
 }
 ```
