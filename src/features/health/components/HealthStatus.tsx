@@ -5,7 +5,7 @@ const baseClassName =
 
 export function HealthStatus() {
   const health = useHealth();
-  const isHealthy = health.isSuccess && health.data?.status === "ok";
+  const isHealthy = health.isSuccess && health.data?.status === "UP";
 
   if (health.isPending) {
     return <div className={`${baseClassName} bg-gray-800 text-white`}>Verificando conexión...</div>;
