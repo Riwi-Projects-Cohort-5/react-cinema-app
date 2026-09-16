@@ -49,3 +49,12 @@ en `src/test/`. Ver `docs/frontend-architecture/tooling/testing.md`.
 - Los routes principales se manejan desde src/routes/appRouter.tsx.
 
 Esta estructura sirve como punto de partida para construir la aplicación de forma ordenada y escalable.
+
+## Versiones de Node y npm
+
+Este proyecto requiere **Node.js >=22 <23** y **npm >=10**. La versión de Node está fijada en `.nvmrc` y el `package.json` incluye el campo `engines`. El archivo `.npmrc` activa `engine-strict=true`, lo que hace que `npm ci` falle si las versiones no coinciden.
+
+- Usa [`nvm`](https://github.com/nvm-sh/nvm) o [`fnm`](https://github.com/Schniz/fnm) para gestionar la versión de Node: `nvm use` leerá `.nvmrc` automáticamente.
+- **Nadie edita `package-lock.json` a mano ni resuelve sus conflictos a mano.** Ante un conflicto en el lockfile, descarta tu versión propia y ejecuta `npm install` de nuevo para regenerarlo.
+- El Dockerfile usa `node:22-alpine` y `npm ci` para garantizar que el build en CI sea reproducible.
+- El CI ejecuta `npm ci` en la matriz `ubuntu-latest` + `windows-latest` para verificar paridad entre sistemas operativos.
