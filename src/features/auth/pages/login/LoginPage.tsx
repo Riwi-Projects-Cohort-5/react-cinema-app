@@ -55,6 +55,10 @@ export const LoginPage = () => {
         return;
       }
 
+      //if (error instanceof ApiError && error.status === 400){
+        
+      //}
+
       if (error instanceof ApiError && error.status === 401) {
         setLoginErrorMessage(error.message);
         return;

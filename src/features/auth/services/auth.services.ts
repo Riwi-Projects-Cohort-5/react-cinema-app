@@ -1,4 +1,4 @@
- import { httpClient } from "@services/httpClient";
+import { httpClient } from "@services/httpClient";
 
 import type { LoginRequest, LoginResponse } from "@features/auth/interfaces";
 

@@ -128,7 +128,7 @@ export function LoginForm({
           Recordarme
         </label>
 
-        <Link to={PATHS.auth.forgotPassword} className="text-xs text-accent font-medium p-3-60">
+        <Link to={PATHS.auth.forgotPassword} className="text-xs text-accent font-medium p-3">
           ¿Olvidaste tu contraseña?
         </Link>
       </div>
