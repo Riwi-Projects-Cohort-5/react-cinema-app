@@ -31,7 +31,11 @@ export const ForgotPasswordPage = () => {
       formTitle="¿Olvidaste tu contraseña?"
       formSubtitle="Ingresa tu correo y te enviaremos un enlace para restablecerla."
       rightImageSrc="/login.png"
-      footer={<Link to={PATHS.auth.login} className="text-sm text-primary hover:underline">◂ Volver a iniciar sesión</Link>}
+      footer={
+        <Link to={PATHS.auth.login} className="text-sm text-primary hover:underline">
+          ◂ Volver a iniciar sesión
+        </Link>
+      }
     >
       <form onSubmit={handleSubmit} className="space-y-4">
         <Input

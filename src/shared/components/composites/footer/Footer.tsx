@@ -1,7 +1,10 @@
 import logo from "../../../../assets/logo.svg";
-import { Button,Input } from "@shared/components/";
+import { Button, Input } from "@shared/components/";
 import {
-  InstagramLogoIcon, FacebookLogoIcon, XLogoIcon, YoutubeLogoIcon,
+  InstagramLogoIcon,
+  FacebookLogoIcon,
+  XLogoIcon,
+  YoutubeLogoIcon,
 } from "@phosphor-icons/react";
 
 import { NavLink } from "react-router";
@@ -19,8 +22,7 @@ export const Footer = () => {
             </div>
 
             <p className="mt-4 max-w-xs text-sm leading-5">
-              La plataforma moderna para disfrutar del cine. Compra tus
-              entradas desde donde estés.
+              La plataforma moderna para disfrutar del cine. Compra tus entradas desde donde estés.
             </p>
 
             <div className="mt-4 flex items-center gap-2">
@@ -65,56 +67,38 @@ export const Footer = () => {
             </h3>
 
             <ul className="space-y-2">
-                <li>
-                  <NavLink
-                    to="/catalog"
-                    className="text-sm transition hover:text-white"
-                  >
-                    Cartelera
-                  </NavLink>
-                </li>
-
-                <li>
-                  <NavLink
-                    to="/premieres"
-                    className="text-sm transition hover:text-white"
-                  >
-                    Próximos estrenos
-                  </NavLink>
-                </li>
+              <li>
+                <NavLink to="/catalog" className="text-sm transition hover:text-white">
+                  Cartelera
+                </NavLink>
+              </li>
 
               <li>
-                <NavLink
-                  to="/cine-flash"
-                  className="text-sm transition hover:text-white"
-                >
+                <NavLink to="/premieres" className="text-sm transition hover:text-white">
+                  Próximos estrenos
+                </NavLink>
+              </li>
+
+              <li>
+                <NavLink to="/cine-flash" className="text-sm transition hover:text-white">
                   Cine Flash
                 </NavLink>
               </li>
 
               <li>
-                <NavLink
-                  to="/confectionery"
-                  className="text-sm transition hover:text-white"
-                >
+                <NavLink to="/confectionery" className="text-sm transition hover:text-white">
                   Confitería
                 </NavLink>
               </li>
 
               <li>
-                <NavLink
-                  to="/promotions"
-                  className="text-sm transition hover:text-white"
-                >
+                <NavLink to="/promotions" className="text-sm transition hover:text-white">
                   Promociones
                 </NavLink>
               </li>
 
               <li>
-                <NavLink
-                  to="/complexes"
-                  className="text-sm transition hover:text-white"
-                >
+                <NavLink to="/complexes" className="text-sm transition hover:text-white">
                   Complejos
                 </NavLink>
               </li>
@@ -129,55 +113,37 @@ export const Footer = () => {
 
             <ul className="space-y-2">
               <li>
-                <NavLink
-                  to="/login"
-                  className="text-sm transition hover:text-white"
-                >
+                <NavLink to="/login" className="text-sm transition hover:text-white">
                   Iniciar sesión
                 </NavLink>
               </li>
 
               <li>
-                <NavLink
-                  to="/register"
-                  className="text-sm transition hover:text-white"
-                >
+                <NavLink to="/register" className="text-sm transition hover:text-white">
                   Registrarse
                 </NavLink>
               </li>
 
               <li>
-                <NavLink
-                  to="/tickets"
-                  className="text-sm transition hover:text-white"
-                >
+                <NavLink to="/tickets" className="text-sm transition hover:text-white">
                   Mis entradas
                 </NavLink>
               </li>
 
               <li>
-                <NavLink
-                  to="/points"
-                  className="text-sm transition hover:text-white"
-                >
+                <NavLink to="/points" className="text-sm transition hover:text-white">
                   Mis puntos
                 </NavLink>
               </li>
 
               <li>
-                <NavLink
-                  to="/profile"
-                  className="text-sm transition hover:text-white"
-                >
+                <NavLink to="/profile" className="text-sm transition hover:text-white">
                   Perfil
                 </NavLink>
               </li>
 
               <li>
-                <NavLink
-                  to="/favorites"
-                  className="text-sm transition hover:text-white"
-                >
+                <NavLink to="/favorites" className="text-sm transition hover:text-white">
                   Favoritos
                 </NavLink>
               </li>
@@ -192,19 +158,13 @@ export const Footer = () => {
 
             <ul className="space-y-2">
               <li>
-                <NavLink
-                  to="/cinemas/arino"
-                  className="text-sm transition hover:text-white"
-                >
+                <NavLink to="/cinemas/arino" className="text-sm transition hover:text-white">
                   RC Arino
                 </NavLink>
               </li>
 
               <li>
-                <NavLink
-                  to="/cinemas/unicentro"
-                  className="text-sm transition hover:text-white"
-                >
+                <NavLink to="/cinemas/unicentro" className="text-sm transition hover:text-white">
                   RC Unicentro
                 </NavLink>
               </li>
@@ -219,19 +179,13 @@ export const Footer = () => {
               </li>
 
               <li>
-                <NavLink
-                  to="/cinemas/el-retiro"
-                  className="text-sm transition hover:text-white"
-                >
+                <NavLink to="/cinemas/el-retiro" className="text-sm transition hover:text-white">
                   RC El Retiro
                 </NavLink>
               </li>
 
               <li>
-                <NavLink
-                  to="/cinemas/hayuelos"
-                  className="text-sm transition hover:text-white"
-                >
+                <NavLink to="/cinemas/hayuelos" className="text-sm transition hover:text-white">
                   RC Hayuelos
                 </NavLink>
               </li>
@@ -278,24 +232,15 @@ export const Footer = () => {
           </p>
 
           <div className="flex items-center gap-4">
-            <NavLink
-              to="/terms"
-              className="text-sm text-white/30 transition hover:text-white/70"
-            >
+            <NavLink to="/terms" className="text-sm text-white/30 transition hover:text-white/70">
               Términos de uso
             </NavLink>
 
-            <NavLink
-              to="/privacy"
-              className="text-sm text-white/30 transition hover:text-white/70"
-            >
+            <NavLink to="/privacy" className="text-sm text-white/30 transition hover:text-white/70">
               Privacidad
             </NavLink>
 
-            <NavLink
-              to="/cookies"
-              className="text-sm text-white/30 transition hover:text-white/70"
-            >
+            <NavLink to="/cookies" className="text-sm text-white/30 transition hover:text-white/70">
               Cookies
             </NavLink>
           </div>

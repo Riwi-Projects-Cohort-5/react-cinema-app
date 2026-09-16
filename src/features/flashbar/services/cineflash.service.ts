@@ -12,10 +12,7 @@ function reportFallback(): void {
   );
 }
 
-async function withFallback<T>(
-  request: () => Promise<T>,
-  fallback: () => Promise<T>
-): Promise<T> {
+async function withFallback<T>(request: () => Promise<T>, fallback: () => Promise<T>): Promise<T> {
   if (env.enableMocks) {
     return fallback();
   }
@@ -33,11 +30,14 @@ export async function getCineFlash(
   cityId: string,
   signal?: AbortSignal
 ): Promise<CineFlashResponse> {
-  return withFallback(async () => {
-    const { data } = await httpClient.get<CineFlashResponse>("/cineflash", {
-      params: { cityId },
-      signal,
-    });
-    return data;
-  }, () => getMockCineFlash(cityId));
+  return withFallback(
+    async () => {
+      const { data } = await httpClient.get<CineFlashResponse>("/cineflash", {
+        params: { cityId },
+        signal,
+      });
+      return data;
+    },
+    () => getMockCineFlash(cityId)
+  );
 }

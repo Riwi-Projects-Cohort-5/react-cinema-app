@@ -2,9 +2,17 @@ import React from "react";
 import type { ZodType } from "zod";
 import { useFormField } from "../composites/forms/useFormField";
 
-
 type InputType =
-  "text" | "email" | "password" | "number" | "tel" | "url" | "search" | "date" | "textarea" | "select";
+  | "text"
+  | "email"
+  | "password"
+  | "number"
+  | "tel"
+  | "url"
+  | "search"
+  | "date"
+  | "textarea"
+  | "select";
 
 type InputState = "idle" | "error" | "disabled";
 
@@ -191,7 +199,6 @@ const Input = React.forwardRef<
       autoComplete,
     },
     ref
-    
   ) => {
     const isError = state === "error";
     const isDisabled = state === "disabled";
@@ -203,7 +210,9 @@ const Input = React.forwardRef<
     const resolvedRequired = required || field.required;
     const displayMessage = resolvedError || (isError ? errorMessage : resolvedHelperText);
     const messageClassName = resolvedError || isError ? "text-error" : "text-text-secondary";
-    const hasFormFieldContext = Boolean(field.label || field.error || field.helperText || field.required);
+    const hasFormFieldContext = Boolean(
+      field.label || field.error || field.helperText || field.required
+    );
     const shouldRenderLabel = !hasFormFieldContext && Boolean(resolvedLabel);
     const shouldRenderMessage = !hasFormFieldContext && Boolean(displayMessage);
     const baseInputClasses = getBaseInputClasses(state);
@@ -303,7 +312,7 @@ const Input = React.forwardRef<
     // Determinar qué mensaje mostrar
     return (
       <div className="w-full space-y-1">
-{shouldRenderLabel && (
+        {shouldRenderLabel && (
           <label htmlFor={inputId} className={getLabelClasses(state)}>
             {resolvedLabel}
             {resolvedRequired && <span className="text-error ml-1">*</span>}

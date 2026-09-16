@@ -28,9 +28,15 @@ export const FormField: React.FC<FormFieldProps> = ({
         </label>
       )}
       {children}
-      {helperText && !error && <p className="mt-1 text-caption text-text-secondary">{helperText}</p>}
+      {helperText && !error && (
+        <p className="mt-1 text-caption text-text-secondary">{helperText}</p>
+      )}
       {error && (
-        <p id={id ? `${id}-error` : undefined} className="mt-1 text-caption text-error" role="alert">
+        <p
+          id={id ? `${id}-error` : undefined}
+          className="mt-1 text-caption text-error"
+          role="alert"
+        >
           {error}
         </p>
       )}

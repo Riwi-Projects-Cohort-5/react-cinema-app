@@ -17,7 +17,12 @@ export const RegisterSecurityStep = ({ form, errors, updateField }: RegisterFiel
         autoComplete="new-password"
       />
     </FormField>
-    <FormField id="confirmPassword" label="Confirmar contraseña" error={errors.confirmPassword} required>
+    <FormField
+      id="confirmPassword"
+      label="Confirmar contraseña"
+      error={errors.confirmPassword}
+      required
+    >
       <Input
         id="confirmPassword"
         type="password"

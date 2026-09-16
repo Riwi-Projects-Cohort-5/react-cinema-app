@@ -15,12 +15,12 @@ Barra `bg-divider` con borde redondeado (`rounded-2xl`):
 
 ## Composición
 
-| Elemento       | Detalle                                                                                                        |
-| -------------- | -------------------------------------------------------------------------------------------------------------- |
-| Contenedor     | `bg-divider`, `rounded-2xl`, `p-1.5`, borde `border-gray-800/80`, márgenes laterales `mx-4`                    |
-| NavLinks       | `NavLink` de React Router, `text-sm`, hover `text-white`                                                       |
-| Ubicación      | `Dropdown` con `triggerIcon={<MapPinIcon ... class="text-primary">}` y `triggerClassName` pill (`bg-surface-variant`, `rounded-full`, `outline-border`) |
-| Búsqueda       | `Button` `variant="secondary"` `radius="full"` con `MagnifyingGlassIcon`; sin `onClick` (placeholder)          |
+| Elemento   | Detalle                                                                                                                                                 |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Contenedor | `bg-divider`, `rounded-2xl`, `p-1.5`, borde `border-gray-800/80`, márgenes laterales `mx-4`                                                             |
+| NavLinks   | `NavLink` de React Router, `text-sm`, hover `text-white`                                                                                                |
+| Ubicación  | `Dropdown` con `triggerIcon={<MapPinIcon ... class="text-primary">}` y `triggerClassName` pill (`bg-surface-variant`, `rounded-full`, `outline-border`) |
+| Búsqueda   | `Button` `variant="secondary"` `radius="full"` con `MagnifyingGlassIcon`; sin `onClick` (placeholder)                                                   |
 
 > `triggerIcon` y `triggerClassName` son props de la primitiva `Dropdown` (ver [dropdown.md](../../primitives/dropdown/dropdown.md)): el pill de la ubicación es **relativo al contexto de uso**, configurado con `cn` + `tailwind-merge`, no hardcodeado en la primitiva base.
 

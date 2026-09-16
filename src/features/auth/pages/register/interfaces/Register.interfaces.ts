@@ -23,29 +23,22 @@ export type StepConfig = {
 };
 
 export type RegisterPayload = {
-  personal: {
-    firstName: string;
-    lastName: string;
-    documentType: string;
-    documentNumber: string;
-    birthDate: string;
-    gender: string;
-  };
-  contact: {
-    email: string;
-    phone: string;
-  };
+  firstName: string;
+  lastName: string;
+  phone: string;
+  birthDate: string;
+  gender: string;
+  cityId: number;
+  email: string;
+  confirmEmail: string;
   password: string;
-  preferences: {
-    cityId: string;
-    favoriteCinemaId: string;
-  };
-  consents: {
-    dataProcessing: boolean;
-    terms: boolean;
-    commercialEmail: boolean;
-  };
-  captchaToken: string;
+  confirmPassword: string;
+  documentType: string;
+  documentNumber: string;
+  favoriteCinemaId?: string | number;
+  personalDataConsent: boolean;
+  termsConsent: boolean;
+  commercialConsent: boolean;
 };
 
 export type RegisterResponse = Record<string, unknown>;

@@ -1,4 +1,5 @@
 import { Link } from "react-router";
+import type React from "react";
 
 import { FormSubmitButton } from "@shared/components/composites/forms";
 import { Button } from "@shared/components/primitives";
@@ -15,7 +16,7 @@ type RegisterWizardProps = {
   form: FormState;
   errors: FieldErrors;
   isSubmitting: boolean;
-  submitError: string;
+  submitError: React.ReactNode;
   updateField: (field: keyof FormState, value: string | boolean) => void;
   handleNameChange: (field: "firstName" | "lastName", value: string) => void;
   goToStep: (stepIndex: number) => void;
@@ -42,7 +43,9 @@ export const RegisterWizard = ({
     <div className="relative w-full max-w-[520px]">
       <div className="pt-3">
         <div className="mb-4 flex items-center justify-between text-overline font-semibold uppercase tracking-overline text-text-secondary">
-          <span>Paso {currentStep + 1} de {steps.length}</span>
+          <span>
+            Paso {currentStep + 1} de {steps.length}
+          </span>
           <span className="text-text-disabled">{steps[currentStep]!.label}</span>
         </div>
 
@@ -84,7 +87,10 @@ export const RegisterWizard = ({
         {currentStep === 3 && <RegisterPreferencesStep {...fieldProps} />}
 
         {submitError && (
-          <div className="mt-4 rounded-md border border-error bg-error/10 px-3 py-2 text-caption text-error" role="alert">
+          <div
+            className="mt-4 rounded-md border border-error bg-error/10 px-3 py-2 text-caption text-error"
+            role="alert"
+          >
             {submitError}
           </div>
         )}
@@ -111,7 +117,10 @@ export const RegisterWizard = ({
         </div>
 
         <p className="mt-4 text-center text-caption text-text-secondary">
-          ¿Ya tienes cuenta? <Link to="/auth/login" className="text-primary hover:text-primary-hover">Iniciar sesión</Link>
+          ¿Ya tienes cuenta?{" "}
+          <Link to="/auth/login" className="text-primary hover:text-primary-hover">
+            Iniciar sesión
+          </Link>
         </p>
       </div>
     </div>

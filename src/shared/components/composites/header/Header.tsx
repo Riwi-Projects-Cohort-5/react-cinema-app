@@ -1,5 +1,10 @@
 import logo from "../../../../assets/logo.svg";
-import { InstagramLogoIcon, FacebookLogoIcon, XLogoIcon, YoutubeLogoIcon } from "@phosphor-icons/react";
+import {
+  InstagramLogoIcon,
+  FacebookLogoIcon,
+  XLogoIcon,
+  YoutubeLogoIcon,
+} from "@phosphor-icons/react";
 import { Link } from "react-router";
 
 import { Button } from "@shared/components/";
@@ -18,7 +23,9 @@ const Header = () => {
             variant="secondary"
             size="sm"
             radius="sm"
-            className={cn("bg-transparent px-4 py-2 text-sm font-medium text-text-custom transition-all duration-200 hover:bg-secondary/30 focus:ring-2 focus:ring-secondary focus:ring-offset-2")} 
+            className={cn(
+              "bg-transparent px-4 py-2 text-sm font-medium text-text-custom transition-all duration-200 hover:bg-secondary/30 focus:ring-2 focus:ring-secondary focus:ring-offset-2"
+            )}
             onClick={() => navigate(PATHS.auth.register)}
           >
             Register
@@ -33,12 +40,9 @@ const Header = () => {
               Login
             </Button>
           </Link>
-
         </div>
 
         <div className="absolute right-2 p-5 flex items-center gap-4 ">
-
-
           <div className="flex items-center gap-1  ">
             <span className="text-secondary  ">|</span>
             <InstagramLogoIcon size={24} className="text-secondary" />
@@ -48,11 +52,8 @@ const Header = () => {
           </div>
           <img src={logo} alt="Logo" className="w-40" />
         </div>
-
-
       </header>
     </main>
-
   );
 };
 
