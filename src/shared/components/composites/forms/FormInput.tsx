@@ -1,6 +1,6 @@
 import React from "react";
 
-import Input, { type InputProps } from "@/shared/components/primitives/Input";
+import Input, { type InputProps } from "@/shared/components/primitives/Input/Input";
 import { useFormField } from "./useFormField";
 
 export const FormInput = React.forwardRef<

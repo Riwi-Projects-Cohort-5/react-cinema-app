@@ -6,7 +6,7 @@ import { Link } from "react-router";
 import Button from "@shared/components/primitives/Button";
 import { Checkbox } from "@shared/components/primitives/checkbox/Checkbox";
 import GreenIndicator from "@shared/components/primitives/GreenIndicator";
-import Input from "@shared/components/primitives/Input";
+import Input from "@/shared/components/primitives/Input/Input";
 import { useFormValidation } from "@shared/validation/hooks/useFormValidation";
 import {
   emailSchema,
