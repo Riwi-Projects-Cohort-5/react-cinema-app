@@ -8,10 +8,10 @@ En `LoginForm` mantengo el estado local de `email`, `password`, visibilidad de l
 
 1. Evita el envío si el formulario está bloqueado o ya se está enviando.
 2. Recorta correo y contraseña.
-3. Ejecuta `loginSchema` mediante `useFormValidation`; el schema aplica la validación estricta de contraseña.
+3. Ejecuta `loginSchema` mediante `useFormValidation`; el login solo exige que la contraseña no esté vacía.
 4. Invoca `onSubmit` con un `LoginFormData` válido.
 
-El correo conserva el color normal del texto cuando tiene un error; el color de error queda reservado para el borde y el mensaje debajo del campo. Para la contraseña uso `passwordStrictSchema`, que exige longitud mínima, mayúscula, minúscula, número y carácter especial. Cuando cumple todas las reglas, muestro el `GreenIndicator` existente del sistema de diseño.
+El correo conserva el color normal del texto cuando tiene un error; el color de error queda reservado para el borde y el mensaje debajo del campo. Para la contraseña uso `passwordBasicSchema`, que solo exige presencia. Cuando contiene algún valor, muestro el `GreenIndicator` existente del sistema de diseño.
 
 Los botones sociales usan los SVG ubicados en `public/google.svg` y `public/apple.svg`. Actualmente son elementos visuales y todavía no conectan con proveedores OAuth.
 

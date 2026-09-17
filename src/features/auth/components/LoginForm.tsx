@@ -11,7 +11,7 @@ import { useFormValidation } from "@shared/validation/hooks/useFormValidation";
 import {
   emailSchema,
   loginSchema,
-  passwordStrictSchema,
+  passwordBasicSchema,
   type LoginFormData,
 } from "@shared/validation/schemas/authSchemas";
 
@@ -70,7 +70,7 @@ export function LoginForm({
   };
 
   const busy = isSubmitting || isLocked;
-  const passwordIsValid = passwordStrictSchema.safeParse(formData.password).success;
+  const passwordIsValid = passwordBasicSchema.safeParse(formData.password).success;
 
   return (
     <form onSubmit={handleSubmit} noValidate className="space-y-3">
@@ -99,7 +99,7 @@ export function LoginForm({
         state={errors.password ? "error" : "idle"}
         error={errors.password}
         fieldName="password"
-        fieldSchema={passwordStrictSchema}
+        fieldSchema={passwordBasicSchema}
         onBlurValidation={handleBlurValidation}
         icon={{
           right: (

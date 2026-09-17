@@ -2,14 +2,18 @@ import { create } from "zustand";
 
 interface SessionState {
   accessToken: string | null;
+  userId: string | null;
   setAccessToken: (accessToken: string | null) => void;
+  setUserId: (userId: string | null) => void;
   clearSession: () => void;
 }
 
 export const useSessionStore = create<SessionState>((set) => ({
   accessToken: null,
+  userId: null,
   setAccessToken: (accessToken) => set({ accessToken }),
-  clearSession: () => set({ accessToken: null }),
+  setUserId: (userId) => set({ userId }),
+  clearSession: () => set({ accessToken: null, userId: null }),
 }));
 
 export function getAccessToken(): string | null {

@@ -21,8 +21,8 @@ export const LoginPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const setAccessToken = useSessionStore((state) => state.setAccessToken);
-  const { setUser, lockedUntil, loginErrorMessage, setLockout, setLoginErrorMessage } =
-    useAuthStore();
+  const setUserId = useSessionStore((state) => state.setUserId);
+  const { lockedUntil, loginErrorMessage, setLockout, setLoginErrorMessage } = useAuthStore();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [now, setNow] = useState(() => Date.now());
@@ -42,7 +42,7 @@ export const LoginPage = () => {
     try {
       const response = await login(data);
       setAccessToken(response.accessToken);
-      setUser(response.user);
+      setUserId(response.userId);
 
       notifySuccess("Sesión iniciada correctamente");
 
@@ -55,9 +55,10 @@ export const LoginPage = () => {
         return;
       }
 
-      //if (error instanceof ApiError && error.status === 400){
-        
-      //}
+      if (error instanceof ApiError && error.status === 400) {
+        setLoginErrorMessage(error.message);
+        return;
+      }
 
       if (error instanceof ApiError && error.status === 401) {
         setLoginErrorMessage(error.message);

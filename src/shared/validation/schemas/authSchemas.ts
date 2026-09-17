@@ -11,7 +11,7 @@ export const emailSchema = z
 // Validación básica para flujos que solo requieren presencia.
 export const passwordBasicSchema = z.string().min(1, fieldMessages.password.required);
 
-// Validación estricta para login, registro y reset.
+// Validación estricta para registro y reset.
 export const passwordStrictSchema = z
   .string()
   .min(8, fieldMessages.password.minLength)
@@ -23,7 +23,7 @@ export const passwordStrictSchema = z
 // ==================== LOGIN ====================
 export const loginSchema = z.object({
   email: emailSchema,
-  password: passwordStrictSchema,
+  password: passwordBasicSchema,
 });
 
 export type LoginFormData = z.infer<typeof loginSchema>;
@@ -32,7 +32,7 @@ export type LoginFormData = z.infer<typeof loginSchema>;
 export const registerSchema = z
   .object({
     email: emailSchema,
-    password: passwordStrictSchema,
+    password: passwordBasicSchema,
     confirmPassword: z.string().min(1, fieldMessages.confirmPassword.required),
   })
   .refine((data) => data.password === data.confirmPassword, {
@@ -46,7 +46,7 @@ export type RegisterFormData = z.infer<typeof registerSchema>;
 export const resetPasswordSchema = z
   .object({
     email: emailSchema,
-    newPassword: passwordStrictSchema,
+    newPassword: passwordBasicSchema,
     confirmPassword: z.string().min(1, fieldMessages.confirmPassword.required),
   })
   .refine((data) => data.newPassword === data.confirmPassword, {
