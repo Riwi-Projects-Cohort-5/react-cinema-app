@@ -1,11 +1,10 @@
 import type { RegisterFieldProps } from "../interfaces/Register.interfaces";
-import { FormField } from "@shared/components/composites/forms";
-import { Input } from "@shared/components/primitives";
+import { FormField, FormInput } from "@shared/components/composites/forms";
 
 export const RegisterContactStep = ({ form, errors, updateField }: RegisterFieldProps) => (
   <div className="space-y-4">
     <FormField id="email" label="Correo electrónico" error={errors.email} required>
-      <Input
+      <FormInput
         id="email"
         type="email"
         value={form.email}
@@ -21,7 +20,7 @@ export const RegisterContactStep = ({ form, errors, updateField }: RegisterField
     </FormField>
 
     <FormField id="confirmEmail" label="Confirmar correo" error={errors.confirmEmail} required>
-      <Input
+      <FormInput
         id="confirmEmail"
         type="email"
         value={form.confirmEmail}
@@ -37,7 +36,7 @@ export const RegisterContactStep = ({ form, errors, updateField }: RegisterField
     </FormField>
 
     <FormField id="phone" label="Celular" error={errors.phone} required>
-      <Input
+      <FormInput
         id="phone"
         type="tel"
         value={form.phone}

@@ -1,6 +1,5 @@
 import type { RegisterFieldProps } from "../interfaces/Register.interfaces";
-import { FormField } from "@shared/components/composites/forms";
-import { Input } from "@shared/components/primitives";
+import { FormField, FormInput } from "@shared/components/composites/forms";
 
 export const RegisterPersonalStep = ({
   form,
@@ -11,7 +10,7 @@ export const RegisterPersonalStep = ({
   <div className="space-y-4">
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
       <FormField id="firstName" label="Nombre" error={errors.firstName} required>
-        <Input
+        <FormInput
           id="firstName"
           value={form.firstName}
           onChange={(e) => handleNameChange("firstName", e.currentTarget.value)}
@@ -23,7 +22,7 @@ export const RegisterPersonalStep = ({
         />
       </FormField>
       <FormField id="lastName" label="Apellidos" error={errors.lastName} required>
-        <Input
+        <FormInput
           id="lastName"
           value={form.lastName}
           onChange={(e) => handleNameChange("lastName", e.currentTarget.value)}
@@ -36,7 +35,7 @@ export const RegisterPersonalStep = ({
       </FormField>
     </div>
     <FormField id="birthDate" label="Fecha de nacimiento" error={errors.birthDate} required>
-      <Input
+      <FormInput
         id="birthDate"
         type="date"
         value={form.birthDate}
@@ -47,7 +46,7 @@ export const RegisterPersonalStep = ({
       />
     </FormField>
     <FormField id="gender" label="Género" helperText="Opcional">
-      <Input
+      <FormInput
         id="gender"
         type="select"
         value={form.gender}

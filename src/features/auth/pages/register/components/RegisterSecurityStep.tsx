@@ -1,11 +1,10 @@
 import type { RegisterFieldProps } from "../interfaces/Register.interfaces";
-import { FormField } from "@shared/components/composites/forms";
-import { Input } from "@shared/components/primitives";
+import { FormField, FormInput } from "@shared/components/composites/forms";
 
 export const RegisterSecurityStep = ({ form, errors, updateField }: RegisterFieldProps) => (
   <div className="space-y-4">
     <FormField id="password" label="Contraseña" error={errors.password} required>
-      <Input
+      <FormInput
         id="password"
         type="password"
         value={form.password}
@@ -17,8 +16,13 @@ export const RegisterSecurityStep = ({ form, errors, updateField }: RegisterFiel
         autoComplete="new-password"
       />
     </FormField>
-    <FormField id="confirmPassword" label="Confirmar contraseña" error={errors.confirmPassword} required>
-      <Input
+    <FormField
+      id="confirmPassword"
+      label="Confirmar contraseña"
+      error={errors.confirmPassword}
+      required
+    >
+      <FormInput
         id="confirmPassword"
         type="password"
         value={form.confirmPassword}

@@ -1,10 +1,17 @@
 import React from "react";
 import type { ZodType } from "zod";
-import { useFormField } from "../composites/forms/useFormField";
-
 
 type InputType =
-  "text" | "email" | "password" | "number" | "tel" | "url" | "search" | "date" | "textarea" | "select";
+  | "text"
+  | "email"
+  | "password"
+  | "number"
+  | "tel"
+  | "url"
+  | "search"
+  | "date"
+  | "textarea"
+  | "select";
 
 type InputState = "idle" | "error" | "disabled";
 
@@ -13,7 +20,7 @@ interface SelectOption {
   label: string;
 }
 
-interface InputProps {
+export interface InputProps {
   // Variación y estado
   type?: InputType;
   state?: InputState;
@@ -23,6 +30,10 @@ interface InputProps {
   placeholder?: string;
   helperText?: string;
   errorMessage?: string;
+
+  // Accesibilidad
+  "aria-invalid"?: React.AriaAttributes["aria-invalid"];
+  "aria-describedby"?: string;
 
   // Para selects
   options?: SelectOption[];
@@ -66,6 +77,8 @@ interface InputProps {
 
   // Personalización
   className?: string;
+  showLabel?: boolean;
+  showMessage?: boolean;
 }
 
 // ============================================================================
@@ -189,25 +202,31 @@ const Input = React.forwardRef<
       onBlur,
       icon,
       autoComplete,
+      showLabel = true,
+      showMessage = true,
+      "aria-invalid": ariaInvalid,
+      "aria-describedby": ariaDescribedby,
     },
     ref
-    
   ) => {
     const isError = state === "error";
     const isDisabled = state === "disabled";
-    const inputId = id || name;
-    const field = useFormField();
-    const resolvedLabel = label ?? field.label;
-    const resolvedError = error ?? field.error;
-    const resolvedHelperText = helperText ?? field.helperText;
-    const resolvedRequired = required || field.required;
-    const displayMessage = resolvedError || (isError ? errorMessage : resolvedHelperText);
-    const messageClassName = resolvedError || isError ? "text-error" : "text-text-secondary";
-    const hasFormFieldContext = Boolean(field.label || field.error || field.helperText || field.required);
-    const shouldRenderLabel = !hasFormFieldContext && Boolean(resolvedLabel);
-    const shouldRenderMessage = !hasFormFieldContext && Boolean(displayMessage);
+    const generatedId = React.useId();
+    const inputId = id ?? name ?? `input-${generatedId}`;
+    const resolvedLabel = label;
+    const resolvedError = error ?? (isError ? errorMessage : undefined);
+    const resolvedRequired = required;
+    const shouldRenderLabel = showLabel && Boolean(resolvedLabel);
+    const shouldRenderError = showMessage && Boolean(resolvedError);
+    const shouldRenderHelperText = showMessage && Boolean(helperText);
     const baseInputClasses = getBaseInputClasses(state);
     const finalInputClasses = `${baseInputClasses} ${className}`.trim();
+    const helperTextId = helperText ? `${inputId}-helper-text` : undefined;
+    const errorId = resolvedError ? `${inputId}-error` : undefined;
+    const describedBy =
+      [ariaDescribedby, helperTextId, errorId].filter(Boolean).join(" ") || undefined;
+    const resolvedAriaInvalid =
+      ariaInvalid ?? (Boolean(resolvedError) || isError ? true : undefined);
 
     const commonProps = {
       id: inputId,
@@ -215,10 +234,12 @@ const Input = React.forwardRef<
       value,
       onChange,
       disabled: isDisabled,
-      required,
+      required: resolvedRequired,
       placeholder,
       className: finalInputClasses,
       autoComplete,
+      "aria-invalid": resolvedAriaInvalid,
+      "aria-describedby": describedBy,
     };
 
     // Renderizar el elemento correcto según el tipo
@@ -303,7 +324,7 @@ const Input = React.forwardRef<
     // Determinar qué mensaje mostrar
     return (
       <div className="w-full space-y-1">
-{shouldRenderLabel && (
+        {shouldRenderLabel && (
           <label htmlFor={inputId} className={getLabelClasses(state)}>
             {resolvedLabel}
             {resolvedRequired && <span className="text-error ml-1">*</span>}
@@ -312,7 +333,17 @@ const Input = React.forwardRef<
 
         <div className="relative">{renderField()}</div>
 
-        {shouldRenderMessage && <p className={messageClassName}>{displayMessage}</p>}
+        {shouldRenderError && (
+          <p id={errorId} className="text-error">
+            {resolvedError}
+          </p>
+        )}
+
+        {shouldRenderHelperText && (
+          <p id={helperTextId} className="text-text-secondary">
+            {helperText}
+          </p>
+        )}
       </div>
     );
   }
