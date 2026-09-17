@@ -6,22 +6,13 @@ export interface FormContextValue<T> {
   values: T;
   errors: Record<string, string>;
   isSubmitting: boolean;
-  setFieldValue: (fieldName: string, value: unknown) => void; // ← string
-  setFieldError: (fieldName: string, error: string) => void; // ← string
+  setFieldValue: (fieldName: string, value: unknown) => void;
+  setFieldError: (fieldName: string, error: string) => void;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
   register: (
     fieldName: string,
     fieldSchema: ZodType<unknown>
-  ) => {
-    name: string;
-    value: unknown;
-    onChange: (
-      e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-    ) => void;
-    onBlur: (
-      e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-    ) => Promise<void>;
-  };
+  ) => React.InputHTMLAttributes<HTMLInputElement>;
 }
 
 interface FormWrapperProps<T> {
@@ -95,17 +86,13 @@ function FormWrapperInner<T>(
   const register = useCallback(
     (fieldName: string, fieldSchema: ZodType<unknown>) => ({
       name: fieldName,
-      value: (values[fieldName] ?? "") as string | number,
-      onChange: (
-        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-      ) => {
+      value: (values[fieldName] ?? "") as string | number | readonly string[] | undefined,
+      onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
         setFieldValue(fieldName, e.target.value);
       },
-      onBlur: async (
-        e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-      ) => {
+      onBlur: (e: React.FocusEvent<HTMLInputElement>) => {
         const currentValue = e.target.value;
-        await validateField(fieldName, currentValue, fieldSchema);
+        void validateField(fieldName, currentValue, fieldSchema);
       },
     }),
     [values, setFieldValue, validateField]

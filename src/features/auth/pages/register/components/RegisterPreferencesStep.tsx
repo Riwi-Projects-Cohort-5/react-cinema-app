@@ -1,12 +1,12 @@
-import { FormField } from "@shared/components/composites/forms";
-import { Input, Checkbox, CheckboxRobot } from "@shared/components/primitives";
+import { FormField, FormInput } from "@shared/components/composites/forms";
+import { Checkbox, CheckboxRobot } from "@shared/components/primitives";
 
 import type { RegisterFieldProps } from "../interfaces/Register.interfaces";
 
 export const RegisterPreferencesStep = ({ form, errors, updateField }: RegisterFieldProps) => (
   <div className="space-y-4">
     <FormField id="city" label="Ciudad principal" error={errors.city} required>
-      <Input
+      <FormInput
         id="city"
         type="select"
         value={form.city}
@@ -30,18 +30,31 @@ export const RegisterPreferencesStep = ({ form, errors, updateField }: RegisterF
           onChange={(checked) => updateField("consentPersonal", checked)}
           ariaLabelledBy="consentPersonal-label"
         />
-        <span id="consentPersonal-label">Acepto el tratamiento de datos personales ver política<span className="text-error">*</span></span>
+        <span id="consentPersonal-label">
+          Acepto el tratamiento de datos personales ver política
+          <span className="text-error">*</span>
+        </span>
       </label>
-      {errors.consentPersonal && <p id="consentPersonal-error" className="text-caption text-error" role="alert">{errors.consentPersonal}</p>}
+      {errors.consentPersonal && (
+        <p id="consentPersonal-error" className="text-caption text-error" role="alert">
+          {errors.consentPersonal}
+        </p>
+      )}
       <label className="flex items-start gap-3 py-2">
         <Checkbox
           checked={form.consentTerms}
           onChange={(checked) => updateField("consentTerms", checked)}
           ariaLabelledBy="consentTerms-label"
         />
-        <span id="consentTerms-label">Acepto los términos y condiciones ver política<span className="text-error">*</span></span>
+        <span id="consentTerms-label">
+          Acepto los términos y condiciones ver política<span className="text-error">*</span>
+        </span>
       </label>
-      {errors.consentTerms && <p id="consentTerms-error" className="text-caption text-error" role="alert">{errors.consentTerms}</p>}
+      {errors.consentTerms && (
+        <p id="consentTerms-error" className="text-caption text-error" role="alert">
+          {errors.consentTerms}
+        </p>
+      )}
       <label className="flex items-start gap-3 py-2">
         <Checkbox
           checked={form.marketing}
@@ -66,7 +79,11 @@ export const RegisterPreferencesStep = ({ form, errors, updateField }: RegisterF
           <span className="inline-block h-3 w-3 rounded-xs bg-success" />
         </span>
       </label>
-      {errors.acceptTerms && <p id="acceptTerms-error" className="text-caption text-error" role="alert">{errors.acceptTerms}</p>}
+      {errors.acceptTerms && (
+        <p id="acceptTerms-error" className="text-caption text-error" role="alert">
+          {errors.acceptTerms}
+        </p>
+      )}
     </div>
   </div>
 );
