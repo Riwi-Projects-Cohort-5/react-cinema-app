@@ -216,14 +216,15 @@ const Input = React.forwardRef<
     const resolvedLabel = label;
     const resolvedError = error ?? (isError ? errorMessage : undefined);
     const resolvedRequired = required;
-    const displayMessage = resolvedError || (isError ? errorMessage : helperText);
-    const messageClassName = resolvedError || isError ? "text-error" : "text-text-secondary";
     const shouldRenderLabel = showLabel && Boolean(resolvedLabel);
-    const shouldRenderMessage = showMessage && Boolean(displayMessage);
+    const shouldRenderError = showMessage && Boolean(resolvedError);
+    const shouldRenderHelperText = showMessage && Boolean(helperText);
     const baseInputClasses = getBaseInputClasses(state);
     const finalInputClasses = `${baseInputClasses} ${className}`.trim();
+    const helperTextId = helperText ? `${inputId}-helper-text` : undefined;
     const errorId = resolvedError ? `${inputId}-error` : undefined;
-    const describedBy = [ariaDescribedby, errorId].filter(Boolean).join(" ") || undefined;
+    const describedBy =
+      [ariaDescribedby, helperTextId, errorId].filter(Boolean).join(" ") || undefined;
     const resolvedAriaInvalid =
       ariaInvalid ?? (Boolean(resolvedError) || isError ? true : undefined);
 
@@ -332,7 +333,17 @@ const Input = React.forwardRef<
 
         <div className="relative">{renderField()}</div>
 
-        {shouldRenderMessage && <p className={messageClassName}>{displayMessage}</p>}
+        {shouldRenderError && (
+          <p id={errorId} className="text-error">
+            {resolvedError}
+          </p>
+        )}
+
+        {shouldRenderHelperText && (
+          <p id={helperTextId} className="text-text-secondary">
+            {helperText}
+          </p>
+        )}
       </div>
     );
   }
