@@ -1,67 +1,79 @@
 # GET /health
 
-> **Pendiente de confirmación con el backend.** Este endpoint **no** aparece en la colección Postman
-> compartida (`GET /health` responde 404 en el mock). **HU-FE-001** ya monta `getHealth()` sobre este
-> endpoint para el banner de conectividad: sin respaldo del backend, mostrará "Conexión inestable"
-> permanentemente. Confirmar la ruta real cuando el backend la exponga.
+> **Disponible en el backend.** El endpoint `GET /health` responde `200 OK` cuando el servicio se encuentra disponible.
 
 ## Historia de usuario relacionada
-- **HU-FE-001** — Configuración de la plataforma frontend (verificación de arranque). **HU-FE-029** — Consumo de API pública (conectividad/disponibilidad de la plataforma).
+
+* **HU-FE-001** — Configuración de la plataforma frontend (verificación de arranque).
+* **HU-FE-029** — Consumo de API pública (conectividad/disponibilidad de la plataforma).
 
 ## Propósito
-Sonda de liveness/readiness de la API de Multicine. Se llama **una vez al arrancar la app** (y de nuevo tras una reconexión) para decidir si se muestra el banner global de conectividad. Es deliberadamente pequeña, rápida y no bloqueante: la app arranca sin importar su resultado y solo cambia el estado del banner. La respuesta no trae datos de negocio.
+
+Sonda de liveness/readiness de la API de Multicine. Se llama una vez al arrancar la app y nuevamente tras una reconexión para decidir si se muestra el banner global de conectividad.
+
+La respuesta proporciona información sobre la disponibilidad del servicio y el estado de sus servicios dependientes.
 
 ## Método HTTP
+
 GET
 
 ## URL
+
 `{{baseUrl}}/health`
 
 ## Autenticación
-- Pública. No se requiere token. No se aplica límite de peticiones más allá de las reglas compartidas (convenciones §10).
+
+* Pública.
+* No se requiere token.
 
 ## Cabeceras
-| Cabecera | Requerida | Descripción |
-|---|---|---|
-| `Accept` | Recomendada | `application/json` (convenciones §2) |
-| `X-Request-Id` | Opcional | UUID generado por el cliente, que el servidor repite para trazabilidad |
+
+| Cabecera       | Requerida   | Descripción                                    |
+| -------------- | ----------- | ---------------------------------------------- |
+| `Accept`       | Recomendada | `application/json`                             |
+| `X-Request-Id` | Opcional    | UUID generado por el cliente para trazabilidad |
 
 ## Parámetros de ruta
+
 Ninguno.
 
 ## Parámetros de consulta
+
 Ninguno.
 
 ## Cuerpo de la petición
+
 Ninguno. Petición GET.
 
 ## Respuestas de éxito
 
-**200 OK** — servicio en buen estado.
+**200 OK** — servicio disponible y saludable.
 
 ```json
 {
-  "status": "ok",
-  "service": "multicine-api",
-  "version": "v1",
+  "status": "OK",
+  "uptime": 86400,
   "timestamp": "2026-08-10T20:00:00Z",
-  "database": "ok",
-  "uptimeSeconds": 86400
+  "services": {
+    "database": "UP"
+  }
 }
 ```
 
-| Campo | Tipo | Notas |
-|---|---|---|
-| `status` | string | `"ok"` — saludable |
-| `service` | string | Constante `"multicine-api"` (para etiquetado en logs/análisis) |
-| `version` | string | Versión de la API `"v1"` |
-| `timestamp` | string | ISO 8601 UTC (convenciones §7) |
-| `database` | string | `"ok"` cuando la sonda de lectura de la BD pasa |
-| `uptimeSeconds` | integer | Tiempo de actividad del proceso del servidor; solo informativo |
+| Campo               | Tipo   | Notas                                                                                     |
+| ------------------- | ------ | ----------------------------------------------------------------------------------------- |
+| `status`            | string | Estado general del servicio. `OK` indica que el servicio está saludable.                  |
+| `uptime`            | number | Tiempo de actividad del proceso del servidor.                                             |
+| `timestamp`         | string | Fecha y hora de la respuesta en formato ISO 8601.                                         |
+| `services.database` | string | Estado de la base de datos. `UP` indica que la sonda de la base de datos está disponible. |
 
 ## Respuestas de error
 
-Cualquier respuesta no-2xx significa que la plataforma está inalcanzable o degradada. Ante un `503` (o fallo de red) el frontend muestra el banner no bloqueante. El cuerpo usa la envoltura de convenciones §4 y `status` puede ser `"degraded"`:
+Cualquier respuesta no-2xx significa que la plataforma está inalcanzable o degradada.
+
+Ante un `503` o un fallo de red, el frontend muestra el banner no bloqueante de conectividad y continúa con los reintentos configurados.
+
+Ejemplo:
 
 ```json
 {
@@ -75,27 +87,35 @@ Cualquier respuesta no-2xx significa que la plataforma está inalcanzable o degr
 ```
 
 ## Consideraciones de frontend
-- **Se llama una vez al arrancar** (antes/en paralelo a los datos de la primera pantalla) y **de nuevo tras un evento de reconexión** (`online`) o cuando las peticiones empiezan a fallar con errores de conectividad.
-- Decide el **banner global** (sin conexión/degradado) — **nunca bloquea toda la app**: el usuario puede seguir navegando y los datos en caché de TanStack Query se siguen renderizando (estado sin conexión §13).
-- **Reintentos con backoff exponencial** (p. ej. 1s, 2s, 4s … con tope de ~60s) y un **tope de reintentos** (p. ej. 5 intentos) para que un backend caído no sature la red; el banner permanece mientras se reintenta.
-- Clave de TanStack Query `["health"]`; `staleTime` 30s para que los montajes repetidos reutilicen la última sonda en lugar de relanzarla; `refetchOnReconnect: true`.
-- No uses los datos de health para feature flags — el versionado y la disponibilidad de negocio provienen de las respuestas reales de los endpoints.
-- Registra el estado de health en la herramienta de monitoreo (no bloqueante) para el análisis de fallos al arrancar.
+
+* Se llama una vez al arrancar la aplicación y nuevamente tras un evento de reconexión.
+* La consulta utiliza la clave de TanStack Query `["health"]`.
+* `staleTime` es de 30 segundos.
+* `refetchOnReconnect` está habilitado.
+* Se realizan hasta 5 reintentos con backoff exponencial.
+* El health check no bloquea el funcionamiento de la aplicación.
+* Cuando `services.database` es `UP`, el frontend considera que el servicio está saludable.
+* Los datos de health no deben utilizarse para feature flags.
 
 ## Reglas de validación
-- Ninguna (del lado del cliente). No hay parámetros que validar — siempre es un GET sin más.
+
+Ninguna del lado del cliente. No hay parámetros que validar.
 
 ## Reglas de negocio
-- La sonda solo reporta conectividad/disponibilidad de la plataforma — no es una verificación de estado de negocio y debe permanecer libre de health por módulo (la degradación de un módulo se manifiesta a través de los errores de ese módulo).
-- El `503` con `retryAfterSeconds` guía el calendario de reintentos (convenciones §10).
+
+La sonda reporta conectividad y disponibilidad de la plataforma. No representa el estado funcional de módulos específicos del negocio.
 
 ## Notas de seguridad
-- La respuesta no contiene **información sensible** — sin detalles de infraestructura, hostnames, nombres de BD, versiones más allá del `version` de la API, ni identificadores internos.
-- Endpoint público; seguro de llamar sin autenticación desde la ruta de arranque.
+
+La respuesta no contiene información sensible.
+
+El endpoint es público y puede consultarse sin autenticación.
 
 ## Flujo de ejemplo
-1. La app arranca → `GET /health` se dispara en paralelo con las primeras peticiones de datos.
-2. 200 `{ status: "ok", ... }` → sin banner; la app se renderiza con normalidad.
-3. Una petición posterior falla con un error de conectividad → `GET /health` se vuelve a disparar.
-4. `503` (o fallo de red) → aparece el banner global "Conexión inestable"; los reintentos continúan con backoff (con tope).
-5. La health se recupera → el banner desaparece; las consultas de datos se reanudan vía `refetchOnReconnect`.
+
+1. La aplicación arranca y ejecuta `GET /health`.
+2. Una respuesta `200 OK` con `status: "OK"` y `services.database: "UP"` indica que el servicio está disponible.
+3. El frontend muestra `Servicio en línea`.
+4. Si el endpoint devuelve un error o falla la conexión, el frontend muestra `Conexión inestable`.
+5. Los reintentos continúan según la configuración de TanStack Query.
+6. Cuando el health check vuelve a responder correctamente, el estado del indicador se actualiza.
