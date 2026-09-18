@@ -4,7 +4,7 @@
 - **HU-FE-007** — Inicio de sesión y autenticación segura. También la consume HU-FE-029 (consumo de API pública). Único punto de entrada para iniciar una sesión.
 
 ## Propósito
-Autentica a un usuario con correo + contraseña. Si es exitoso, emite un `accessToken` JWT de corta duración (15 min, **RN-028**) y un `refreshToken` de larga duración (7 días, **RN-029**). **Ambos tokens viajan en el cuerpo JSON** (no en cookies).
+Autentica a un usuario con correo + contraseña. Si es exitoso, emite un `accessToken` JWT de corta duración (15 min, **RN-028**) y el identificador del usuario. El frontend conserva ambos valores en memoria.
 
 ## Método HTTP
 POST
@@ -47,32 +47,37 @@ Ninguno.
 ```json
 {
   "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-  "user": {
-    "id": 1,
-    "name": "John Doe",
-    "email": "john.doe@example.com",
-    "role_id": 1
-  }
+  "userId": "1",
+  "message": "Login successful",
+  "TokenType": "Bearer"
 }
 ```
 
 | Campo | Tipo | Notas |
 |---|---|---|
 | `accessToken` | string | JWT, válido 15 minutos (**RN-028**) |
-| `refreshToken` | string | JWT, válido 7 días (**RN-029**); se envía en el cuerpo de `#21`/`#22` |
-| `user.id` | integer | Id del usuario |
-| `user.role_id` | integer | Rol del usuario (p. ej. `1` = cliente) |
+| `userId` | string | Identificador del usuario autenticado |
+| `message` | string | Mensaje de confirmación del backend |
+| `TokenType` | string | Tipo de token, normalmente `Bearer` |
 
 ## Respuestas de error
-Todas usan el envelope de convenciones §4 (`{ "error": "..." }`).
+Las respuestas de error siguen el formato definido en las convenciones de API; el `400` del contrato actual devuelve el mensaje en la raíz (`{ "message": "..." }`).
 
 | HTTP | Escenario | Comportamiento de frontend |
 |---|---|---|
+| 400 | Credenciales inválidas según el contrato actual | Mostrar `message` en el formulario y no notificar como error genérico |
 | 401 | Credenciales inválidas | Mostrar el mensaje (p. ej. "Credenciales inválidas. Intento fallido 1 de 5.") |
 | 423 | Cuenta bloqueada temporalmente | Mostrar el mensaje de bloqueo (~15 min) y deshabilitar el envío con cuenta regresiva |
 | 429 | Rate limit | Respetar la cabecera `Retry-After` (§10) |
 | 500 / 503 | Error de servidor | Error genérico reintentable / banner de mantenimiento (§13) |
+
+Ejemplo — credenciales inválidas (`400`):
+
+```json
+{
+  "message": "Invalid credentials"
+}
+```
 
 Ejemplo — credenciales inválidas (`401`):
 
@@ -92,9 +97,10 @@ Ejemplo — cuenta bloqueada (`423`):
 
 ## Consideraciones de frontend
 - Toggle mostrar/ocultar contraseña en el input de contraseña.
-- Guardar el `accessToken` **en memoria** (Zustand/context, convenciones §3) — nunca en `localStorage`/`sessionStorage`.
-- Guardar también el `refreshToken` para renovar la sesión (`#21`) — mantenerlo fuera del almacenamiento persistente mientras la política del proyecto lo permita.
+- Guardar el `accessToken` y `userId` **en memoria** mediante Zustand — nunca en `localStorage`/`sessionStorage`.
+- Para iniciar sesión, validar únicamente que el correo tenga formato válido y que la contraseña no esté vacía; la pantalla no muestra un indicador de fortaleza.
 - Al éxito: obtener el perfil si aplica y redirigir a la ruta prevista (`location.state?.from`), por defecto al home.
+- En `400`, mostrar el `message` recibido por el backend dentro del formulario.
 - En `401` mostrar el mensaje del backend (incluye el conteo de intentos fallidos); en `423` mostrar cuenta regresiva de ~15 min.
 - En 429, mostrar el mensaje informativo y respetar la espera proporcionada por el servidor (§10); no reintentar de inmediato.
 - Los flujos de sesión caducada los gestiona el interceptor (§3), no esta pantalla.
@@ -124,7 +130,7 @@ Validate form (email format, password non-empty)
 ↓
 POST /auth/login { email, password }
 ↓
-200 → store accessToken + refreshToken in memory (Zustand)
+200 → store accessToken + userId in memory (Zustand)
 ↓
 Redirect to location.state?.from (or /)
 (On 423 → countdown ~15 min)

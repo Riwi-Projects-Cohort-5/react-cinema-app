@@ -5,7 +5,6 @@ import { Link } from "react-router";
 
 import Button from "@shared/components/primitives/Button";
 import { Checkbox } from "@shared/components/primitives/checkbox/Checkbox";
-import GreenIndicator from "@shared/components/primitives/GreenIndicator";
 import Input from "@shared/components/primitives/Input";
 import { useFormValidation } from "@shared/validation/hooks/useFormValidation";
 import {
@@ -70,7 +69,6 @@ export function LoginForm({
   };
 
   const busy = isSubmitting || isLocked;
-  const passwordIsValid = passwordBasicSchema.safeParse(formData.password).success;
 
   return (
     <form onSubmit={handleSubmit} noValidate className="space-y-3">
@@ -115,8 +113,6 @@ export function LoginForm({
         }}
         required
       />
-
-      {passwordIsValid && <GreenIndicator text="Contraseña válida" className="justify-start" />}
 
       <div className="flex items-center justify-between gap-4 pt-1">
         <label className="flex cursor-pointer items-center gap-2 text-sm text-text-secondary">

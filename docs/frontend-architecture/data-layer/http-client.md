@@ -11,7 +11,7 @@ src/services/
 ├── api-error.ts        # Modelo ApiError (ver api-error.md)
 ├── httpClient.ts       # Instancia de axios + interceptores
 ├── queryClient.ts      # Cliente de TanStack Query
-├── session.ts          # Sesión transversal (accessToken, refreshAccessToken, clearSession)
+├── session.ts          # Sesión transversal (accessToken, userId, refreshAccessToken, clearSession)
 ├── notify.ts           # Capa de notificaciones (ver tooling/notifications.md)
 └── index.ts            # Barrel de exportaciones
 ```
@@ -47,7 +47,9 @@ La URL base se configura en un único lugar (`.env.example`) y nunca se hardcode
 `src/services/session.ts` expone la capa de sesión transversal usada por el cliente HTTP y las guardas de rutas:
 
 - `useSessionStore` — store Zustand con el `accessToken` en memoria (nunca en `localStorage`).
+- `userId` — identificador del usuario autenticado, guardado junto al token en memoria.
 - `getAccessToken()` — lectura para el interceptor de request.
+- `setUserId()` — actualización del identificador tras un login exitoso.
 - `setAccessToken()` — actualización tras un refresh exitoso.
 - `clearSession()` — cierre de sesión.
 - `refreshAccessToken()` — stub pendiente de la feature de autenticación.
